@@ -2,7 +2,6 @@
 ;; El Get
 ;;----------------------------------------------------------------------------
 
-
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 (unless (require 'el-get nil 'noerror)
@@ -51,6 +50,34 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;;----------------------------------------------------------------------------
+;; Flx Ido Mode
+;;----------------------------------------------------------------------------
+
+(require 'flx-ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; Disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
+;; Display ido results vertically, rather than horizontally
+(setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+(defun ido-disable-line-truncation () (set (make-local-variable 'truncate-lines) nil))
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
+(defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+(add-hook 'ido-setup-hook 'ido-define-keys)
+
+;;----------------------------------------------------------------------------
+;; Projectile Mode
+;;----------------------------------------------------------------------------
+
+(projectile-global-mode)
+(setq projectile-enable-caching t)
+
+;;----------------------------------------------------------------------------
 ;; Ruby Mode
 ;;----------------------------------------------------------------------------
 
@@ -84,3 +111,14 @@
     (when indent
       (indent-line-to indent)
       (when (> offset 0) (forward-char offset)))))
+
+;;----------------------------------------------------------------------------
+;; File associations
+;;----------------------------------------------------------------------------
+
+;; Ruby file associations
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rsel$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\Guardfile$" . ruby-mode))

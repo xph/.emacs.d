@@ -33,6 +33,9 @@
 ;; Disable auto backup
 (setq make-backup-files nil)
 
+;; Indent with spaces
+(setq-default indent-tabs-mode nil)
+
 ;; Auto indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
@@ -78,6 +81,18 @@
 (setq projectile-enable-caching t)
 
 ;;----------------------------------------------------------------------------
+;; Helm Projectile Mode
+;;----------------------------------------------------------------------------
+
+(require 'helm-projectile)
+(helm-projectile-on)
+
+(custom-set-variables
+ '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
+ '(helm-ag-command-option "--all-text")
+ '(helm-ag-insert-at-point 'symbol))
+
+;;----------------------------------------------------------------------------
 ;; Ruby Mode
 ;;----------------------------------------------------------------------------
 
@@ -111,6 +126,12 @@
     (when indent
       (indent-line-to indent)
       (when (> offset 0) (forward-char offset)))))
+
+;;----------------------------------------------------------------------------
+;; Javascript mode
+;;----------------------------------------------------------------------------
+
+(setq js-indent-level 2)
 
 ;;----------------------------------------------------------------------------
 ;; File associations

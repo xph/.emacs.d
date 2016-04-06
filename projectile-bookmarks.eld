@@ -1,1 +1,1 @@
-("~/upstart/upstart_web/" "~/.emacs.d/")
+("~/upstart/upstart_web/" "~/.emacs.d/" "~/.emacs.d/el-get/ag/" "~/.emacs.d/el-get/projectile/")

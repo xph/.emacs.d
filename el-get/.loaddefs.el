@@ -6,7 +6,7 @@
 ;;;### (autoloads (ag-kill-other-buffers ag-kill-buffers ag-project-dired-regexp
 ;;;;;;  ag-project-dired ag-dired-regexp ag-dired ag-project-regexp
 ;;;;;;  ag-project-files ag-project ag-regexp ag-files ag) "ag/ag"
-;;;;;;  "ag/ag.el" (21928 13004 479250 333000))
+;;;;;;  "ag/ag.el" (22276 9907 850135 28000))
 ;;; Generated autoloads from ag/ag.el
 
 (autoload 'ag "ag/ag" "\
@@ -130,7 +130,7 @@ Highlight a column." t)
 ;;;;;;  el-get-cd el-get-reinstall el-get-remove el-get-self-update
 ;;;;;;  el-get-update-packages-of-type el-get-update-all el-get-update
 ;;;;;;  el-get-install el-get-version) "el-get/el-get" "el-get/el-get.el"
-;;;;;;  (21927 64881 971004 965000))
+;;;;;;  (22276 18610 502291 366000))
 ;;; Generated autoloads from el-get/el-get.el
 
 (autoload 'el-get-version "el-get/el-get" "\
@@ -230,8 +230,8 @@ already installed packages is considered.
 ;;;***
 
 ;;;### (autoloads (el-get-bundle! el-get-bundle el-get-bundle-el-get)
-;;;;;;  "el-get/el-get-bundle" "el-get/el-get-bundle.el" (21927 64881
-;;;;;;  967004 965000))
+;;;;;;  "el-get/el-get-bundle" "el-get/el-get-bundle.el" (22276 18610
+;;;;;;  502291 366000))
 ;;; Generated autoloads from el-get/el-get-bundle.el
 
 (autoload 'el-get-bundle-el-get "el-get/el-get-bundle" "\
@@ -281,7 +281,7 @@ required.
 ;;;***
 
 ;;;### (autoloads (el-get-check-recipe) "el-get/el-get-check" "el-get/el-get-check.el"
-;;;;;;  (21927 64881 967004 965000))
+;;;;;;  (22276 18610 502291 366000))
 ;;; Generated autoloads from el-get/el-get-check.el
 
 (autoload 'el-get-check-recipe "el-get/el-get-check" "\
@@ -300,7 +300,7 @@ object or a file path.
 ;;;***
 
 ;;;### (autoloads (el-get-list-packages) "el-get/el-get-list-packages"
-;;;;;;  "el-get/el-get-list-packages.el" (21927 64881 971004 965000))
+;;;;;;  "el-get/el-get-list-packages.el" (22276 18610 502291 366000))
 ;;; Generated autoloads from el-get/el-get-list-packages.el
 
 (autoload 'el-get-list-packages "el-get/el-get-list-packages" "\
@@ -335,6 +335,137 @@ Toggle flx ido mode
 Configure flymake mode to check the current buffer's ruby syntax.
 
 \(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (helm-do-ag-buffers helm-ag-buffers helm-do-ag-project-root
+;;;;;;  helm-ag-project-root helm-do-ag helm-do-ag-this-file helm-ag
+;;;;;;  helm-ag-this-file helm-ag-mode helm-ag-clear-stack helm-ag-pop-stack)
+;;;;;;  "helm-ag/helm-ag" "helm-ag/helm-ag.el" (22276 19049 510299
+;;;;;;  253000))
+;;; Generated autoloads from helm-ag/helm-ag.el
+
+(autoload 'helm-ag-pop-stack "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-ag-clear-stack "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-ag-mode "helm-ag/helm-ag" "\
+Major mode to provide actions in helm grep saved buffer.
+
+Special commands:
+\\{helm-ag-mode-map}
+
+\(fn)" t nil)
+
+(autoload 'helm-ag-this-file "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-ag "helm-ag/helm-ag" "\
+
+
+\(fn &optional BASEDIR)" t nil)
+
+(autoload 'helm-do-ag-this-file "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-do-ag "helm-ag/helm-ag" "\
+
+
+\(fn &optional BASEDIR TARGETS)" t nil)
+
+(autoload 'helm-ag-project-root "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-do-ag-project-root "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-ag-buffers "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-do-ag-buffers "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (helm-projectile helm-projectile-ag helm-projectile-ack
+;;;;;;  helm-projectile-grep helm-projectile-off helm-projectile-on
+;;;;;;  helm-projectile-find-other-file helm-projectile-find-file-dwim
+;;;;;;  helm-projectile-fuzzy-match) "helm-projectile/helm-projectile"
+;;;;;;  "helm-projectile/helm-projectile.el" (22276 18724 938293
+;;;;;;  422000))
+;;; Generated autoloads from helm-projectile/helm-projectile.el
+
+(defvar helm-projectile-fuzzy-match t "\
+Enable fuzzy matching for Helm Projectile commands.
+This needs to be set before loading helm-projectile.")
+
+(custom-autoload 'helm-projectile-fuzzy-match "helm-projectile/helm-projectile" t)
+
+(autoload 'helm-projectile-find-file-dwim "helm-projectile/helm-projectile" "\
+Find file at point based on context.
+
+\(fn)" t nil)
+
+(autoload 'helm-projectile-find-other-file "helm-projectile/helm-projectile" "\
+Switch between files with the same name but different extensions using Helm.
+With FLEX-MATCHING, match any file that contains the base name of current file.
+Other file extensions can be customized with the variable `projectile-other-file-alist'.
+
+\(fn &optional FLEX-MATCHING)" t nil)
+
+(autoload 'helm-projectile-on "helm-projectile/helm-projectile" "\
+Turn on helm-projectile key bindings.
+
+\(fn)" t nil)
+
+(autoload 'helm-projectile-off "helm-projectile/helm-projectile" "\
+Turn off helm-projectile key bindings.
+
+\(fn)" t nil)
+
+(autoload 'helm-projectile-grep "helm-projectile/helm-projectile" "\
+Helm version of `projectile-grep'.
+DIR is the project root, if not set then current directory is used
+
+\(fn &optional DIR)" t nil)
+
+(autoload 'helm-projectile-ack "helm-projectile/helm-projectile" "\
+Helm version of projectile-ack.
+
+\(fn &optional DIR)" t nil)
+
+(autoload 'helm-projectile-ag "helm-projectile/helm-projectile" "\
+Helm version of projectile-ag.
+
+\(fn &optional OPTIONS)" t nil)
+
+(autoload 'helm-projectile "helm-projectile/helm-projectile" "\
+Use projectile with Helm instead of ido.
+
+With a prefix ARG invalidates the cache first.
+If invoked outside of a project, displays a list of known projects to jump.
+
+\(fn &optional ARG)" t nil)
+
+(eval-after-load 'projectile '(progn (define-key projectile-command-map (kbd "h") #'helm-projectile)))
 
 ;;;***
 
@@ -611,103 +742,64 @@ version.
 
 ;;;***
 
-;;;### (autoloads (helm-projectile helm-projectile-ag helm-projectile-ack
-;;;;;;  helm-projectile-grep helm-projectile-off helm-projectile-on
-;;;;;;  helm-projectile-find-other-file helm-projectile-find-file-dwim
-;;;;;;  helm-projectile-fuzzy-match) "projectile/helm-projectile"
-;;;;;;  "projectile/helm-projectile.el" (21928 10200 439199 960000))
-;;; Generated autoloads from projectile/helm-projectile.el
-
-(defvar helm-projectile-fuzzy-match t "\
-Enable fuzzy matching for Helm Projectile commands.
-This needs to be set before loading helm-projectile.")
-
-(custom-autoload 'helm-projectile-fuzzy-match "projectile/helm-projectile" t)
-
-(autoload 'helm-projectile-find-file-dwim "projectile/helm-projectile" "\
-Find file at point based on context.
-
-\(fn)" t nil)
-
-(autoload 'helm-projectile-find-other-file "projectile/helm-projectile" "\
-Switch between files with the same name but different extensions using Helm.
-With FLEX-MATCHING, match any file that contains the base name of current file.
-Other file extensions can be customized with the variable `projectile-other-file-alist'.
-
-\(fn &optional FLEX-MATCHING)" t nil)
-
-(autoload 'helm-projectile-on "projectile/helm-projectile" "\
-Turn on helm-projectile key bindings.
-
-\(fn)" t nil)
-
-(autoload 'helm-projectile-off "projectile/helm-projectile" "\
-Turn off helm-projectile key bindings.
-
-\(fn)" t nil)
-
-(autoload 'helm-projectile-grep "projectile/helm-projectile" "\
-Helm version of projectile-grep.
-
-\(fn)" t nil)
-
-(autoload 'helm-projectile-ack "projectile/helm-projectile" "\
-Helm version of projectile-ack.
-
-\(fn)" t nil)
-
-(autoload 'helm-projectile-ag "projectile/helm-projectile" "\
-Helm version of projectile-ag.
-
-\(fn &optional OPTIONS)" t nil)
-
-(autoload 'helm-projectile "projectile/helm-projectile" "\
-Use projectile with Helm instead of ido.
-
-With a prefix ARG invalidates the cache first.
-If invoked outside of a project, displays a list of known projects to jump.
-
-\(fn &optional ARG)" t nil)
-
-(eval-after-load 'projectile '(progn (define-key projectile-command-map (kbd "h") #'helm-projectile)))
-
-;;;***
-
-;;;### (autoloads (projectile-persp-switch-project) "projectile/persp-projectile"
-;;;;;;  "projectile/persp-projectile.el" (21928 10200 439199 960000))
-;;; Generated autoloads from projectile/persp-projectile.el
-
-(autoload 'projectile-persp-switch-project "projectile/persp-projectile" "\
-Switch to a project or perspective we have visited before.
-If the perspective of corresponding project does not exist, this
-function will call `persp-switch' to create one and switch to
-that before `projectile-switch-project' invokes
-`projectile-switch-project-action'.
-
-Otherwise, this function calls `persp-switch' to switch to an
-existing perspective of the project unless we're already in that
-perspective.
-
-\(fn PROJECT-TO-SWITCH)" t nil)
-
-;;;***
-
 ;;;### (autoloads (projectile-global-mode projectile-mode projectile-mode-line
-;;;;;;  projectile-commander projectile-remove-current-project-from-known-projects
+;;;;;;  projectile-edit-dir-locals projectile-commander projectile-ibuffer
+;;;;;;  projectile-remove-current-project-from-known-projects projectile-remove-known-project
 ;;;;;;  projectile-clear-known-projects projectile-cleanup-known-projects
-;;;;;;  projectile-find-file-in-known-projects projectile-recentf
-;;;;;;  projectile-vc projectile-dired projectile-save-project-buffers
-;;;;;;  projectile-kill-buffers projectile-run-async-shell-command-in-root
-;;;;;;  projectile-run-shell-command-in-root projectile-run-command-in-root
-;;;;;;  projectile-find-tag projectile-regenerate-tags projectile-toggle-between-implementation-and-test
-;;;;;;  projectile-find-implementation-or-test-other-window projectile-find-file-other-window
-;;;;;;  projectile-find-file projectile-find-file-dwim-other-window
-;;;;;;  projectile-find-file-dwim projectile-multi-occur projectile-project-buffers-other-buffer
+;;;;;;  projectile-find-file-in-known-projects projectile-find-file-in-directory
+;;;;;;  projectile-switch-open-project projectile-switch-project
+;;;;;;  projectile-run-project projectile-test-project projectile-compile-project
+;;;;;;  projectile-recentf projectile-vc projectile-dired projectile-save-project-buffers
+;;;;;;  projectile-kill-buffers projectile-replace-regexp projectile-replace
+;;;;;;  projectile-run-term projectile-run-eshell projectile-run-shell
+;;;;;;  projectile-run-async-shell-command-in-root projectile-run-shell-command-in-root
+;;;;;;  projectile-run-command-in-root projectile-find-tag projectile-regenerate-tags
+;;;;;;  projectile-ag projectile-grep projectile-toggle-between-implementation-and-test
+;;;;;;  projectile-find-implementation-or-test-other-window projectile-project-info
+;;;;;;  projectile-find-test-file projectile-find-dir-other-window
+;;;;;;  projectile-find-dir projectile-find-file-other-window projectile-find-file
+;;;;;;  projectile-find-file-dwim-other-window projectile-find-file-dwim
+;;;;;;  projectile-find-other-file-other-window projectile-find-other-file
+;;;;;;  projectile-multi-occur projectile-project-buffers-other-buffer
 ;;;;;;  projectile-display-buffer projectile-switch-to-buffer-other-window
-;;;;;;  projectile-switch-to-buffer projectile-cache-current-file)
-;;;;;;  "projectile/projectile" "projectile/projectile.el" (21928
-;;;;;;  10200 443199 960000))
+;;;;;;  projectile-switch-to-buffer projectile-cache-current-file
+;;;;;;  projectile-purge-dir-from-cache projectile-purge-file-from-cache
+;;;;;;  projectile-invalidate-cache projectile-version) "projectile/projectile"
+;;;;;;  "projectile/projectile.el" (22276 12297 670177 959000))
 ;;; Generated autoloads from projectile/projectile.el
+
+(autoload 'projectile-version "projectile/projectile" "\
+Get the Projectile version as string.
+
+If called interactively or if SHOW-VERSION is non-nil, show the
+version in the echo area and the messages buffer.
+
+The returned string includes both, the version from package.el
+and the library version, if both a present and different.
+
+If the version number could not be determined, signal an error,
+if called interactively, or if SHOW-VERSION is non-nil, otherwise
+just return nil.
+
+\(fn &optional SHOW-VERSION)" t nil)
+
+(autoload 'projectile-invalidate-cache "projectile/projectile" "\
+Remove the current project's files from `projectile-projects-cache'.
+
+With a prefix argument ARG prompts for the name of the project whose cache
+to invalidate.
+
+\(fn ARG)" t nil)
+
+(autoload 'projectile-purge-file-from-cache "projectile/projectile" "\
+Purge FILE from the cache of the current project.
+
+\(fn FILE)" t nil)
+
+(autoload 'projectile-purge-dir-from-cache "projectile/projectile" "\
+Purge DIR from the cache of the current project.
+
+\(fn DIR)" t nil)
 
 (autoload 'projectile-cache-current-file "projectile/projectile" "\
 Add the currently visited file to the cache.
@@ -739,6 +831,20 @@ Only buffers not visible in windows are returned.
 Do a `multi-occur' in the project's buffers.
 
 \(fn)" t nil)
+
+(autoload 'projectile-find-other-file "projectile/projectile" "\
+Switch between files with the same name but different extensions.
+With FLEX-MATCHING, match any file that contains the base name of current file.
+Other file extensions can be customized with the variable `projectile-other-file-alist'.
+
+\(fn &optional FLEX-MATCHING)" t nil)
+
+(autoload 'projectile-find-other-file-other-window "projectile/projectile" "\
+Switch between files with the same name but different extensions in other window.
+With FLEX-MATCHING, match any file that contains the base name of current file.
+Other file extensions can be customized with the variable `projectile-other-file-alist'.
+
+\(fn &optional FLEX-MATCHING)" t nil)
 
 (autoload 'projectile-find-file-dwim "projectile/projectile" "\
 Jump to a project's files using completion based on context.
@@ -806,6 +912,32 @@ With a prefix ARG invalidates the cache first.
 
 \(fn &optional ARG)" t nil)
 
+(autoload 'projectile-find-dir "projectile/projectile" "\
+Jump to a project's directory using completion.
+
+With a prefix ARG invalidates the cache first.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'projectile-find-dir-other-window "projectile/projectile" "\
+Jump to a project's directory in other window using completion.
+
+With a prefix ARG invalidates the cache first.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'projectile-find-test-file "projectile/projectile" "\
+Jump to a project's test file using completion.
+
+With a prefix ARG invalidates the cache first.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'projectile-project-info "projectile/projectile" "\
+Display info for current project.
+
+\(fn)" t nil)
+
 (autoload 'projectile-find-implementation-or-test-other-window "projectile/projectile" "\
 Open matching implementation or test file in other window.
 
@@ -815,6 +947,25 @@ Open matching implementation or test file in other window.
 Toggle between an implementation file and its test file.
 
 \(fn)" t nil)
+
+(autoload 'projectile-grep "projectile/projectile" "\
+Perform rgrep in the project.
+
+With a prefix ARG asks for files (globbing-aware) which to grep in.
+With prefix ARG of `-' (such as `M--'), default the files (without prompt),
+to `projectile-grep-default-files'.
+
+With REGEXP given, don't query the user for a regexp.
+
+\(fn &optional REGEXP ARG)" t nil)
+
+(autoload 'projectile-ag "projectile/projectile" "\
+Run an ag search with SEARCH-TERM in the project.
+
+With an optional prefix argument ARG SEARCH-TERM is interpreted as a
+regular expression.
+
+\(fn SEARCH-TERM &optional ARG)" t nil)
 
 (autoload 'projectile-regenerate-tags "projectile/projectile" "\
 Regenerate the project's [e|g]tags.
@@ -841,6 +992,37 @@ Invoke `async-shell-command' in the project's root.
 
 \(fn)" t nil)
 
+(autoload 'projectile-run-shell "projectile/projectile" "\
+Invoke `shell' in the project's root.
+
+\(fn)" t nil)
+
+(autoload 'projectile-run-eshell "projectile/projectile" "\
+Invoke `eshell' in the project's root.
+
+\(fn)" t nil)
+
+(autoload 'projectile-run-term "projectile/projectile" "\
+Invoke `term' in the project's root.
+
+\(fn PROGRAM)" t nil)
+
+(autoload 'projectile-replace "projectile/projectile" "\
+Replace literal string in project using non-regexp `tags-query-replace'.
+
+With a prefix argument ARG prompts you for a directory on which
+to run the replacement.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'projectile-replace-regexp "projectile/projectile" "\
+Replace a regexp in the project using `tags-query-replace'.
+
+With a prefix argument ARG prompts you for a directory on which
+to run the replacement.
+
+\(fn &optional ARG)" t nil)
+
 (autoload 'projectile-kill-buffers "projectile/projectile" "\
 Kill all project buffers.
 
@@ -860,6 +1042,7 @@ Open `dired' at the root of the project.
 Open `vc-dir' at the root of the project.
 
 For git projects `magit-status-internal' is used if available.
+For hg projects `monky-status' is used if available.
 
 \(fn &optional PROJECT-ROOT)" t nil)
 
@@ -867,6 +1050,56 @@ For git projects `magit-status-internal' is used if available.
 Show a list of recently visited files in a project.
 
 \(fn)" t nil)
+
+(autoload 'projectile-compile-project "projectile/projectile" "\
+Run project compilation command.
+
+Normally you'll be prompted for a compilation command, unless
+variable `compilation-read-command'.  You can force the prompt
+with a prefix ARG.
+
+\(fn ARG &optional DIR)" t nil)
+
+(autoload 'projectile-test-project "projectile/projectile" "\
+Run project test command.
+
+Normally you'll be prompted for a compilation command, unless
+variable `compilation-read-command'.  You can force the prompt
+with a prefix ARG.
+
+\(fn ARG)" t nil)
+
+(autoload 'projectile-run-project "projectile/projectile" "\
+Run project run command.
+
+Normally you'll be prompted for a compilation command, unless
+variable `compilation-read-command'.  You can force the prompt
+with a prefix ARG.
+
+\(fn ARG)" t nil)
+
+(autoload 'projectile-switch-project "projectile/projectile" "\
+Switch to a project we have visited before.
+Invokes the command referenced by `projectile-switch-project-action' on switch.
+With a prefix ARG invokes `projectile-commander' instead of
+`projectile-switch-project-action.'
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'projectile-switch-open-project "projectile/projectile" "\
+Switch to a project we have currently opened.
+Invokes the command referenced by `projectile-switch-project-action' on switch.
+With a prefix ARG invokes `projectile-commander' instead of
+`projectile-switch-project-action.'
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'projectile-find-file-in-directory "projectile/projectile" "\
+Jump to a file in a (maybe regular) DIRECTORY.
+
+This command will first prompt for the directory the file is in.
+
+\(fn &optional DIRECTORY)" t nil)
 
 (autoload 'projectile-find-file-in-known-projects "projectile/projectile" "\
 Jump to a file in any of the known projects.
@@ -883,10 +1116,22 @@ Clear both `projectile-known-projects' and `projectile-known-projects-file'.
 
 \(fn)" t nil)
 
+(autoload 'projectile-remove-known-project "projectile/projectile" "\
+Remove PROJECT from the list of known projects.
+
+\(fn &optional PROJECT)" t nil)
+
 (autoload 'projectile-remove-current-project-from-known-projects "projectile/projectile" "\
 Remove the current project from the list of known projects.
 
 \(fn)" t nil)
+
+(autoload 'projectile-ibuffer "projectile/projectile" "\
+Open an IBuffer window showing all buffers in the current project.
+
+Let user choose another project when PREFIX is supplied.
+
+\(fn PREFIX)" t nil)
 
 (autoload 'projectile-commander "projectile/projectile" "\
 Execute a Projectile command with a single letter.
@@ -898,7 +1143,12 @@ See `def-projectile-commander-method' for defining new methods.
 
 \(fn)" t nil)
 
-(defvar projectile-mode-line '(:eval (format " Projectile[%s]" (projectile-project-name))) "\
+(autoload 'projectile-edit-dir-locals "projectile/projectile" "\
+Edit or create a .dir-locals.el file of the project.
+
+\(fn)" t nil)
+
+(defvar projectile-mode-line '(:eval (if (file-remote-p default-directory) " Projectile" (format " Projectile[%s]" (projectile-project-name)))) "\
 Mode line lighter for Projectile.
 
 The value of this variable is a mode line template as in
@@ -1000,7 +1250,7 @@ Major mode for editing Slim files.
 ;;;;;;  "el-get/el-get-install.el" "el-get/el-get-methods.el" "el-get/el-get-notify.el"
 ;;;;;;  "el-get/el-get-recipes.el" "el-get/el-get-status.el" "epl/epl.el"
 ;;;;;;  "f/f.el" "flx/flx.el" "flymake-easy/flymake-easy.el" "multi-web-mode/mweb-example-config.el"
-;;;;;;  "s/s.el") (21928 13004 936974 936000))
+;;;;;;  "s/s.el") (22276 19049 933912 15000))
 
 ;;;***
 

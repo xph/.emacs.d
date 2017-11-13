@@ -37,6 +37,9 @@
            :type github :pkgname "rejeep/f.el"))
  (flx status "installed" recipe
       (:name flx :description "Fuzzy matching with good sorting in ido" :type github :pkgname "lewang/flx"))
+ (flycheck status "installed" recipe
+           (:name flycheck :type github :pkgname "flycheck/flycheck" :minimum-emacs-version "24.3" :description "On-the-fly syntax checking extension" :depends
+                  (dash pkg-info let-alist seq)))
  (flymake-easy status "installed" recipe
                (:name flymake-easy :type github :description "Helpers for easily building flymake checkers" :pkgname "purcell/flymake-easy" :website "http://github.com/purcell/flymake-easy"))
  (flymake-ruby status "installed" recipe
@@ -70,8 +73,34 @@
 (js2-mode status "installed" recipe
 (:name js2-mode :website "https://github.com/mooz/js2-mode#readme" :description "An improved JavaScript editing mode" :type github :pkgname "mooz/js2-mode" :prepare
 (autoload 'js2-mode "js2-mode" nil t)))
+(let-alist status "installed" recipe
+(:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :url "https://elpa.gnu.org/packages/let-alist.html"))
 (multi-web-mode status "installed" recipe
 (:name "multi-web-mode" :description "Multi Web Mode is a minor mode which makes web editing in Emacs much easier" :type github :pkgname "fgallina/multi-web-mode"))
+(package status "installed" recipe
+(:name package :description "ELPA implementation (\"package.el\") from Emacs 24" :builtin "24" :type http :url "http://repo.or.cz/w/emacs.git/blob_plain/ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09:/lisp/emacs-lisp/package.el" :shallow nil :features package :post-init
+(progn
+(let
+((old-package-user-dir
+(expand-file-name
+(convert-standard-filename
+(concat
+(file-name-as-directory default-directory)
+"elpa")))))
+(when
+(file-directory-p old-package-user-dir)
+(add-to-list 'package-directory-list old-package-user-dir)))
+(setq package-archives
+(bound-and-true-p package-archives))
+(mapc
+(lambda
+(pa)
+(add-to-list 'package-archives pa 'append))
+'(("ELPA" . "http://tromey.com/elpa/")
+("melpa" . "http://melpa.org/packages/")
+("gnu" . "http://elpa.gnu.org/packages/")
+("marmalade" . "http://marmalade-repo.org/packages/")
+("SC" . "http://joseito.republika.pl/sunrise-commander/"))))))
 (pkg-info status "installed" recipe
 (:name pkg-info :description "Provide information about Emacs packages." :type github :pkgname "lunaryorn/pkg-info.el" :depends
 (dash epl)))
@@ -85,6 +114,8 @@
 (rvm-use-default)))
 (s status "installed" recipe
 (:name s :description "The long lost Emacs string manipulation library." :type github :pkgname "magnars/s.el"))
+(seq status "installed" recipe
+(:name seq :description "Sequence manipulation library for Emacs" :builtin "25" :type github :pkgname "NicolasPetton/seq.el"))
 (slim-mode status "installed" recipe
 (:name slim-mode :description "Syntax highlighting for Slim" :type github :pkgname "slim-template/emacs-slim" :features slim-mode))
 (tern status "installed" recipe

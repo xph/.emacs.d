@@ -86,4 +86,14 @@
 (s status "installed" recipe
 (:name s :description "The long lost Emacs string manipulation library." :type github :pkgname "magnars/s.el"))
 (slim-mode status "installed" recipe
-(:name slim-mode :description "Syntax highlighting for Slim" :type github :pkgname "slim-template/emacs-slim" :features slim-mode)))
+(:name slim-mode :description "Syntax highlighting for Slim" :type github :pkgname "slim-template/emacs-slim" :features slim-mode))
+(tern status "installed" recipe
+(:name tern :description "A JavaScript code analyzer for deep, cross-editor language support." :type github :pkgname "marijnh/tern" :build
+'(("npm" "--production" "install"))
+:prepare
+(add-to-list 'auto-mode-alist
+'("\\.tern-\\(project\\|\\config\\)\\'" . json-mode))
+:load-path
+("emacs")))
+(web-mode status "installed" recipe
+(:name web-mode :description "emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)" :type github :pkgname "fxbois/web-mode")))

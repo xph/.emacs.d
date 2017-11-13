@@ -128,6 +128,57 @@
       (when (> offset 0) (forward-char offset)))))
 
 ;;----------------------------------------------------------------------------
+;; Tern mode
+;;----------------------------------------------------------------------------
+
+(add-to-list 'load-path "~/.emacs.d/el-get/tern/emacs/")
+(autoload 'tern-mode "tern.el" nil t)
+
+(add-hook 'js-mode-hook (lambda () (tern-mode t)))
+
+;;----------------------------------------------------------------------------
+;; Web mode
+;;----------------------------------------------------------------------------
+
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (tern-mode t)
+
+  (setq-default indent-tabs-mode nil)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-script-padding 2)
+  (setq web-mode-attr-indent-offset 2)
+  (setq web-mode-enable-css-colorization t)
+  (setq web-mode-enable-auto-closing t)
+  (setq web-mode-enable-auto-pairing t)
+
+  (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-quotes" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
+  (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
+
+  (setq web-mode-enable-auto-quoting nil)
+
+  (setq web-mode-comment-formats
+        '(("js"  . "/*")
+          ("jsx" . "//")
+          ))
+)
+(add-hook 'web-mode-hook 'my-web-mode-hook)
+
+;; for better jsx syntax-highlighting in web-mode
+;; - courtesy of Patrick @halbtuerke
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+    (let ((web-mode-enable-part-face nil))
+      ad-do-it)
+    ad-do-it))
+
+;;----------------------------------------------------------------------------
 ;; Javascript mode
 ;;----------------------------------------------------------------------------
 
@@ -143,3 +194,6 @@
 (add-to-list 'auto-mode-alist '("\\Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\Guardfile$" . ruby-mode))
+
+;; JS file associations
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))

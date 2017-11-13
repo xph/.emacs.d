@@ -1244,13 +1244,51 @@ Major mode for editing Slim files.
 
 ;;;***
 
+;;;### (autoloads (tern-mode tern-use-server) "tern/emacs/tern" "tern/emacs/tern.el"
+;;;;;;  (23045 55312 902768 797000))
+;;; Generated autoloads from tern/emacs/tern.el
+
+(autoload 'tern-use-server "tern/emacs/tern" "\
+
+
+\(fn PORT SERVER)" t nil)
+
+(autoload 'tern-mode "tern/emacs/tern" "\
+Minor mode binding to the Tern JavaScript analyzer
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (tern-ac-setup) "tern/emacs/tern-auto-complete"
+;;;;;;  "tern/emacs/tern-auto-complete.el" (23045 55312 902768 797000))
+;;; Generated autoloads from tern/emacs/tern-auto-complete.el
+
+(autoload 'tern-ac-setup "tern/emacs/tern-auto-complete" "\
+Setup auto-complete for tern-mode.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (web-mode) "web-mode/web-mode" "web-mode/web-mode.el"
+;;;;;;  (23045 56357 194787 557000))
+;;; Generated autoloads from web-mode/web-mode.el
+
+(autoload 'web-mode "web-mode/web-mode" "\
+Major mode for editing web templates.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil nil ("dash/dash-functional.el" "dash/dash.el"
 ;;;;;;  "el-get/el-get-autoloading.el" "el-get/el-get-build.el" "el-get/el-get-byte-compile.el"
 ;;;;;;  "el-get/el-get-core.el" "el-get/el-get-custom.el" "el-get/el-get-dependencies.el"
 ;;;;;;  "el-get/el-get-install.el" "el-get/el-get-methods.el" "el-get/el-get-notify.el"
 ;;;;;;  "el-get/el-get-recipes.el" "el-get/el-get-status.el" "epl/epl.el"
 ;;;;;;  "f/f.el" "flx/flx.el" "flymake-easy/flymake-easy.el" "multi-web-mode/mweb-example-config.el"
-;;;;;;  "s/s.el") (22276 19049 933912 15000))
+;;;;;;  "s/s.el") (23045 56358 132125 961000))
 
 ;;;***
 

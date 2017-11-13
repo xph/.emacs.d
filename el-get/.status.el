@@ -40,13 +40,6 @@
  (flycheck status "installed" recipe
            (:name flycheck :type github :pkgname "flycheck/flycheck" :minimum-emacs-version "24.3" :description "On-the-fly syntax checking extension" :depends
                   (dash pkg-info let-alist seq)))
- (flymake-easy status "installed" recipe
-               (:name flymake-easy :type github :description "Helpers for easily building flymake checkers" :pkgname "purcell/flymake-easy" :website "http://github.com/purcell/flymake-easy"))
- (flymake-ruby status "installed" recipe
-               (:name flymake-ruby :type github :description "A flymake handler for ruby-mode files" :pkgname "purcell/flymake-ruby" :website "http://github.com/purcell/flymake-ruby" :depends
-                      (flymake-easy)
-                      :features flymake-ruby :post-init
-                      (add-hook 'ruby-mode-hook 'flymake-ruby-load)))
  (helm status "installed" recipe
        (:name helm :description "Emacs incremental completion and narrowing framework" :type github :pkgname "emacs-helm/helm" :autoloads "helm-autoloads" :build
               (("make"))
@@ -75,8 +68,6 @@
 (autoload 'js2-mode "js2-mode" nil t)))
 (let-alist status "installed" recipe
 (:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :url "https://elpa.gnu.org/packages/let-alist.html"))
-(multi-web-mode status "installed" recipe
-(:name "multi-web-mode" :description "Multi Web Mode is a minor mode which makes web editing in Emacs much easier" :type github :pkgname "fgallina/multi-web-mode"))
 (package status "installed" recipe
 (:name package :description "ELPA implementation (\"package.el\") from Emacs 24" :builtin "24" :type http :url "http://repo.or.cz/w/emacs.git/blob_plain/ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09:/lisp/emacs-lisp/package.el" :shallow nil :features package :post-init
 (progn

@@ -29,6 +29,8 @@
                           (feat feats)
                         (unload-feature feat t))))
                   (require 'el-get))))
+ (emacs-async status "installed" recipe
+              (:name emacs-async :description "Simple library for asynchronous processing in Emacs" :type github :pkgname "jwiegley/emacs-async"))
  (epl status "installed" recipe
       (:name epl :description "EPL provides a convenient high-level API for various package.el versions, and aims to overcome its most striking idiocies." :type github :pkgname "cask/epl"))
  (f status "installed" recipe
@@ -69,7 +71,7 @@
 (let-alist status "installed" recipe
 (:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :url "https://elpa.gnu.org/packages/let-alist.html"))
 (package status "installed" recipe
-(:name package :description "ELPA implementation (\"package.el\") from Emacs 24" :builtin "24" :type http :url "http://repo.or.cz/w/emacs.git/blob_plain/ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09:/lisp/emacs-lisp/package.el" :shallow nil :features package :post-init
+(:name package :description "ELPA implementation (\"package.el\") from Emacs 24" :builtin "24" :type http :url "https://repo.or.cz/w/emacs.git/blob_plain/ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09:/lisp/emacs-lisp/package.el" :features package :post-init
 (progn
 (let
 ((old-package-user-dir
@@ -83,21 +85,36 @@
 (add-to-list 'package-directory-list old-package-user-dir)))
 (setq package-archives
 (bound-and-true-p package-archives))
-(mapc
-(lambda
-(pa)
-(add-to-list 'package-archives pa 'append))
-'(("ELPA" . "http://tromey.com/elpa/")
-("melpa" . "http://melpa.org/packages/")
-("gnu" . "http://elpa.gnu.org/packages/")
-("marmalade" . "http://marmalade-repo.org/packages/")
-("SC" . "http://joseito.republika.pl/sunrise-commander/"))))))
+(let
+((protocol
+(if
+(and
+(fboundp 'gnutls-available-p)
+(gnutls-available-p))
+"https://"
+(lwarn
+'(el-get tls)
+:warning "Your Emacs doesn't support HTTPS (TLS)%s"
+(if
+(eq system-type 'windows-nt)
+",\n  see https://github.com/dimitri/el-get/wiki/Installation-on-Windows." "."))
+"http://"))
+(archives
+'(("melpa" . "melpa.org/packages/")
+("gnu" . "elpa.gnu.org/packages/")
+("marmalade" . "marmalade-repo.org/packages/"))))
+(dolist
+(archive archives)
+(add-to-list 'package-archives
+(cons
+(car archive)
+(concat protocol
+(cdr archive)))))))))
 (pkg-info status "installed" recipe
 (:name pkg-info :description "Provide information about Emacs packages." :type github :pkgname "lunaryorn/pkg-info.el" :depends
 (dash epl)))
 (projectile status "installed" recipe
-(:name projectile :description "Project navigation and management library for Emacs." :type github :pkgname "bbatsov/projectile" :depends
-(dash s f pkg-info)))
+(:name projectile :description "Project navigation and management library for Emacs." :type github :pkgname "bbatsov/projectile" :depends pkg-info))
 (ruby-mode status "installed" recipe
 (:name ruby-mode :builtin "24" :type http :description "Major mode for editing Ruby files." :url "http://bugs.ruby-lang.org/projects/ruby-trunk/repository/raw/misc/ruby-mode.el"))
 (rvm status "installed" recipe

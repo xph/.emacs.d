@@ -1,0 +1,156 @@
+#+TITLE: Emacs Solidity Mode
+#+AUTHOR: Lefteris Karapetsas
+
+[[LICENSE][file:https://img.shields.io/badge/License-GPL%20v3-blue.svg]] [[http://melpa.org/#/solidity-mode][file:http://melpa.org/packages/solidity-mode-badge.svg]]
+
+A simple language mode for the Solidity language. It is a constant work in progress as the
+ language itself also progresses. For information about Solidity check the [[https://github.com/ethereum/wiki/wiki/Solidity-Tutorial][Tutorial]] and the [[https://github.com/ethereum/wiki/wiki/Solidity-Features][Features]] 
+wiki pages.
+
+
+* Installation
+You can simply load the file in your emacs but the recommended way to install it is either via el-get or MELPA.
+
+** El-get
+If you don't know how to use el-get you can find more information on its [[https://github.com/dimitri/el-get][webpage]]. First [[https://github.com/dimitri/el-get#basic-setup][install el-get]] and then (in emacs), press =Alt+x= (this is in emacs notation written as =M-x= ) and then type =el-get-install=. This will prompt you for a package, type =solidity-mode= and hit enter, this should install all you need.
+
+** Melpa
+You can also obtain solidity-mode from [[http://melpa.org/#/][Melpa]] as can be seen [[http://melpa.org/#/solidity-mode][here]].
+
+* Configuration
+By default solidity-mode associates itself with any files ending in =.sol=.
+
+If using =el-get= then you should have a specific package initializing lisp file. If not then you can put these
+anywhere in your =init.el=.
+
+** Generic configuration
+Regardless of where you installed solidity mode from, you need to require the package:
+#+BEGIN_SRC lisp
+(require 'solidity-mode)
+#+END_SRC
+(append that line to your =~/.emacs= file)
+
+You can also set the way the comments are inserted by emacs with commands like =comment-region=. The default is 
+=/* .. */= and you can turn it to using =//= instead by putting the following into your emacs config:
+
+#+BEGIN_SRC lisp
+(setq solidity-comment-style 'slash)
+;; or
+(setq solidity-comment-style 'star) ;; this is the default
+#+END_SRC
+
+** Keymap
+You can modify the default keybindings of the solidity mode keymap by adding
+a new key combination for each command you want to change. For example
+
+#+BEGIN_SRC lisp
+(define-key map (kbd "C-c C-g") 'solidity-estimate-gas-at-point)
+#+END_SRC
+
+** Interface with linters
+*** Provide path to solc binary
+The =solc= binary is assumed to be part of the PATH. Wherever that is not the case you would have to manually
+set the location of the binary like below:
+#+BEGIN_SRC emacs-lisp
+(setq solidity-solc-path "/home/lefteris/ew/cpp-ethereum/build/solc/solc")
+#+END_SRC
+
+Note: This better be set before requiring solidity mode.
+
+*** Provide path to solium binary
+The =solium= binary is assumed to be part of the user's =PATH=. If this is not the case
+then set its location like below:
+#+BEGIN_SRC emacs-lisp
+(setq solidity-solium-path "/home/lefteris/.npm-global/bin/solium")
+#+END_SRC
+
+
+** [Optional] Flycheck interface
+Solidity mode can also interface with [[https://github.com/flycheck/flycheck][flycheck]] if you have it. Make sure to
+download and install the flycheck package. Then configure it to either work on
+all modes or enable it only for solidity mode.
+
+Flycheck can interface with solc and/or with [[http://solium.readthedocs.io/en/latest/][solium]]. You have to specifically set the path
+to both executables and activate the checker integration by setting the following:
+
+To activate =solc= checker
+#+BEGIN_SRC emacs-lisp
+(setq solidity-flycheck-solc-checker-active t)
+#+END_SRC
+
+To activate =solium= checker
+#+BEGIN_SRC emacs-lisp
+(setq solidity-flycheck-solium-checker-active t)
+#+END_SRC
+
+
+Keep in mind that you need to provide the path to either solc or solium unless
+emacs can already find it in your environment's =PATH=. Even if you can call it
+from the command line it does not mean that EMACS can see it as emacs may be started
+by systemd at which point =PATH= is not fully populated.
+
+*** Configuring solc checker
+
+You can configure flycheck's solc invocation with the following arguments
+
+**** std contracts
+By default this is false. If you want to include the standard contracts just add the following to your emacs init file
+
+#+BEGIN_SRC emacs-lisp
+(setq flycheck-solidity-solc-addstd-contracts t)
+#+END_SRC
+
+*** Configuring solium checker
+You can configure flycheck's solium incocation with the following arguments
+
+**** solium RC file
+By default solium looks at the current directory of the file you are editing in order to find =.soliumrc.json=. Having this
+file is required. But you can point to an external configuration file by putting the following anywhere in your emacs init file.
+
+#+BEGIN_SRC emacs-lisp
+(setq flycheck-solidity-solium-soliumrcfile "/home/path/to/common/.soliumrc.json")
+#+END_SRC
+
+*** Chaining both checkers
+If you enable both checkers then their results are chained. The variable =solidity-flycheck-chaining-error-level= controls
+how they are chained. Its value can be either =t=, =error=, =warning= or =info= and that controls the maximum error level
+of the solc checker after which solium will not run. If =t= is given solium will always run. The default is =warning=, so
+if anything over than a warning is found in solc solium will not run.
+
+** [Optional] Autocompletion
+[[https://github.com/ssmolkin1/company-solidity][company-solidity]], a simple [[http://company-mode.github.io/][company-mode]] back-end for Solidity, has now been fully integrated into solidity-mode. You no longer need to install company-solidity separately from solidity-mode, nor should you do so. To take advantage of the autocompletion features, you must have the [[http://company-mode.github.io/][company-mode]] package installed. The autocompletion features will be enabled automatically if you have company-mode installed.
+
+*** What it does
+Give completion suggestions for Solidity keywords, global variables, and address methods.
+
+*** What it isn't
+Smart. The completion suggestions are *not context dependent*.
+
+*** Something to watch out for
+=company-mode= treats =.= as the end of a word, and will cut off compeletion suggestions when you type a =.=. So, when you've typed =msg= you will get =msg.sender=, =msg.value= etc. as completion suggestions. However, as soon as you type =msg.=, the suggestions will disappear.
+
+*** Local Variables
+If you want autocomplete suggestions to include local variables, in addition to Solidity keywords, add the following to your =init.el=:
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'solidity-mode-hook
+	(lambda ()
+	(set (make-local-variable 'company-backends)
+		(append '((company-solidity company-capf company-dabbrev-code))
+			company-backends))))
+#+END_SRC
+
+* Commands
+
+** Gas estimate of function under point
+You can get an estimate of the function under the cursor, by placing the curson
+on top of the function name and typing =C-c C-g=.
+
+This will call =solidity-estimate-gas-at-point= and provide a max gas estimate,
+if possible, for the function.
+* Features
++ Syntax highlighting
++ Autocompletion
++ Indentation
++ On the fly syntax checking with flycheck
++ Gas estimation for function under point

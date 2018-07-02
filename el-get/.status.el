@@ -2,7 +2,7 @@
      (:name ag :description "A simple ag frontend, loosely based on ack-and-half.el." :type github :pkgname "Wilfred/ag.el" :depends
             (dash s)))
  (cl-lib status "installed" recipe
-         (:name cl-lib :builtin "24.3" :type elpa :description "Properly prefixed CL functions and macros" :url "http://elpa.gnu.org/packages/cl-lib.html"))
+         (:name cl-lib :builtin "24.3" :type elpa :description "Properly prefixed CL functions and macros" :website "http://elpa.gnu.org/packages/cl-lib.html"))
  (column-marker status "installed" recipe
                 (:name column-marker :description "Highlight certain character columns" :type emacswiki :features column-marker))
  (dash status "installed" recipe
@@ -44,9 +44,14 @@
                   (dash pkg-info let-alist seq)))
  (helm status "installed" recipe
        (:name helm :description "Emacs incremental completion and narrowing framework" :type github :pkgname "emacs-helm/helm" :autoloads "helm-autoloads" :build
-              (("make"))
+              `(("make" ,(concat "ASYNC_ELPA_DIR="
+                                 (el-get-package-directory 'emacs-async))))
+              :depends
+              (emacs-async)
               :build/darwin
-              `(("make" ,(format "EMACS_COMMAND=%s" el-get-emacs)))
+              `(("make" ,(concat "ASYNC_ELPA_DIR="
+                                 (el-get-package-directory 'emacs-async))
+                 ,(format "EMACS_COMMAND=%s" el-get-emacs)))
               :build/windows-nt
               (let
                   ((generated-autoload-file
@@ -55,6 +60,9 @@
                    (backup-inhibited t))
               (update-directory-autoloads default-directory)
               nil)
+       :build/berkeley-unix
+       `(("gmake" ,(concat "ASYNC_ELPA_DIR="
+                           (el-get-package-directory 'emacs-async))))
        :features "helm-config" :post-init
        (helm-mode)))
 (helm-ag status "installed" recipe
@@ -62,14 +70,14 @@
 (helm)))
 (helm-projectile status "installed" recipe
 (:name helm-projectile :description "Helm integration for Projectile." :type github :pkgname "bbatsov/helm-projectile" :depends
-(projectile helm dash cl-lib)))
+(projectile helm cl-lib)))
 (inf-ruby status "installed" recipe
 (:name inf-ruby :description "Inferior Ruby Mode - ruby process in a buffer." :type github :pkgname "nonsequitur/inf-ruby"))
 (js2-mode status "installed" recipe
 (:name js2-mode :website "https://github.com/mooz/js2-mode#readme" :description "An improved JavaScript editing mode" :type github :pkgname "mooz/js2-mode" :prepare
 (autoload 'js2-mode "js2-mode" nil t)))
 (let-alist status "installed" recipe
-(:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :url "https://elpa.gnu.org/packages/let-alist.html"))
+(:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :website "https://elpa.gnu.org/packages/let-alist.html"))
 (package status "installed" recipe
 (:name package :description "ELPA implementation (\"package.el\") from Emacs 24" :builtin "24" :type http :url "https://repo.or.cz/w/emacs.git/blob_plain/ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09:/lisp/emacs-lisp/package.el" :features package :post-init
 (progn
@@ -126,6 +134,8 @@
 (:name seq :description "Sequence manipulation library for Emacs" :builtin "25" :type github :pkgname "NicolasPetton/seq.el"))
 (slim-mode status "installed" recipe
 (:name slim-mode :description "Syntax highlighting for Slim" :type github :pkgname "slim-template/emacs-slim" :features slim-mode))
+(solidity-mode status "installed" recipe
+(:name solidity-mode :description "Language mode for Ethereum's Solidity Language" :type github :website "https://github.com/ethereum/emacs-solidity" :pkgname "ethereum/emacs-solidity"))
 (tern status "installed" recipe
 (:name tern :description "A JavaScript code analyzer for deep, cross-editor language support." :type github :pkgname "marijnh/tern" :build
 '(("npm" "--production" "install"))

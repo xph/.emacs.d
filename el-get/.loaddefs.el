@@ -3,8 +3,119 @@
 ;;; Code:
 
 
+;;;### (autoloads nil "ag/ag" "ag/ag.el" (23345 21947 433726 43000))
+;;; Generated autoloads from ag/ag.el
+
+(autoload 'ag "ag/ag" "\
+Search using ag in a given DIRECTORY for a given literal search STRING,
+with STRING defaulting to the symbol under point.
+
+If called with a prefix, prompts for flags to pass to ag.
+
+\(fn STRING DIRECTORY)" t nil)
+
+(autoload 'ag-files "ag/ag" "\
+Search using ag in a given DIRECTORY for a given literal search STRING,
+limited to files that match FILE-TYPE. STRING defaults to the
+symbol under point.
+
+If called with a prefix, prompts for flags to pass to ag.
+
+\(fn STRING FILE-TYPE DIRECTORY)" t nil)
+
+(autoload 'ag-regexp "ag/ag" "\
+Search using ag in a given directory for a given regexp.
+The regexp should be in PCRE syntax, not Emacs regexp syntax.
+
+If called with a prefix, prompts for flags to pass to ag.
+
+\(fn STRING DIRECTORY)" t nil)
+
+(autoload 'ag-project "ag/ag" "\
+Guess the root of the current project and search it with ag
+for the given literal search STRING.
+
+If called with a prefix, prompts for flags to pass to ag.
+
+\(fn STRING)" t nil)
+
+(autoload 'ag-project-files "ag/ag" "\
+Search using ag for a given literal search STRING,
+limited to files that match FILE-TYPE. STRING defaults to the
+symbol under point.
+
+If called with a prefix, prompts for flags to pass to ag.
+
+\(fn STRING FILE-TYPE)" t nil)
+
+(autoload 'ag-project-regexp "ag/ag" "\
+Guess the root of the current project and search it with ag
+for the given regexp. The regexp should be in PCRE syntax, not
+Emacs regexp syntax.
+
+If called with a prefix, prompts for flags to pass to ag.
+
+\(fn REGEXP)" t nil)
+
+(defalias 'ag-project-at-point 'ag-project)
+
+(defalias 'ag-regexp-project-at-point 'ag-project-regexp)
+
+(autoload 'ag-dired "ag/ag" "\
+Recursively find files in DIR matching literal search STRING.
+
+The PATTERN is matched against the full path to the file, not
+only against the file name.
+
+The results are presented as a `dired-mode' buffer with
+`default-directory' being DIR.
+
+See also `ag-dired-regexp'.
+
+\(fn DIR STRING)" t nil)
+
+(autoload 'ag-dired-regexp "ag/ag" "\
+Recursively find files in DIR matching REGEXP.
+REGEXP should be in PCRE syntax, not Emacs regexp syntax.
+
+The REGEXP is matched against the full path to the file, not
+only against the file name.
+
+Results are presented as a `dired-mode' buffer with
+`default-directory' being DIR.
+
+See also `find-dired'.
+
+\(fn DIR REGEXP)" t nil)
+
+(autoload 'ag-project-dired "ag/ag" "\
+Recursively find files in current project matching PATTERN.
+
+See also `ag-dired'.
+
+\(fn PATTERN)" t nil)
+
+(autoload 'ag-project-dired-regexp "ag/ag" "\
+Recursively find files in current project matching REGEXP.
+
+See also `ag-dired-regexp'.
+
+\(fn REGEXP)" t nil)
+
+(autoload 'ag-kill-buffers "ag/ag" "\
+Kill all `ag-mode' buffers.
+
+\(fn)" t nil)
+
+(autoload 'ag-kill-other-buffers "ag/ag" "\
+Kill all `ag-mode' buffers other than the current buffer.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil "column-marker/column-marker" "column-marker/column-marker.el"
-;;;;;;  (23125 55254 547285 572000))
+;;;;;;  (23345 21749 37352 137000))
 ;;; Generated autoloads from column-marker/column-marker.el
 
 (autoload 'column-marker-1 "column-marker" "\
@@ -12,8 +123,8 @@ Highlight a column." t)
 
 ;;;***
 
-;;;### (autoloads nil "el-get/el-get" "el-get/el-get.el" (23125 54709
-;;;;;;  845955 554000))
+;;;### (autoloads nil "el-get/el-get" "el-get/el-get.el" (23345 21792
+;;;;;;  821940 644000))
 ;;; Generated autoloads from el-get/el-get.el
 
 (autoload 'el-get-version "el-get/el-get" "\
@@ -113,7 +224,7 @@ already installed packages is considered.
 ;;;***
 
 ;;;### (autoloads nil "el-get/el-get-bundle" "el-get/el-get-bundle.el"
-;;;;;;  (23125 54709 845955 554000))
+;;;;;;  (23345 21792 817941 241000))
 ;;; Generated autoloads from el-get/el-get-bundle.el
 
 (autoload 'el-get-bundle-el-get "el-get/el-get-bundle" "\
@@ -154,7 +265,7 @@ version is used if `el-get-bundle-byte-compile' is non-nil.
 
 \(fn PACKAGE &rest FORM)" nil t)
 
-(put 'el-get-bundle 'lisp-indent-function 'defun)
+(function-put 'el-get-bundle 'lisp-indent-function 'defun)
 
 (autoload 'el-get-bundle! "el-get/el-get-bundle" "\
 Install PACKAGE and run initialization form.
@@ -163,12 +274,12 @@ required.
 
 \(fn PACKAGE &rest ARGS)" nil t)
 
-(put 'el-get-bundle! 'lisp-indent-function 'defun)
+(function-put 'el-get-bundle! 'lisp-indent-function 'defun)
 
 ;;;***
 
 ;;;### (autoloads nil "el-get/el-get-check" "el-get/el-get-check.el"
-;;;;;;  (23125 54709 845955 554000))
+;;;;;;  (23345 21792 817941 241000))
 ;;; Generated autoloads from el-get/el-get-check.el
 
 (autoload 'el-get-check-recipe "el-get/el-get-check" "\
@@ -187,7 +298,7 @@ object or a file path.
 ;;;***
 
 ;;;### (autoloads nil "el-get/el-get-list-packages" "el-get/el-get-list-packages.el"
-;;;;;;  (23125 54709 845955 554000))
+;;;;;;  (23345 21792 821940 644000))
 ;;; Generated autoloads from el-get/el-get-list-packages.el
 
 (autoload 'el-get-list-packages "el-get/el-get-list-packages" "\
@@ -198,7 +309,7 @@ Display a list of packages.
 ;;;***
 
 ;;;### (autoloads nil "emacs-async/async" "emacs-async/async.el"
-;;;;;;  (23125 54748 373499 764000))
+;;;;;;  (23345 21749 37352 137000))
 ;;; Generated autoloads from emacs-async/async.el
 
 (autoload 'async-start-process "emacs-async/async" "\
@@ -264,7 +375,7 @@ returns nil.  It can still be useful, however, as an argument to
 ;;;***
 
 ;;;### (autoloads nil "emacs-async/async-bytecomp" "emacs-async/async-bytecomp.el"
-;;;;;;  (23125 54748 373499 764000))
+;;;;;;  (23345 21749 37352 137000))
 ;;; Generated autoloads from emacs-async/async-bytecomp.el
 
 (autoload 'async-byte-recompile-directory "emacs-async/async-bytecomp" "\
@@ -275,7 +386,8 @@ All *.elc files are systematically deleted before proceeding.
 
 (defvar async-bytecomp-package-mode nil "\
 Non-nil if Async-Bytecomp-Package mode is enabled.
-See the command `async-bytecomp-package-mode' for a description of this minor mode.
+See the `async-bytecomp-package-mode' command
+for a description of this minor mode.
 Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
 or call the function `async-bytecomp-package-mode'.")
@@ -292,12 +404,13 @@ Async compilation of packages can be controlled by
 ;;;***
 
 ;;;### (autoloads nil "emacs-async/dired-async" "emacs-async/dired-async.el"
-;;;;;;  (23125 54748 373499 764000))
+;;;;;;  (23345 21749 37352 137000))
 ;;; Generated autoloads from emacs-async/dired-async.el
 
 (defvar dired-async-mode nil "\
 Non-nil if Dired-Async mode is enabled.
-See the command `dired-async-mode' for a description of this minor mode.
+See the `dired-async-mode' command
+for a description of this minor mode.
 Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
 or call the function `dired-async-mode'.")
@@ -331,8 +444,26 @@ Run ‘dired-do-rename’ asynchronously.
 
 ;;;***
 
+;;;### (autoloads nil "flx/flx-ido" "flx/flx-ido.el" (23345 21862
+;;;;;;  37285 473000))
+;;; Generated autoloads from flx/flx-ido.el
+
+(defvar flx-ido-mode nil "\
+Non-nil if Flx-Ido mode is enabled.
+See the `flx-ido-mode' command
+for a description of this minor mode.")
+
+(custom-autoload 'flx-ido-mode "flx/flx-ido" nil)
+
+(autoload 'flx-ido-mode "flx/flx-ido" "\
+Toggle flx ido mode
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil "flycheck/flycheck" "flycheck/flycheck.el"
-;;;;;;  (23126 28420 95972 857000))
+;;;;;;  (23345 22247 661237 919000))
 ;;; Generated autoloads from flycheck/flycheck.el
 
 (autoload 'flycheck-manual "flycheck/flycheck" "\
@@ -361,8 +492,9 @@ buffer manually.
 \(fn &optional ARG)" t nil)
 
 (defvar global-flycheck-mode nil "\
-Non-nil if Global-Flycheck mode is enabled.
-See the command `global-flycheck-mode' for a description of this minor mode.
+Non-nil if Global Flycheck mode is enabled.
+See the `global-flycheck-mode' command
+for a description of this minor mode.
 Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
 or call the function `global-flycheck-mode'.")
@@ -371,7 +503,7 @@ or call the function `global-flycheck-mode'.")
 
 (autoload 'global-flycheck-mode "flycheck/flycheck" "\
 Toggle Flycheck mode in all buffers.
-With prefix ARG, enable Global-Flycheck mode if ARG is positive;
+With prefix ARG, enable Global Flycheck mode if ARG is positive;
 otherwise, disable it.  If called from Lisp, enable the mode if
 ARG is omitted or nil.
 
@@ -431,7 +563,7 @@ The following PROPERTIES constitute an error level:
 
 \(fn LEVEL &rest PROPERTIES)" nil nil)
 
-(put 'flycheck-define-error-level 'lisp-indent-function '1)
+(function-put 'flycheck-define-error-level 'lisp-indent-function '1)
 
 (autoload 'flycheck-define-command-checker "flycheck/flycheck" "\
 Define SYMBOL as syntax checker to run a command.
@@ -512,9 +644,9 @@ default `:verify' function of command checkers.
 
 \(fn SYMBOL DOCSTRING &rest PROPERTIES)" nil nil)
 
-(put 'flycheck-define-command-checker 'lisp-indent-function '1)
+(function-put 'flycheck-define-command-checker 'lisp-indent-function '1)
 
-(put 'flycheck-define-command-checker 'doc-string-elt '2)
+(function-put 'flycheck-define-command-checker 'doc-string-elt '2)
 
 (autoload 'flycheck-def-config-file-var "flycheck/flycheck" "\
 Define SYMBOL as config file variable for CHECKER, with default FILE-NAME.
@@ -531,7 +663,7 @@ argument to `flycheck-define-checker'.
 
 \(fn SYMBOL CHECKER &optional FILE-NAME &rest CUSTOM-ARGS)" nil t)
 
-(put 'flycheck-def-config-file-var 'lisp-indent-function '3)
+(function-put 'flycheck-def-config-file-var 'lisp-indent-function '3)
 
 (autoload 'flycheck-def-option-var "flycheck/flycheck" "\
 Define SYMBOL as option variable with INIT-VALUE for CHECKER.
@@ -548,53 +680,140 @@ Use this together with the `option', `option-list' and
 
 \(fn SYMBOL INIT-VALUE CHECKERS DOCSTRING &rest CUSTOM-ARGS)" nil t)
 
-(put 'flycheck-def-option-var 'lisp-indent-function '3)
+(function-put 'flycheck-def-option-var 'lisp-indent-function '3)
 
-(put 'flycheck-def-option-var 'doc-string-elt '4)
+(function-put 'flycheck-def-option-var 'doc-string-elt '4)
 
 ;;;***
 
-;;;### (autoloads nil "let-alist/let-alist" "let-alist/let-alist.el"
-;;;;;;  (23125 54630 660255 228000))
-;;; Generated autoloads from let-alist/let-alist.el
+;;;### (autoloads nil "helm-ag/helm-ag" "helm-ag/helm-ag.el" (23345
+;;;;;;  21953 113302 288000))
+;;; Generated autoloads from helm-ag/helm-ag.el
 
-(autoload 'let-alist "let-alist/let-alist" "\
-Let-bind dotted symbols to their cdrs in ALIST and execute BODY.
-Dotted symbol is any symbol starting with a `.'.  Only those present
-in BODY are let-bound and this search is done at compile time.
+(autoload 'helm-ag-pop-stack "helm-ag/helm-ag" "\
 
-For instance, the following code
 
-  (let-alist alist
-    (if (and .title .body)
-        .body
-      .site
-      .site.contents))
+\(fn)" t nil)
 
-essentially expands to
+(autoload 'helm-ag-clear-stack "helm-ag/helm-ag" "\
 
-  (let ((.title (cdr (assq \\='title alist)))
-        (.body  (cdr (assq \\='body alist)))
-        (.site  (cdr (assq \\='site alist)))
-        (.site.contents (cdr (assq \\='contents (cdr (assq \\='site alist))))))
-    (if (and .title .body)
-        .body
-      .site
-      .site.contents))
 
-If you nest `let-alist' invocations, the inner one can't access
-the variables of the outer one. You can, however, access alists
-inside the original alist by using dots inside the symbol, as
-displayed in the example above.
+\(fn)" t nil)
 
-\(fn ALIST &rest BODY)" nil t)
+(autoload 'helm-ag-this-file "helm-ag/helm-ag" "\
 
-(put 'let-alist 'lisp-indent-function '1)
+
+\(fn)" t nil)
+
+(autoload 'helm-ag "helm-ag/helm-ag" "\
+
+
+\(fn &optional BASEDIR)" t nil)
+
+(autoload 'helm-do-ag-this-file "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-do-ag "helm-ag/helm-ag" "\
+
+
+\(fn &optional BASEDIR TARGETS)" t nil)
+
+(autoload 'helm-ag-project-root "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-do-ag-project-root "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-ag-buffers "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-do-ag-buffers "helm-ag/helm-ag" "\
+
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-projectile/helm-projectile" "helm-projectile/helm-projectile.el"
+;;;;;;  (23345 21939 478332 928000))
+;;; Generated autoloads from helm-projectile/helm-projectile.el
+
+(defvar helm-projectile-fuzzy-match t "\
+Enable fuzzy matching for Helm Projectile commands.
+This needs to be set before loading helm-projectile.el.")
+
+(custom-autoload 'helm-projectile-fuzzy-match "helm-projectile/helm-projectile" t)
+
+(autoload 'helm-projectile-find-file-dwim "helm-projectile/helm-projectile" "\
+Find file at point based on context.
+
+\(fn)" t nil)
+
+(autoload 'helm-projectile-find-other-file "helm-projectile/helm-projectile" "\
+Switch between files with the same name but different extensions using Helm.
+With FLEX-MATCHING, match any file that contains the base name of current file.
+Other file extensions can be customized with the variable `projectile-other-file-alist'.
+
+\(fn &optional FLEX-MATCHING)" t nil)
+
+(autoload 'helm-projectile-on "helm-projectile/helm-projectile" "\
+Turn on `helm-projectile' key bindings.
+
+\(fn)" t nil)
+
+(autoload 'helm-projectile-off "helm-projectile/helm-projectile" "\
+Turn off `helm-projectile' key bindings.
+
+\(fn)" t nil)
+
+(autoload 'helm-projectile-grep "helm-projectile/helm-projectile" "\
+Helm version of `projectile-grep'.
+DIR is the project root, if not set then current directory is used
+
+\(fn &optional DIR)" t nil)
+
+(autoload 'helm-projectile-ack "helm-projectile/helm-projectile" "\
+Helm version of projectile-ack.
+
+\(fn &optional DIR)" t nil)
+
+(autoload 'helm-projectile-ag "helm-projectile/helm-projectile" "\
+Helm version of `projectile-ag'.
+
+\(fn &optional OPTIONS)" t nil)
+
+(autoload 'helm-projectile-rg "helm-projectile/helm-projectile" "\
+Projectile version of `helm-rg'.
+
+\(fn)" t nil)
+
+(autoload 'helm-projectile-toggle "helm-projectile/helm-projectile" "\
+Toggle Helm version of Projectile commands.
+
+\(fn TOGGLE)" nil nil)
+
+(autoload 'helm-projectile "helm-projectile/helm-projectile" "\
+Use projectile with Helm instead of ido.
+
+With a prefix ARG invalidates the cache first.
+If invoked outside of a project, displays a list of known projects to jump.
+
+\(fn &optional ARG)" t nil)
+
+(eval-after-load 'projectile '(progn (define-key projectile-command-map (kbd "h") #'helm-projectile)))
 
 ;;;***
 
 ;;;### (autoloads nil "projectile/projectile" "projectile/projectile.el"
-;;;;;;  (23126 28372 113473 93000))
+;;;;;;  (23345 21912 780496 333000))
 ;;; Generated autoloads from projectile/projectile.el
 
 (autoload 'projectile-version "projectile/projectile" "\
@@ -862,6 +1081,13 @@ regular expression.
 
 \(fn SEARCH-TERM &optional ARG)" t nil)
 
+(autoload 'projectile-ripgrep "projectile/projectile" "\
+Run a Ripgrep search with `SEARCH-TERM' at current project root.
+
+SEARCH-TERM is a regexp.
+
+\(fn SEARCH-TERM)" t nil)
+
 (autoload 'projectile-regenerate-tags "projectile/projectile" "\
 Regenerate the project's [e|g]tags.
 
@@ -948,6 +1174,11 @@ Open `vc-dir' at the root of the project.
 
 For git projects `magit-status-internal' is used if available.
 For hg projects `monky-status' is used if available.
+
+If PROJECT-ROOT is given, it is opened instead of the project
+root directory of the current buffer file.  If interactively
+called with a prefix argument, the user is prompted for a project
+directory to open.
 
 \(fn &optional PROJECT-ROOT)" t nil)
 
@@ -1062,23 +1293,10 @@ Edit or create a .dir-locals.el file of the project.
 
 \(fn)" t nil)
 
-(defvar projectile-mode-line '(:eval (format " Projectile[%s]" (projectile-project-name))) "\
-Mode line lighter for Projectile.
-
-The value of this variable is a mode line template as in
-`mode-line-format'.  See Info Node `(elisp)Mode Line Format' for
-details about mode line templates.
-
-Customize this variable to change how Projectile displays its
-status in the mode line.  The default value displays the project
-name and type.  Set this variable to nil to disable the mode line
-entirely.")
-
-(custom-autoload 'projectile-mode-line "projectile/projectile" t)
-
 (defvar projectile-mode nil "\
 Non-nil if Projectile mode is enabled.
-See the command `projectile-mode' for a description of this minor mode.
+See the `projectile-mode' command
+for a description of this minor mode.
 Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
 or call the function `projectile-mode'.")
@@ -1104,8 +1322,8 @@ Otherwise behave as if called interactively.
 
 ;;;***
 
-;;;### (autoloads nil "rvm/rvm" "rvm/rvm.el" (23126 28243 371778
-;;;;;;  937000))
+;;;### (autoloads nil "rvm/rvm" "rvm/rvm.el" (23345 21836 176173
+;;;;;;  455000))
 ;;; Generated autoloads from rvm/rvm.el
 
 (autoload 'rvm-use-default "rvm/rvm" "\
@@ -1133,7 +1351,7 @@ switch the current ruby version to any ruby, which is installed with rvm
 ;;;***
 
 ;;;### (autoloads nil "slim-mode/slim-mode" "slim-mode/slim-mode.el"
-;;;;;;  (23126 28244 703771 138000))
+;;;;;;  (23345 21847 402876 67000))
 ;;; Generated autoloads from slim-mode/slim-mode.el
 
 (autoload 'slim-mode "slim-mode/slim-mode" "\
@@ -1147,8 +1365,36 @@ Major mode for editing Slim files.
 
 ;;;***
 
-;;;### (autoloads nil "tern/emacs/tern" "tern/emacs/tern.el" (23125
-;;;;;;  54630 628256 590000))
+;;;### (autoloads nil "solidity-mode/company-solidity" "solidity-mode/company-solidity.el"
+;;;;;;  (23353 40225 916178 54000))
+;;; Generated autoloads from solidity-mode/company-solidity.el
+
+(autoload 'company-solidity "solidity-mode/company-solidity" "\
+Autocompletion for solidity with company mode.
+
+Argument COMMAND `company-backend` functions.
+Optional argument ARG the completion target prefix.
+Optional argument IGNORED Additional arguments are ingnored.
+
+\(fn COMMAND &optional ARG &rest IGNORED)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "solidity-mode/solidity-mode" "solidity-mode/solidity-mode.el"
+;;;;;;  (23353 40225 920178 536000))
+;;; Generated autoloads from solidity-mode/solidity-mode.el
+
+(add-to-list 'auto-mode-alist '("\\.sol\\'" . solidity-mode))
+
+(autoload 'solidity-mode "solidity-mode/solidity-mode" "\
+Major mode for editing solidity language buffers.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "tern/emacs/tern" "tern/emacs/tern.el" (23345
+;;;;;;  22221 10073 893000))
 ;;; Generated autoloads from tern/emacs/tern.el
 
 (autoload 'tern-use-server "tern/emacs/tern" "\
@@ -1164,7 +1410,7 @@ Minor mode binding to the Tern JavaScript analyzer
 ;;;***
 
 ;;;### (autoloads nil "tern/emacs/tern-auto-complete" "tern/emacs/tern-auto-complete.el"
-;;;;;;  (23125 54630 628256 590000))
+;;;;;;  (23345 22221 10073 893000))
 ;;; Generated autoloads from tern/emacs/tern-auto-complete.el
 
 (autoload 'tern-ac-setup "tern/emacs/tern-auto-complete" "\
@@ -1175,7 +1421,7 @@ Setup auto-complete for tern-mode.
 ;;;***
 
 ;;;### (autoloads nil "web-mode/web-mode" "web-mode/web-mode.el"
-;;;;;;  (23125 54630 652255 567000))
+;;;;;;  (23345 21749 77344 479000))
 ;;; Generated autoloads from web-mode/web-mode.el
 
 (autoload 'web-mode "web-mode/web-mode" "\
@@ -1185,15 +1431,14 @@ Major mode for editing web templates.
 
 ;;;***
 
-;;;### (autoloads nil nil ("el-get/el-get-autoloading.el" "el-get/el-get-build.el"
-;;;;;;  "el-get/el-get-byte-compile.el" "el-get/el-get-core.el" "el-get/el-get-custom.el"
-;;;;;;  "el-get/el-get-dependencies.el" "el-get/el-get-install.el"
-;;;;;;  "el-get/el-get-methods.el" "el-get/el-get-notify.el" "el-get/el-get-recipes.el"
-;;;;;;  "el-get/el-get-status.el" "emacs-async/async-pkg.el" "emacs-async/async-test.el"
-;;;;;;  "emacs-async/smtpmail-async.el" "flycheck/flycheck-buttercup.el"
-;;;;;;  "flycheck/flycheck-ert.el" "let-alist/let-alist-autoloads.el"
-;;;;;;  "let-alist/let-alist-pkg.el" "seq/seq-24.el" "seq/seq-25.el"
-;;;;;;  "seq/seq.el") (23126 28490 316003 32000))
+;;;### (autoloads nil nil ("dash/dash-functional.el" "dash/dash.el"
+;;;;;;  "el-get/el-get-autoloading.el" "el-get/el-get-build.el" "el-get/el-get-byte-compile.el"
+;;;;;;  "el-get/el-get-core.el" "el-get/el-get-custom.el" "el-get/el-get-dependencies.el"
+;;;;;;  "el-get/el-get-install.el" "el-get/el-get-methods.el" "el-get/el-get-notify.el"
+;;;;;;  "el-get/el-get-recipes.el" "el-get/el-get-status.el" "flx/flx.el"
+;;;;;;  "flycheck/flycheck-buttercup.el" "flycheck/flycheck-ert.el"
+;;;;;;  "solidity-mode/solidity-common.el" "solidity-mode/solidity-flycheck.el")
+;;;;;;  (23353 40225 920178 536000))
 
 ;;;***
 

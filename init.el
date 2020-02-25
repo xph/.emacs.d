@@ -104,6 +104,8 @@
  '(helm-ag-insert-at-point (quote symbol))
  '(package-selected-packages (quote (let-alist))))
 
+(global-set-key (kbd "C-c p x x") 'helm-do-ag)
+
 ;;----------------------------------------------------------------------------
 ;; Ruby Mode
 ;;----------------------------------------------------------------------------

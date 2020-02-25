@@ -138,6 +138,9 @@
       (indent-line-to indent)
       (when (> offset 0) (forward-char offset)))))
 
+;; Remove encoding information on save
+(setq ruby-insert-encoding-magic-comment nil)
+
 ;;----------------------------------------------------------------------------
 ;; Tern mode
 ;;----------------------------------------------------------------------------

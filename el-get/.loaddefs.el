@@ -3,134 +3,26 @@
 ;;; Code:
 
 
-;;;### (autoloads nil "ag/ag" "ag/ag.el" (23345 21947 433726 43000))
-;;; Generated autoloads from ag/ag.el
+;;;### (autoloads nil "dash/dash" "dash/dash.el" (0 0 0 0))
+;;; Generated autoloads from dash/dash.el
 
-(autoload 'ag "ag/ag" "\
-Search using ag in a given DIRECTORY for a given literal search STRING,
-with STRING defaulting to the symbol under point.
-
-If called with a prefix, prompts for flags to pass to ag.
-
-\(fn STRING DIRECTORY)" t nil)
-
-(autoload 'ag-files "ag/ag" "\
-Search using ag in a given DIRECTORY for a given literal search STRING,
-limited to files that match FILE-TYPE. STRING defaults to the
-symbol under point.
-
-If called with a prefix, prompts for flags to pass to ag.
-
-\(fn STRING FILE-TYPE DIRECTORY)" t nil)
-
-(autoload 'ag-regexp "ag/ag" "\
-Search using ag in a given directory for a given regexp.
-The regexp should be in PCRE syntax, not Emacs regexp syntax.
-
-If called with a prefix, prompts for flags to pass to ag.
-
-\(fn STRING DIRECTORY)" t nil)
-
-(autoload 'ag-project "ag/ag" "\
-Guess the root of the current project and search it with ag
-for the given literal search STRING.
-
-If called with a prefix, prompts for flags to pass to ag.
-
-\(fn STRING)" t nil)
-
-(autoload 'ag-project-files "ag/ag" "\
-Search using ag for a given literal search STRING,
-limited to files that match FILE-TYPE. STRING defaults to the
-symbol under point.
-
-If called with a prefix, prompts for flags to pass to ag.
-
-\(fn STRING FILE-TYPE)" t nil)
-
-(autoload 'ag-project-regexp "ag/ag" "\
-Guess the root of the current project and search it with ag
-for the given regexp. The regexp should be in PCRE syntax, not
-Emacs regexp syntax.
-
-If called with a prefix, prompts for flags to pass to ag.
-
-\(fn REGEXP)" t nil)
-
-(defalias 'ag-project-at-point 'ag-project)
-
-(defalias 'ag-regexp-project-at-point 'ag-project-regexp)
-
-(autoload 'ag-dired "ag/ag" "\
-Recursively find files in DIR matching literal search STRING.
-
-The PATTERN is matched against the full path to the file, not
-only against the file name.
-
-The results are presented as a `dired-mode' buffer with
-`default-directory' being DIR.
-
-See also `ag-dired-regexp'.
-
-\(fn DIR STRING)" t nil)
-
-(autoload 'ag-dired-regexp "ag/ag" "\
-Recursively find files in DIR matching REGEXP.
-REGEXP should be in PCRE syntax, not Emacs regexp syntax.
-
-The REGEXP is matched against the full path to the file, not
-only against the file name.
-
-Results are presented as a `dired-mode' buffer with
-`default-directory' being DIR.
-
-See also `find-dired'.
-
-\(fn DIR REGEXP)" t nil)
-
-(autoload 'ag-project-dired "ag/ag" "\
-Recursively find files in current project matching PATTERN.
-
-See also `ag-dired'.
-
-\(fn PATTERN)" t nil)
-
-(autoload 'ag-project-dired-regexp "ag/ag" "\
-Recursively find files in current project matching REGEXP.
-
-See also `ag-dired-regexp'.
-
-\(fn REGEXP)" t nil)
-
-(autoload 'ag-kill-buffers "ag/ag" "\
-Kill all `ag-mode' buffers.
-
-\(fn)" t nil)
-
-(autoload 'ag-kill-other-buffers "ag/ag" "\
-Kill all `ag-mode' buffers other than the current buffer.
-
-\(fn)" t nil)
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dash/dash" '("!cdr" "!cons" "--" "->" "-a" "-butlast" "-c" "-d" "-e" "-f" "-gr" "-i" "-keep" "-l" "-m" "-non" "-only-some" "-p" "-r" "-s" "-t" "-u" "-value-to-list" "-when-let" "-zip" "dash-")))
 
 ;;;***
 
-;;;### (autoloads nil "column-marker/column-marker" "column-marker/column-marker.el"
-;;;;;;  (23345 21749 37352 137000))
-;;; Generated autoloads from column-marker/column-marker.el
+;;;### (autoloads nil "dash/dash-functional" "dash/dash-functional.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from dash/dash-functional.el
 
-(autoload 'column-marker-1 "column-marker" "\
-Highlight a column." t)
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dash/dash-functional" '("-a" "-c" "-f" "-iteratefn" "-juxt" "-not" "-o" "-prodfn" "-rpartial")))
 
 ;;;***
 
-;;;### (autoloads nil "el-get/el-get" "el-get/el-get.el" (23345 21792
-;;;;;;  821940 644000))
+;;;### (autoloads nil "el-get/el-get" "el-get/el-get.el" (0 0 0 0))
 ;;; Generated autoloads from el-get/el-get.el
 
 (autoload 'el-get-version "el-get/el-get" "\
-Message the current el-get version
-
-\(fn)" t nil)
+Message the current el-get version" t nil)
 
 (autoload 'el-get-install "el-get/el-get" "\
 Cause the named PACKAGE to be installed after all of its
@@ -156,9 +48,7 @@ Update all installed packages of type TYPE.
 \(fn TYPE)" t nil)
 
 (autoload 'el-get-self-update "el-get/el-get" "\
-Update el-get itself.  The standard recipe takes care of reloading the code.
-
-\(fn)" t nil)
+Update el-get itself.  The standard recipe takes care of reloading the code." t nil)
 
 (autoload 'el-get-remove "el-get/el-get" "\
 Remove any PACKAGE that is know to be installed or required.
@@ -189,9 +79,7 @@ Compute the checksum of the given package, and put it in the kill-ring
 (autoload 'el-get-self-checksum "el-get/el-get" "\
 Compute the checksum of the running version of el-get itself.
 
-Also put the checksum in the kill-ring.
-
-\(fn)" t nil)
+Also put the checksum in the kill-ring." t nil)
 
 (autoload 'el-get "el-get/el-get" "\
 Ensure that packages have been downloaded once and init them as needed.
@@ -221,10 +109,28 @@ already installed packages is considered.
 
 \(fn &optional SYNC &rest PACKAGES)" nil nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get" '("el-get-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-autoloading" "el-get/el-get-autoloading.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-autoloading.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-autoloading" '("el-get-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-build" "el-get/el-get-build.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-build.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-build" '("el-get-")))
+
 ;;;***
 
 ;;;### (autoloads nil "el-get/el-get-bundle" "el-get/el-get-bundle.el"
-;;;;;;  (23345 21792 817941 241000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from el-get/el-get-bundle.el
 
 (autoload 'el-get-bundle-el-get "el-get/el-get-bundle" "\
@@ -276,10 +182,20 @@ required.
 
 (function-put 'el-get-bundle! 'lisp-indent-function 'defun)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-bundle" '("el-get-bundle-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-byte-compile" "el-get/el-get-byte-compile.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-byte-compile.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-byte-compile" '("el-get-")))
+
 ;;;***
 
 ;;;### (autoloads nil "el-get/el-get-check" "el-get/el-get-check.el"
-;;;;;;  (23345 21792 817941 241000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from el-get/el-get-check.el
 
 (autoload 'el-get-check-recipe "el-get/el-get-check" "\
@@ -295,25 +211,83 @@ object or a file path.
 
 \(fn FILE-OR-BUFFER)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-check" '("el-get-check-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-core" "el-get/el-get-core.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-core.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-core" '("el-get-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-custom" "el-get/el-get-custom.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-custom.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-custom" '("el-get-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-dependencies" "el-get/el-get-dependencies.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-dependencies.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-dependencies" '("el-get-" "topological-sort")))
+
 ;;;***
 
 ;;;### (autoloads nil "el-get/el-get-list-packages" "el-get/el-get-list-packages.el"
-;;;;;;  (23345 21792 821940 644000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from el-get/el-get-list-packages.el
 
 (autoload 'el-get-list-packages "el-get/el-get-list-packages" "\
-Display a list of packages.
+Display a list of packages." t nil)
 
-\(fn)" t nil)
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-list-packages" '("el-get-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-methods" "el-get/el-get-methods.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-methods.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-methods" '("el-get-insecure-check")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-notify" "el-get/el-get-notify.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-notify.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-notify" '("el-get-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-recipes" "el-get/el-get-recipes.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-recipes.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-recipes" '("el-get-")))
+
+;;;***
+
+;;;### (autoloads nil "el-get/el-get-status" "el-get/el-get-status.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from el-get/el-get-status.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-status" '("el-get-")))
 
 ;;;***
 
 ;;;### (autoloads nil "emacs-async/async" "emacs-async/async.el"
-;;;;;;  (23345 21749 37352 137000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from emacs-async/async.el
 
 (autoload 'async-start-process "emacs-async/async" "\
-Start the executable PROGRAM asynchronously.  See `async-start'.
+Start the executable PROGRAM asynchronously named NAME.  See `async-start'.
 PROGRAM is passed PROGRAM-ARGS, calling FINISH-FUNC with the
 process object when done.  If FINISH-FUNC is nil, the future
 object will return the process object when the program is
@@ -372,10 +346,12 @@ returns nil.  It can still be useful, however, as an argument to
 
 \(fn START-FUNC &optional FINISH-FUNC)" nil nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-async/async" '("async-")))
+
 ;;;***
 
 ;;;### (autoloads nil "emacs-async/async-bytecomp" "emacs-async/async-bytecomp.el"
-;;;;;;  (23345 21749 37352 137000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from emacs-async/async-bytecomp.el
 
 (autoload 'async-byte-recompile-directory "emacs-async/async-bytecomp" "\
@@ -399,12 +375,34 @@ Byte compile asynchronously packages installed with package.el.
 Async compilation of packages can be controlled by
 `async-bytecomp-allowed-packages'.
 
+If called interactively, enable Async-Bytecomp-Package mode if
+ARG is positive, and disable it if ARG is zero or negative.  If
+called from Lisp, also enable the mode if ARG is omitted or nil,
+and toggle it if ARG is `toggle'; disable the mode otherwise.
+
 \(fn &optional ARG)" t nil)
+
+(autoload 'async-byte-compile-file "emacs-async/async-bytecomp" "\
+Byte compile Lisp code FILE asynchronously.
+
+Same as `byte-compile-file' but asynchronous.
+
+\(fn FILE)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-async/async-bytecomp" '("async-byte")))
+
+;;;***
+
+;;;### (autoloads nil "emacs-async/async-test" "emacs-async/async-test.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from emacs-async/async-test.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-async/async-test" '("async-test-")))
 
 ;;;***
 
 ;;;### (autoloads nil "emacs-async/dired-async" "emacs-async/dired-async.el"
-;;;;;;  (23345 21749 37352 137000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from emacs-async/dired-async.el
 
 (defvar dired-async-mode nil "\
@@ -419,6 +417,11 @@ or call the function `dired-async-mode'.")
 
 (autoload 'dired-async-mode "emacs-async/dired-async" "\
 Do dired actions asynchronously.
+
+If called interactively, enable Dired-Async mode if ARG is
+positive, and disable it if ARG is zero or negative.  If called
+from Lisp, also enable the mode if ARG is omitted or nil, and
+toggle it if ARG is `toggle'; disable the mode otherwise.
 
 \(fn &optional ARG)" t nil)
 
@@ -442,54 +445,77 @@ Run ‘dired-do-rename’ asynchronously.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-async/dired-async" '("dired-async-")))
+
 ;;;***
 
-;;;### (autoloads nil "flx/flx-ido" "flx/flx-ido.el" (23345 21862
-;;;;;;  37285 473000))
-;;; Generated autoloads from flx/flx-ido.el
+;;;### (autoloads nil "emacs-async/smtpmail-async" "emacs-async/smtpmail-async.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from emacs-async/smtpmail-async.el
 
-(defvar flx-ido-mode nil "\
-Non-nil if Flx-Ido mode is enabled.
-See the `flx-ido-mode' command
-for a description of this minor mode.")
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-async/smtpmail-async" '("async-smtpmail-")))
 
-(custom-autoload 'flx-ido-mode "flx/flx-ido" nil)
+;;;***
+
+;;;### (autoloads nil "epl/epl" "epl/epl.el" (0 0 0 0))
+;;; Generated autoloads from epl/epl.el
 
-(autoload 'flx-ido-mode "flx/flx-ido" "\
-Toggle flx ido mode
-
-\(fn &optional ARG)" t nil)
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "epl/epl" '("epl-")))
 
 ;;;***
 
 ;;;### (autoloads nil "flycheck/flycheck" "flycheck/flycheck.el"
-;;;;;;  (23345 22247 661237 919000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from flycheck/flycheck.el
 
 (autoload 'flycheck-manual "flycheck/flycheck" "\
-Open the Flycheck manual.
-
-\(fn)" t nil)
+Open the Flycheck manual." t nil)
 
 (autoload 'flycheck-mode "flycheck/flycheck" "\
-Minor mode for on-the-fly syntax checking.
-
-When called interactively, toggle `flycheck-mode'.  With prefix
-ARG, enable `flycheck-mode' if ARG is positive, otherwise disable
-it.
-
-When called from Lisp, enable `flycheck-mode' if ARG is omitted,
-nil or positive.  If ARG is `toggle', toggle `flycheck-mode'.
-Otherwise behave as if called interactively.
+Flycheck is a minor mode for on-the-fly syntax checking.
 
 In `flycheck-mode' the buffer is automatically syntax-checked
 using the first suitable syntax checker from `flycheck-checkers'.
 Use `flycheck-select-checker' to select a checker for the current
 buffer manually.
 
+If you run into issues, use `\\[flycheck-verify-setup]' to get help.
+
+Flycheck supports many languages out of the box, and many
+additional ones are available on MELPA.  Adding new ones is very
+easy.  Complete documentation is available online at URL
+`https://www.flycheck.org/en/latest/'.  Please report issues and
+request features at URL `https://github.com/flycheck/flycheck'.
+
+Flycheck displays its status in the mode line.  In the default
+configuration, it looks like this:
+
+`FlyC'     This buffer has not been checked yet.
+`FlyC-'    Flycheck doesn't have a checker for this buffer.
+`FlyC*'    Flycheck is running.  Expect results soon!
+`FlyC:3|2' This buffer contains three warnings and two errors.
+           Use `\\[flycheck-list-errors]' to see the list.
+
+You may also see the following icons:
+`FlyC!'    The checker crashed.
+`FlyC.'    The last syntax check was manually interrupted.
+`FlyC?'    The checker did something unexpected, like exiting with 1
+           but returning no errors.
+
+The following keybindings are available in `flycheck-mode':
+
 \\{flycheck-mode-map}
+\(you can change the prefix by customizing
+`flycheck-keymap-prefix')
+
+If called interactively, enable Flycheck mode if ARG is positive,
+and disable it if ARG is zero or negative.  If called from Lisp,
+also enable the mode if ARG is omitted or nil, and toggle it if
+ARG is ‘toggle’; disable the mode otherwise.
 
 \(fn &optional ARG)" t nil)
+
+(put 'global-flycheck-mode 'globalized-minor-mode t)
 
 (defvar global-flycheck-mode nil "\
 Non-nil if Global Flycheck mode is enabled.
@@ -521,7 +547,8 @@ The following PROPERTIES constitute an error level:
 `:severity SEVERITY'
      A number denoting the severity of this level.  The higher
      the number, the more severe is this level compared to other
-     levels.  Defaults to 0.
+     levels.  Defaults to 0; info is -10, warning is 10, and
+     error is 100.
 
      The severity is used by `flycheck-error-level-<' to
      determine the ordering of errors according to their levels.
@@ -547,15 +574,23 @@ The following PROPERTIES constitute an error level:
      property for error level categories is `priority', to
      influence the stacking of multiple error level overlays.
 
-`:fringe-bitmap BITMAP'
+`:fringe-bitmap BITMAPS'
      A fringe bitmap symbol denoting the bitmap to use for fringe
-     indicators for this level.  See Info node `(elisp)Fringe
-     Bitmaps' for more information about fringe bitmaps,
-     including a list of built-in fringe bitmaps.
+     indicators for this level, or a cons of two bitmaps (one for
+     narrow fringes and one for wide fringes).  See Info node
+     `(elisp)Fringe Bitmaps' for more information about fringe
+     bitmaps, including a list of built-in fringe bitmaps.
 
 `:fringe-face FACE'
      A face symbol denoting the face to use for fringe indicators
      for this level.
+
+`:margin-spec SPEC'
+     A display specification indicating what to display in the
+     margin when `flycheck-indication-mode' is `left-margin' or
+     `right-margin'.  See Info node `(elisp)Displaying in the
+     Margins'.  If omitted, Flycheck generates an image spec from
+     the fringe bitmap.
 
 `:error-list-face FACE'
      A face symbol denoting the face to use for messages of this
@@ -652,11 +687,12 @@ default `:verify' function of command checkers.
 Define SYMBOL as config file variable for CHECKER, with default FILE-NAME.
 
 SYMBOL is declared as customizable variable using `defcustom', to
-provide a configuration file for the given syntax CHECKER.
+provide configuration files for the given syntax CHECKER.
 CUSTOM-ARGS are forwarded to `defcustom'.
 
 FILE-NAME is the initial value of the new variable.  If omitted,
-the default value is nil.
+the default value is nil.  It can be either a string or a list of
+strings.
 
 Use this together with the `config-file' form in the `:command'
 argument to `flycheck-define-checker'.
@@ -684,66 +720,95 @@ Use this together with the `option', `option-list' and
 
 (function-put 'flycheck-def-option-var 'doc-string-elt '4)
 
+(autoload 'flycheck-define-checker "flycheck/flycheck" "\
+Define SYMBOL as command syntax checker with DOCSTRING and PROPERTIES.
+
+Like `flycheck-define-command-checker', but PROPERTIES must not
+be quoted.  Also, implicitly define the executable variable for
+SYMBOL with `flycheck-def-executable-var'.
+
+\(fn SYMBOL DOCSTRING &rest PROPERTIES)" nil t)
+
+(function-put 'flycheck-define-checker 'lisp-indent-function '1)
+
+(function-put 'flycheck-define-checker 'doc-string-elt '2)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "flycheck/flycheck" '("flycheck-" "help-flycheck-checker-d" "list-flycheck-errors")))
+
 ;;;***
 
-;;;### (autoloads nil "helm-ag/helm-ag" "helm-ag/helm-ag.el" (23345
-;;;;;;  21953 113302 288000))
+;;;### (autoloads nil "flycheck/flycheck-buttercup" "flycheck/flycheck-buttercup.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from flycheck/flycheck-buttercup.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "flycheck/flycheck-buttercup" '("flycheck-buttercup-format-error-list")))
+
+;;;***
+
+;;;### (autoloads nil "flycheck/flycheck-ert" "flycheck/flycheck-ert.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from flycheck/flycheck-ert.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "flycheck/flycheck-ert" '("flycheck-er")))
+
+;;;***
+
+;;;### (autoloads nil "helm-ag/helm-ag" "helm-ag/helm-ag.el" (0 0
+;;;;;;  0 0))
 ;;; Generated autoloads from helm-ag/helm-ag.el
 
 (autoload 'helm-ag-pop-stack "helm-ag/helm-ag" "\
-
-
-\(fn)" t nil)
+Not documented." t nil)
 
 (autoload 'helm-ag-clear-stack "helm-ag/helm-ag" "\
-
-
-\(fn)" t nil)
+Not documented." t nil)
 
 (autoload 'helm-ag-this-file "helm-ag/helm-ag" "\
+Do ag with in this file with QUERY.
 
-
-\(fn)" t nil)
+\(fn &optional QUERY)" t nil)
 
 (autoload 'helm-ag "helm-ag/helm-ag" "\
+Do ag with in BASEDIR and with QUERY.
 
-
-\(fn &optional BASEDIR)" t nil)
+\(fn &optional BASEDIR QUERY)" t nil)
 
 (autoload 'helm-do-ag-this-file "helm-ag/helm-ag" "\
+Not documented, QUERY.
 
-
-\(fn)" t nil)
+\(fn &optional QUERY)" t nil)
 
 (autoload 'helm-do-ag "helm-ag/helm-ag" "\
+Not documented, BASEDIR, TARGETS, DEFAULT-INPUT.
 
-
-\(fn &optional BASEDIR TARGETS)" t nil)
+\(fn &optional BASEDIR TARGETS DEFAULT-INPUT)" t nil)
 
 (autoload 'helm-ag-project-root "helm-ag/helm-ag" "\
+Not documented, QUERY.
 
-
-\(fn)" t nil)
+\(fn &optional QUERY)" t nil)
 
 (autoload 'helm-do-ag-project-root "helm-ag/helm-ag" "\
+Not documented, QUERY.
 
-
-\(fn)" t nil)
+\(fn &optional QUERY)" t nil)
 
 (autoload 'helm-ag-buffers "helm-ag/helm-ag" "\
+Not documented, QUERY.
 
-
-\(fn)" t nil)
+\(fn &optional QUERY)" t nil)
 
 (autoload 'helm-do-ag-buffers "helm-ag/helm-ag" "\
+Not documented, QUERY.
 
+\(fn &optional QUERY)" t nil)
 
-\(fn)" t nil)
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "helm-ag/helm-ag" '("helm-")))
 
 ;;;***
 
 ;;;### (autoloads nil "helm-projectile/helm-projectile" "helm-projectile/helm-projectile.el"
-;;;;;;  (23345 21939 478332 928000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from helm-projectile/helm-projectile.el
 
 (defvar helm-projectile-fuzzy-match t "\
@@ -753,9 +818,7 @@ This needs to be set before loading helm-projectile.el.")
 (custom-autoload 'helm-projectile-fuzzy-match "helm-projectile/helm-projectile" t)
 
 (autoload 'helm-projectile-find-file-dwim "helm-projectile/helm-projectile" "\
-Find file at point based on context.
-
-\(fn)" t nil)
+Find file at point based on context." t nil)
 
 (autoload 'helm-projectile-find-other-file "helm-projectile/helm-projectile" "\
 Switch between files with the same name but different extensions using Helm.
@@ -765,14 +828,10 @@ Other file extensions can be customized with the variable `projectile-other-file
 \(fn &optional FLEX-MATCHING)" t nil)
 
 (autoload 'helm-projectile-on "helm-projectile/helm-projectile" "\
-Turn on `helm-projectile' key bindings.
-
-\(fn)" t nil)
+Turn on `helm-projectile' key bindings." t nil)
 
 (autoload 'helm-projectile-off "helm-projectile/helm-projectile" "\
-Turn off `helm-projectile' key bindings.
-
-\(fn)" t nil)
+Turn off `helm-projectile' key bindings." t nil)
 
 (autoload 'helm-projectile-grep "helm-projectile/helm-projectile" "\
 Helm version of `projectile-grep'.
@@ -791,9 +850,7 @@ Helm version of `projectile-ag'.
 \(fn &optional OPTIONS)" t nil)
 
 (autoload 'helm-projectile-rg "helm-projectile/helm-projectile" "\
-Projectile version of `helm-rg'.
-
-\(fn)" t nil)
+Projectile version of `helm-rg'." t nil)
 
 (autoload 'helm-projectile-toggle "helm-projectile/helm-projectile" "\
 Toggle Helm version of Projectile commands.
@@ -810,10 +867,125 @@ If invoked outside of a project, displays a list of known projects to jump.
 
 (eval-after-load 'projectile '(progn (define-key projectile-command-map (kbd "h") #'helm-projectile)))
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "helm-projectile/helm-projectile" '("helm-")))
+
+;;;***
+
+;;;### (autoloads nil "pkg-info/pkg-info" "pkg-info/pkg-info.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from pkg-info/pkg-info.el
+
+(autoload 'pkg-info-library-original-version "pkg-info/pkg-info" "\
+Get the original version in the header of LIBRARY.
+
+The original version is stored in the X-Original-Version header.
+This header is added by the MELPA package archive to preserve
+upstream version numbers.
+
+LIBRARY is either a symbol denoting a named feature, or a library
+name as string.
+
+If SHOW is non-nil, show the version in the minibuffer.
+
+Return the version from the header of LIBRARY as list.  Signal an
+error if the LIBRARY was not found or had no X-Original-Version
+header.
+
+See Info node `(elisp)Library Headers' for more information
+about library headers.
+
+\(fn LIBRARY &optional SHOW)" t nil)
+
+(autoload 'pkg-info-library-version "pkg-info/pkg-info" "\
+Get the version in the header of LIBRARY.
+
+LIBRARY is either a symbol denoting a named feature, or a library
+name as string.
+
+If SHOW is non-nil, show the version in the minibuffer.
+
+Return the version from the header of LIBRARY as list.  Signal an
+error if the LIBRARY was not found or had no proper header.
+
+See Info node `(elisp)Library Headers' for more information
+about library headers.
+
+\(fn LIBRARY &optional SHOW)" t nil)
+
+(autoload 'pkg-info-defining-library-original-version "pkg-info/pkg-info" "\
+Get the original version of the library defining FUNCTION.
+
+The original version is stored in the X-Original-Version header.
+This header is added by the MELPA package archive to preserve
+upstream version numbers.
+
+If SHOW is non-nil, show the version in mini-buffer.
+
+This function is mainly intended to find the version of a major
+or minor mode, i.e.
+
+   (pkg-info-defining-library-version 'flycheck-mode)
+
+Return the version of the library defining FUNCTION.  Signal an
+error if FUNCTION is not a valid function, if its defining
+library was not found, or if the library had no proper version
+header.
+
+\(fn FUNCTION &optional SHOW)" t nil)
+
+(autoload 'pkg-info-defining-library-version "pkg-info/pkg-info" "\
+Get the version of the library defining FUNCTION.
+
+If SHOW is non-nil, show the version in mini-buffer.
+
+This function is mainly intended to find the version of a major
+or minor mode, i.e.
+
+   (pkg-info-defining-library-version 'flycheck-mode)
+
+Return the version of the library defining FUNCTION.  Signal an
+error if FUNCTION is not a valid function, if its defining
+library was not found, or if the library had no proper version
+header.
+
+\(fn FUNCTION &optional SHOW)" t nil)
+
+(autoload 'pkg-info-package-version "pkg-info/pkg-info" "\
+Get the version of an installed PACKAGE.
+
+If SHOW is non-nil, show the version in the minibuffer.
+
+Return the version as list, or nil if PACKAGE is not installed.
+
+\(fn PACKAGE &optional SHOW)" t nil)
+
+(autoload 'pkg-info-version-info "pkg-info/pkg-info" "\
+Obtain complete version info for LIBRARY and PACKAGE.
+
+LIBRARY is a symbol denoting a named feature, or a library name
+as string.  PACKAGE is a symbol denoting an ELPA package.  If
+omitted or nil, default to LIBRARY.
+
+If SHOW is non-nil, show the version in the minibuffer.
+
+When called interactively, prompt for LIBRARY.  When called
+interactively with prefix argument, prompt for PACKAGE as well.
+
+Return a string with complete version information for LIBRARY.
+This version information contains the version from the headers of
+LIBRARY, and the version of the installed PACKAGE, the LIBRARY is
+part of.  If PACKAGE is not installed, or if the PACKAGE version
+is the same as the LIBRARY version, do not include a package
+version.
+
+\(fn LIBRARY &optional PACKAGE SHOW)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pkg-info/pkg-info" '("pkg-info-")))
+
 ;;;***
 
 ;;;### (autoloads nil "projectile/projectile" "projectile/projectile.el"
-;;;;;;  (23345 21912 780496 333000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from projectile/projectile.el
 
 (autoload 'projectile-version "projectile/projectile" "\
@@ -834,10 +1006,10 @@ just return nil.
 (autoload 'projectile-invalidate-cache "projectile/projectile" "\
 Remove the current project's files from `projectile-projects-cache'.
 
-With a prefix argument ARG prompts for the name of the project whose cache
+With a prefix argument PROMPT prompts for the name of the project whose cache
 to invalidate.
 
-\(fn ARG)" t nil)
+\(fn PROMPT)" t nil)
 
 (autoload 'projectile-purge-file-from-cache "projectile/projectile" "\
 Purge FILE from the cache of the current project.
@@ -850,9 +1022,7 @@ Purge DIR from the cache of the current project.
 \(fn DIR)" t nil)
 
 (autoload 'projectile-cache-current-file "projectile/projectile" "\
-Add the currently visited file to the cache.
-
-\(fn)" t nil)
+Add the currently visited file to the cache." t nil)
 
 (autoload 'projectile-discover-projects-in-directory "projectile/projectile" "\
 Discover any projects in DIRECTORY and add them to the projectile cache.
@@ -861,31 +1031,25 @@ at the top level of DIRECTORY.
 
 \(fn DIRECTORY)" t nil)
 
-(autoload 'projectile-switch-to-buffer "projectile/projectile" "\
-Switch to a project buffer.
+(autoload 'projectile-discover-projects-in-search-path "projectile/projectile" "\
+Discover projects in `projectile-project-search-path'.
+Invoked automatically when `projectile-mode' is enabled." t nil)
 
-\(fn)" t nil)
+(autoload 'projectile-switch-to-buffer "projectile/projectile" "\
+Switch to a project buffer." t nil)
 
 (autoload 'projectile-switch-to-buffer-other-window "projectile/projectile" "\
-Switch to a project buffer and show it in another window.
-
-\(fn)" t nil)
+Switch to a project buffer and show it in another window." t nil)
 
 (autoload 'projectile-switch-to-buffer-other-frame "projectile/projectile" "\
-Switch to a project buffer and show it in another window.
-
-\(fn)" t nil)
+Switch to a project buffer and show it in another frame." t nil)
 
 (autoload 'projectile-display-buffer "projectile/projectile" "\
-Display a project buffer in another window without selecting it.
-
-\(fn)" t nil)
+Display a project buffer in another window without selecting it." t nil)
 
 (autoload 'projectile-project-buffers-other-buffer "projectile/projectile" "\
 Switch to the most recently selected buffer project buffer.
-Only buffers not visible in windows are returned.
-
-\(fn)" t nil)
+Only buffers not visible in windows are returned." t nil)
 
 (autoload 'projectile-multi-occur "projectile/projectile" "\
 Do a `multi-occur' in the project's buffers.
@@ -908,7 +1072,7 @@ Other file extensions can be customized with the variable `projectile-other-file
 \(fn &optional FLEX-MATCHING)" t nil)
 
 (autoload 'projectile-find-other-file-other-frame "projectile/projectile" "\
-Switch between files with the same name but different extensions in other window.
+Switch between files with the same name but different extensions in other frame.
 With FLEX-MATCHING, match any file that contains the base name of current file.
 Other file extensions can be customized with the variable `projectile-other-file-alist'.
 
@@ -917,7 +1081,7 @@ Other file extensions can be customized with the variable `projectile-other-file
 (autoload 'projectile-find-file-dwim "projectile/projectile" "\
 Jump to a project's files using completion based on context.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
 If point is on a filename, Projectile first tries to search for that
 file in project:
@@ -938,12 +1102,12 @@ the content of that directory.  If it is executed on a partial filename like
 
 - If it finds nothing, display a list of all files in project for selecting.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
 
 (autoload 'projectile-find-file-dwim-other-window "projectile/projectile" "\
 Jump to a project's files using completion based on context in other window.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
 If point is on a filename, Projectile first tries to search for that
 file in project:
@@ -965,12 +1129,12 @@ is presented.
 
 - If it finds nothing, display a list of all files in project for selecting.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
 
 (autoload 'projectile-find-file-dwim-other-frame "projectile/projectile" "\
 Jump to a project's files using completion based on context in other frame.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
 If point is on a filename, Projectile first tries to search for that
 file in project:
@@ -992,75 +1156,99 @@ is presented.
 
 - If it finds nothing, display a list of all files in project for selecting.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
 
 (autoload 'projectile-find-file "projectile/projectile" "\
 Jump to a project's file using completion.
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
 
 (autoload 'projectile-find-file-other-window "projectile/projectile" "\
 Jump to a project's file using completion and show it in another window.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
 
 (autoload 'projectile-find-file-other-frame "projectile/projectile" "\
 Jump to a project's file using completion and show it in another frame.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
+
+(autoload 'projectile-toggle-project-read-only "projectile/projectile" "\
+Toggle project read only." t nil)
 
 (autoload 'projectile-find-dir "projectile/projectile" "\
 Jump to a project's directory using completion.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
 
 (autoload 'projectile-find-dir-other-window "projectile/projectile" "\
 Jump to a project's directory in other window using completion.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
 
 (autoload 'projectile-find-dir-other-frame "projectile/projectile" "\
-Jump to a project's directory in other window using completion.
+Jump to a project's directory in other frame using completion.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
 
 (autoload 'projectile-find-test-file "projectile/projectile" "\
 Jump to a project's test file using completion.
 
-With a prefix ARG invalidates the cache first.
+With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional INVALIDATE-CACHE)" t nil)
+
+(autoload 'projectile-find-related-file-other-window "projectile/projectile" "\
+Open related file in other window." t nil)
+
+(autoload 'projectile-find-related-file-other-frame "projectile/projectile" "\
+Open related file in other frame." t nil)
+
+(autoload 'projectile-find-related-file "projectile/projectile" "\
+Open related file." t nil)
+
+(autoload 'projectile-related-files-fn-groups "projectile/projectile" "\
+Generate a related-files-fn which relates as KIND for files in each of GROUPS.
+
+\(fn KIND GROUPS)" nil nil)
+
+(autoload 'projectile-related-files-fn-extensions "projectile/projectile" "\
+Generate a related-files-fn which relates as KIND for files having EXTENSIONS.
+
+\(fn KIND EXTENSIONS)" nil nil)
+
+(autoload 'projectile-related-files-fn-test-with-prefix "projectile/projectile" "\
+Generate a related-files-fn which relates tests and impl for files with EXTENSION based on TEST-PREFIX.
+
+\(fn EXTENSION TEST-PREFIX)" nil nil)
+
+(autoload 'projectile-related-files-fn-test-with-suffix "projectile/projectile" "\
+Generate a related-files-fn which relates tests and impl for files with EXTENSION based on TEST-SUFFIX.
+
+\(fn EXTENSION TEST-SUFFIX)" nil nil)
 
 (autoload 'projectile-project-info "projectile/projectile" "\
-Display info for current project.
-
-\(fn)" t nil)
+Display info for current project." t nil)
 
 (autoload 'projectile-find-implementation-or-test-other-window "projectile/projectile" "\
-Open matching implementation or test file in other window.
-
-\(fn)" t nil)
+Open matching implementation or test file in other window." t nil)
 
 (autoload 'projectile-find-implementation-or-test-other-frame "projectile/projectile" "\
-Open matching implementation or test file in other frame.
-
-\(fn)" t nil)
+Open matching implementation or test file in other frame." t nil)
 
 (autoload 'projectile-toggle-between-implementation-and-test "projectile/projectile" "\
-Toggle between an implementation file and its test file.
-
-\(fn)" t nil)
+Toggle between an implementation file and its test file." t nil)
 
 (autoload 'projectile-grep "projectile/projectile" "\
 Perform rgrep in the project.
@@ -1084,49 +1272,73 @@ regular expression.
 (autoload 'projectile-ripgrep "projectile/projectile" "\
 Run a Ripgrep search with `SEARCH-TERM' at current project root.
 
-SEARCH-TERM is a regexp.
+With an optional prefix argument ARG SEARCH-TERM is interpreted as a
+regular expression.
 
-\(fn SEARCH-TERM)" t nil)
+\(fn SEARCH-TERM &optional ARG)" t nil)
 
 (autoload 'projectile-regenerate-tags "projectile/projectile" "\
-Regenerate the project's [e|g]tags.
-
-\(fn)" t nil)
+Regenerate the project's [e|g]tags." t nil)
 
 (autoload 'projectile-find-tag "projectile/projectile" "\
-Find tag in project.
-
-\(fn)" t nil)
+Find tag in project." t nil)
 
 (autoload 'projectile-run-command-in-root "projectile/projectile" "\
-Invoke `execute-extended-command' in the project's root.
-
-\(fn)" t nil)
+Invoke `execute-extended-command' in the project's root." t nil)
 
 (autoload 'projectile-run-shell-command-in-root "projectile/projectile" "\
-Invoke `shell-command' in the project's root.
-
-\(fn)" t nil)
+Invoke `shell-command' in the project's root." t nil)
 
 (autoload 'projectile-run-async-shell-command-in-root "projectile/projectile" "\
-Invoke `async-shell-command' in the project's root.
+Invoke `async-shell-command' in the project's root." t nil)
 
-\(fn)" t nil)
+(autoload 'projectile-run-gdb "projectile/projectile" "\
+Invoke `gdb' in the project's root." t nil)
 
 (autoload 'projectile-run-shell "projectile/projectile" "\
 Invoke `shell' in the project's root.
 
-\(fn)" t nil)
+Switch to the project specific shell buffer if it already exists.
+
+Use a prefix argument ARG to indicate creation of a new process instead.
+
+\(fn ARG)" t nil)
 
 (autoload 'projectile-run-eshell "projectile/projectile" "\
 Invoke `eshell' in the project's root.
 
-\(fn)" t nil)
+Switch to the project specific eshell buffer if it already exists.
+
+Use a prefix argument ARG to indicate creation of a new process instead.
+
+\(fn ARG)" t nil)
+
+(autoload 'projectile-run-ielm "projectile/projectile" "\
+Invoke `ielm' in the project's root.
+
+Switch to the project specific ielm buffer if it already exists.
+
+Use a prefix argument ARG to indicate creation of a new process instead.
+
+\(fn ARG)" t nil)
 
 (autoload 'projectile-run-term "projectile/projectile" "\
 Invoke `term' in the project's root.
 
-\(fn PROGRAM)" t nil)
+Switch to the project specific term buffer if it already exists.
+
+Use a prefix argument ARG to indicate creation of a new process instead.
+
+\(fn ARG)" t nil)
+
+(autoload 'projectile-run-vterm "projectile/projectile" "\
+Invoke `vterm' in the project's root.
+
+Switch to the project specific term buffer if it already exists.
+
+Use a prefix argument ARG to indicate creation of a new process instead.
+
+\(fn &optional ARG)" t nil)
 
 (autoload 'projectile-replace "projectile/projectile" "\
 Replace literal string in project using non-regexp `tags-query-replace'.
@@ -1145,29 +1357,22 @@ to run the replacement.
 \(fn &optional ARG)" t nil)
 
 (autoload 'projectile-kill-buffers "projectile/projectile" "\
-Kill all project buffers.
+Kill project buffers.
 
-\(fn)" t nil)
+The buffer are killed according to the value of
+`projectile-kill-buffers-filter'." t nil)
 
 (autoload 'projectile-save-project-buffers "projectile/projectile" "\
-Save all project buffers.
-
-\(fn)" t nil)
+Save all project buffers." t nil)
 
 (autoload 'projectile-dired "projectile/projectile" "\
-Open `dired' at the root of the project.
-
-\(fn)" t nil)
+Open `dired' at the root of the project." t nil)
 
 (autoload 'projectile-dired-other-window "projectile/projectile" "\
-Open `dired'  at the root of the project in another window.
-
-\(fn)" t nil)
+Open `dired'  at the root of the project in another window." t nil)
 
 (autoload 'projectile-dired-other-frame "projectile/projectile" "\
-Open `dired' at the root of the project in another frame.
-
-\(fn)" t nil)
+Open `dired' at the root of the project in another frame." t nil)
 
 (autoload 'projectile-vc "projectile/projectile" "\
 Open `vc-dir' at the root of the project.
@@ -1183,9 +1388,7 @@ directory to open.
 \(fn &optional PROJECT-ROOT)" t nil)
 
 (autoload 'projectile-recentf "projectile/projectile" "\
-Show a list of recently visited files in a project.
-
-\(fn)" t nil)
+Show a list of recently visited files in a project." t nil)
 
 (autoload 'projectile-configure-project "projectile/projectile" "\
 Run project configure command.
@@ -1214,6 +1417,24 @@ with a prefix ARG.
 
 \(fn ARG)" t nil)
 
+(autoload 'projectile-install-project "projectile/projectile" "\
+Run project install command.
+
+Normally you'll be prompted for a compilation command, unless
+variable `compilation-read-command'.  You can force the prompt
+with a prefix ARG.
+
+\(fn ARG)" t nil)
+
+(autoload 'projectile-package-project "projectile/projectile" "\
+Run project package command.
+
+Normally you'll be prompted for a compilation command, unless
+variable `compilation-read-command'.  You can force the prompt
+with a prefix ARG.
+
+\(fn ARG)" t nil)
+
 (autoload 'projectile-run-project "projectile/projectile" "\
 Run project run command.
 
@@ -1222,6 +1443,18 @@ variable `compilation-read-command'.  You can force the prompt
 with a prefix ARG.
 
 \(fn ARG)" t nil)
+
+(autoload 'projectile-repeat-last-command "projectile/projectile" "\
+Run last projectile external command.
+
+External commands are: `projectile-configure-project',
+`projectile-compile-project', `projectile-test-project',
+`projectile-install-project', `projectile-package-project',
+and `projectile-run-project'.
+
+If the prefix argument SHOW_PROMPT is non nil, the command can be edited.
+
+\(fn SHOW-PROMPT)" t nil)
 
 (autoload 'projectile-switch-project "projectile/projectile" "\
 Switch to a project we have visited before.
@@ -1247,19 +1480,13 @@ This command will first prompt for the directory the file is in.
 \(fn &optional DIRECTORY)" t nil)
 
 (autoload 'projectile-find-file-in-known-projects "projectile/projectile" "\
-Jump to a file in any of the known projects.
-
-\(fn)" t nil)
+Jump to a file in any of the known projects." t nil)
 
 (autoload 'projectile-cleanup-known-projects "projectile/projectile" "\
-Remove known projects that don't exist anymore.
-
-\(fn)" t nil)
+Remove known projects that don't exist anymore." t nil)
 
 (autoload 'projectile-clear-known-projects "projectile/projectile" "\
-Clear both `projectile-known-projects' and `projectile-known-projects-file'.
-
-\(fn)" t nil)
+Clear both `projectile-known-projects' and `projectile-known-projects-file'." t nil)
 
 (autoload 'projectile-remove-known-project "projectile/projectile" "\
 Remove PROJECT from the list of known projects.
@@ -1267,16 +1494,19 @@ Remove PROJECT from the list of known projects.
 \(fn &optional PROJECT)" t nil)
 
 (autoload 'projectile-remove-current-project-from-known-projects "projectile/projectile" "\
-Remove the current project from the list of known projects.
+Remove the current project from the list of known projects." t nil)
 
-\(fn)" t nil)
+(autoload 'projectile-add-known-project "projectile/projectile" "\
+Add PROJECT-ROOT to the list of known projects.
+
+\(fn PROJECT-ROOT)" t nil)
 
 (autoload 'projectile-ibuffer "projectile/projectile" "\
 Open an IBuffer window showing all buffers in the current project.
 
-Let user choose another project when PREFIX is supplied.
+Let user choose another project when PROMPT-FOR-PROJECT is supplied.
 
-\(fn PREFIX)" t nil)
+\(fn PROMPT-FOR-PROJECT)" t nil)
 
 (autoload 'projectile-commander "projectile/projectile" "\
 Execute a Projectile command with a single letter.
@@ -1284,14 +1514,18 @@ The user is prompted for a single character indicating the action to invoke.
 The `?' character describes then
 available actions.
 
-See `def-projectile-commander-method' for defining new methods.
+See `def-projectile-commander-method' for defining new methods." t nil)
 
-\(fn)" t nil)
+(autoload 'projectile-browse-dirty-projects "projectile/projectile" "\
+Browse dirty version controlled projects.
+
+With a prefix argument, or if CACHED is non-nil, try to use the cached
+dirty project list.
+
+\(fn &optional CACHED)" t nil)
 
 (autoload 'projectile-edit-dir-locals "projectile/projectile" "\
-Edit or create a .dir-locals.el file of the project.
-
-\(fn)" t nil)
+Edit or create a .dir-locals.el file of the project." t nil)
 
 (defvar projectile-mode nil "\
 Non-nil if Projectile mode is enabled.
@@ -1318,40 +1552,14 @@ Otherwise behave as if called interactively.
 
 \(fn &optional ARG)" t nil)
 
-(define-obsolete-function-alias 'projectile-global-mode 'projectile-mode)
+(define-obsolete-function-alias 'projectile-global-mode 'projectile-mode "1.0")
 
-;;;***
-
-;;;### (autoloads nil "rvm/rvm" "rvm/rvm.el" (23345 21836 176173
-;;;;;;  455000))
-;;; Generated autoloads from rvm/rvm.el
-
-(autoload 'rvm-use-default "rvm/rvm" "\
-use the rvm-default ruby as the current ruby version
-
-\(fn)" t nil)
-
-(autoload 'rvm-activate-corresponding-ruby "rvm/rvm" "\
-activate the corresponding ruby version for the file in the current buffer.
-This function searches for an .rvmrc file and activates the configured ruby.
-If no .rvmrc file is found, the default ruby is used insted.
-
-\(fn)" t nil)
-
-(autoload 'rvm-use "rvm/rvm" "\
-switch the current ruby version to any ruby, which is installed with rvm
-
-\(fn NEW-RUBY NEW-GEMSET)" t nil)
-
-(autoload 'rvm-open-gem "rvm/rvm" "\
-
-
-\(fn GEMHOME)" t nil)
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "projectile/projectile" '("??" "compilation-find-file-projectile-find-compilation-buffer" "def-projectile-commander-method" "delete-file-projectile-remove-from-cache" "projectile-")))
 
 ;;;***
 
 ;;;### (autoloads nil "slim-mode/slim-mode" "slim-mode/slim-mode.el"
-;;;;;;  (23345 21847 402876 67000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from slim-mode/slim-mode.el
 
 (autoload 'slim-mode "slim-mode/slim-mode" "\
@@ -1363,10 +1571,12 @@ Major mode for editing Slim files.
 
 (add-to-list 'auto-mode-alist '("\\.slim\\'" . slim-mode))
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "slim-mode/slim-mode" '("html-tags" "slim-")))
+
 ;;;***
 
 ;;;### (autoloads nil "solidity-mode/company-solidity" "solidity-mode/company-solidity.el"
-;;;;;;  (23353 40225 916178 54000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from solidity-mode/company-solidity.el
 
 (autoload 'company-solidity "solidity-mode/company-solidity" "\
@@ -1378,10 +1588,28 @@ Optional argument IGNORED Additional arguments are ingnored.
 
 \(fn COMMAND &optional ARG &rest IGNORED)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "solidity-mode/company-solidity" '("company-solidity-")))
+
+;;;***
+
+;;;### (autoloads nil "solidity-mode/solidity-common" "solidity-mode/solidity-common.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from solidity-mode/solidity-common.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "solidity-mode/solidity-common" '("solidity-sol")))
+
+;;;***
+
+;;;### (autoloads nil "solidity-mode/solidity-flycheck" "solidity-mode/solidity-flycheck.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from solidity-mode/solidity-flycheck.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "solidity-mode/solidity-flycheck" '("get-solc-version" "sol")))
+
 ;;;***
 
 ;;;### (autoloads nil "solidity-mode/solidity-mode" "solidity-mode/solidity-mode.el"
-;;;;;;  (23353 40225 920178 536000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from solidity-mode/solidity-mode.el
 
 (add-to-list 'auto-mode-alist '("\\.sol\\'" . solidity-mode))
@@ -1391,10 +1619,12 @@ Major mode for editing solidity language buffers.
 
 \(fn)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "solidity-mode/solidity-mode" '("solidity-")))
+
 ;;;***
 
-;;;### (autoloads nil "tern/emacs/tern" "tern/emacs/tern.el" (23345
-;;;;;;  22221 10073 893000))
+;;;### (autoloads nil "tern/emacs/tern" "tern/emacs/tern.el" (0 0
+;;;;;;  0 0))
 ;;; Generated autoloads from tern/emacs/tern.el
 
 (autoload 'tern-use-server "tern/emacs/tern" "\
@@ -1405,23 +1635,30 @@ Major mode for editing solidity language buffers.
 (autoload 'tern-mode "tern/emacs/tern" "\
 Minor mode binding to the Tern JavaScript analyzer
 
+If called interactively, enable Tern mode if ARG is positive, and
+disable it if ARG is zero or negative.  If called from Lisp, also
+enable the mode if ARG is omitted or nil, and toggle it if ARG is
+`toggle'; disable the mode otherwise.
+
 \(fn &optional ARG)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "tern/emacs/tern" '("tern-")))
 
 ;;;***
 
 ;;;### (autoloads nil "tern/emacs/tern-auto-complete" "tern/emacs/tern-auto-complete.el"
-;;;;;;  (23345 22221 10073 893000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from tern/emacs/tern-auto-complete.el
 
 (autoload 'tern-ac-setup "tern/emacs/tern-auto-complete" "\
-Setup auto-complete for tern-mode.
+Setup auto-complete for tern-mode." t nil)
 
-\(fn)" t nil)
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "tern/emacs/tern-auto-complete" '("tern-ac-")))
 
 ;;;***
 
 ;;;### (autoloads nil "web-mode/web-mode" "web-mode/web-mode.el"
-;;;;;;  (23345 21749 77344 479000))
+;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from web-mode/web-mode.el
 
 (autoload 'web-mode "web-mode/web-mode" "\
@@ -1429,20 +1666,15 @@ Major mode for editing web templates.
 
 \(fn)" t nil)
 
-;;;***
-
-;;;### (autoloads nil nil ("dash/dash-functional.el" "dash/dash.el"
-;;;;;;  "el-get/el-get-autoloading.el" "el-get/el-get-build.el" "el-get/el-get-byte-compile.el"
-;;;;;;  "el-get/el-get-core.el" "el-get/el-get-custom.el" "el-get/el-get-dependencies.el"
-;;;;;;  "el-get/el-get-install.el" "el-get/el-get-methods.el" "el-get/el-get-notify.el"
-;;;;;;  "el-get/el-get-recipes.el" "el-get/el-get-status.el" "flx/flx.el"
-;;;;;;  "flycheck/flycheck-buttercup.el" "flycheck/flycheck-ert.el"
-;;;;;;  "solidity-mode/solidity-common.el" "solidity-mode/solidity-flycheck.el")
-;;;;;;  (23353 40225 920178 536000))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "web-mode/web-mode" '("web-mode-")))
 
 ;;;***
 
-(provide '.loaddefs)
+;;;### (autoloads nil nil ("el-get/el-get-install.el" "emacs-async/async-pkg.el")
+;;;;;;  (0 0 0 0))
+
+;;;***
+
 ;; Local Variables:
 ;; version-control: never
 ;; no-update-autoloads: t

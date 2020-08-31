@@ -1,10 +1,10 @@
 ;;; solidity-mode.el --- Major mode for ethereum's solidity language
 
-;; Copyright (C) 2015-2018  Lefteris Karapetsas
+;; Copyright (C) 2015-2020  Lefteris Karapetsas
 
 ;; Author: Lefteris Karapetsas  <lefteris@refu.co>
-;; Keywords: languages
-;; Version: 0.1.9
+;; Keywords: languages, solidity
+;; Version: 0.1.10
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@
 
 (defcustom solidity-mode-hook nil
   "Callback hook to execute whenever a solidity file is loaded."
+  :type 'hook
   :group 'solidity)
 
 (defcustom solidity-comment-style 'star
@@ -63,6 +64,11 @@ Possible values are:
   :package-version '(solidity . "0.1.7")
   :safe #'symbolp)
 
+(defcustom solidity-mode-disable-c-mode-hook t
+  "If non-nil, do not run `c-mode-hook'."
+  :group 'solidity
+  :type 'boolean)
+
 (defvar solidity-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map "\C-j" 'newline-and-indent)
@@ -82,7 +88,8 @@ Possible values are:
         (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
 
 (defconst solidity-keywords
-  '("after"
+  '("abstract"
+    "after"
     "anonymous"
     "as"
     "assembly"
@@ -114,6 +121,7 @@ Possible values are:
     "memory"
     "modifier"
     "new"
+    "override"
     "payable"
     "pragma"
     "private"
@@ -131,6 +139,7 @@ Possible values are:
     "using"
     "var"
     "view"
+    "virtual"
     "while"
     )
   "Keywords of the solidity language.")
@@ -238,6 +247,7 @@ Possible values are:
     "int248"
     "int256"
 
+    "let"
     "mapping"
     "real"
     "string"
@@ -326,7 +336,7 @@ Possible values are:
    '(solidity-match-event-decl (1 font-lock-keyword-face)
                                   (2 font-lock-variable-name-face))
    '(solidity-match-variable-decls (1 font-lock-keyword-face)
-                                   (4 font-lock-variable-name-face))
+                                   (2 font-lock-variable-name-face))
    `(,(regexp-opt solidity-constants 'words) . font-lock-constant-face))
   "The font lock options for solidity.")
 
@@ -344,7 +354,7 @@ Possible values are:
 First match should be a keyword and second an identifier."
   (solidity-match-regexp
    (concat
-    " *\\(contract\\) +\\(" solidity-identifier-regexp "\\)")
+    " *\\(\\<contract\\>\\) +\\(" solidity-identifier-regexp "\\)")
    limit))
 
 (defun solidity-match-library-decl (limit)
@@ -353,7 +363,7 @@ First match should be a keyword and second an identifier."
 First match should be a keyword and second an identifier."
   (solidity-match-regexp
    (concat
-    " *\\(library\\) +\\(" solidity-identifier-regexp "\\)")
+    " *\\(\\<library\\>\\) +\\(" solidity-identifier-regexp "\\)")
    limit))
 
 (defun solidity-match-pragma-stmt (limit)
@@ -362,7 +372,7 @@ First match should be a keyword and second an identifier."
 First match should be a keyword and second an identifier."
   (solidity-match-regexp
    (concat
-    " *\\(pragma\\) +\\(.*\\);")
+    " *\\(\\<pragma\\>\\) +\\(.*\\);")
    limit))
 
 (defun solidity-match-struct-decl (limit)
@@ -371,7 +381,7 @@ First match should be a keyword and second an identifier."
 First match should be a keyword and second an identifier."
   (solidity-match-regexp
    (concat
-    " *\\(struct\\) +\\(" solidity-identifier-regexp "\\)")
+    " *\\(\\<struct\\>\\) +\\(" solidity-identifier-regexp "\\)")
    limit))
 
 (defun solidity-match-functions (limit)
@@ -380,7 +390,7 @@ First match should be a keyword and second an identifier."
 Highlight the 1st result."
   (solidity-match-regexp
    (concat
-    " *\\(function\\) +\\(" solidity-identifier-regexp "\\)")
+    " *\\(\\<function\\>\\) +\\(" solidity-identifier-regexp "\\)")
    limit))
 
 (defun solidity-match-event-decl (limit)
@@ -389,7 +399,7 @@ Highlight the 1st result."
 Highlight the 1st result."
   (solidity-match-regexp
    (concat
-    " *\\(event\\) +\\(" solidity-identifier-regexp "\\)")
+    " *\\(\\<event\\>\\) +\\(" solidity-identifier-regexp "\\)")
    limit))
 
 (defun solidity-match-modifier-decl (limit)
@@ -398,7 +408,7 @@ Highlight the 1st result."
 Highlight the 1st result."
   (solidity-match-regexp
    (concat
-    " *\\(modifier\\) +\\(" solidity-identifier-regexp "\\)")
+    " *\\(\\<modifier\\>\\) +\\(" solidity-identifier-regexp "\\)")
    limit))
 
 (defun solidity-match-mappings (limit)
@@ -407,7 +417,7 @@ Highlight the 1st result."
 Highlight the 1st result."
   (solidity-match-regexp
    (concat
-    " *\\(mapping\\) *(.*) *\\("(regexp-opt solidity-variable-modifier) " \\)*\\(" solidity-identifier-regexp "\\)")
+    " *\\(\\<mapping\\>\\) *(.*) *\\("(regexp-opt solidity-variable-modifier) " \\)*\\(" solidity-identifier-regexp "\\)")
    limit))
 
 (defun solidity-match-variable-decls (limit)
@@ -416,7 +426,7 @@ Highlight the 1st result."
 Highlight the 1st result."
   (solidity-match-regexp
    (concat
-    " *\\(" (regexp-opt solidity-builtin-types) " *\\(\\[ *[0-9]*\\]\\)* *\\) " "\\("(regexp-opt solidity-variable-modifier) " \\)* *\\(" solidity-identifier-regexp "\\)")
+    " *\\(" (regexp-opt solidity-builtin-types 'words) " *\\(?:\\[ *[0-9]*\\]\\)* *\\) " "\\(?:"(regexp-opt solidity-variable-modifier 'words) " \\)* *\\(" solidity-identifier-regexp "\\)")
    limit))
 
 ;; solidity syntax table
@@ -493,6 +503,25 @@ Cursor must be at the function's name.  Does not currently work for constructors
   (interactive)
   (solidity--start-gasestimate (thing-at-point 'symbol 'no-properties)))
 
+;;; Support for imenu
+(defun solidity-mode-imenu-generic-expression ()
+  "Generic expressions for solidity mode imenu."
+  (let* ((spacetabs "[\t\n ]+")
+         (optional-spacetabs "[\t\n ]*")
+         (ident-group "\\([A-Za-z_][A-Za-z0-9_]*\\)")
+         (ctr-ident-group "\\(constructor\\)")
+         (modifier (mapconcat 'identity
+                              '("payable" "public" "private" "external" "internal" "view" "pure")
+                              "\\|"))
+         (modifiers (concat "\\(?:\\(?:" modifier "\\)" spacetabs "\\)*")))
+    `(("function", (concat "^" optional-spacetabs "function" spacetabs ident-group) 1)
+      ("modifier", (concat "^" optional-spacetabs "modifier" spacetabs ident-group) 1)
+      ("constructor", (concat "^" optional-spacetabs ctr-ident-group) 1)
+      ("contract", (concat "^" optional-spacetabs "contract" spacetabs ident-group) 1)
+      ("library", (concat "^" optional-spacetabs "library" spacetabs ident-group) 1)
+      ("interface", (concat "^" optional-spacetabs "interface" spacetabs ident-group) 1)
+      )))
+
 ;;;###autoload
 (define-derived-mode solidity-mode c-mode "solidity"
   "Major mode for editing solidity language buffers."
@@ -523,19 +552,20 @@ Cursor must be at the function's name.  Does not currently work for constructors
   (set (make-local-variable 'comment-multi-line) t)
   (set (make-local-variable 'comment-line-break-function)
        'c-indent-new-comment-line)
+  (set (make-local-variable 'c-basic-offset) 4)
+
+  (when solidity-mode-disable-c-mode-hook
+    (set (make-local-variable 'c-mode-hook) nil))
+
+  ;; set imenu
+  (setq imenu-generic-expression
+        (solidity-mode-imenu-generic-expression))
 
   ;; set keymap
   (use-local-map solidity-mode-map)
   ;; set hooks
   (run-hooks 'solidity-mode-hook))
 
-;;; --- interface with flycheck if existing ---
-(when (require 'flycheck nil 'noerror)
-  (require 'solidity-flycheck))
-
-;;; --- autcompletion back-end for company-mode, loads if company mode is installed ---
-(when (require 'company nil 'noerror)
-  (require 'company-solidity))
 
 (provide 'solidity-mode)
 ;;; solidity-mode.el ends here

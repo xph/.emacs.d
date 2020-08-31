@@ -41,6 +41,37 @@ If you don't want to make dired/helm asynchronous disable it with `dired-async-m
 
 Users of Debian 9 or later or Ubuntu 16.04 or later may simply `apt-get install elpa-async`.
 
+## Authentication and user interaction
+
+Some authentications require user interaction, for example answering to a
+prompt, entering a passwords etc. Your async implementation should
+avoid any such user interaction, to avoid being stuck with a prompt you
+will not be able to answer to in the child emacs.  For all what is remote
+(mails, tramp etc...) you have to let emacs manage your identification
+with [auth-sources](https://www.gnu.org/software/emacs/manual/html_mono/auth.html), so that you do not have to enter a password.
+
+Basically all you need is something like this in your init file:
+
+    (use-package auth-source
+      :no-require t
+      :config (setq auth-sources '("~/.authinfo.gpg" "~/.netrc")))
+
+And a "~/.authinfo.gpg" file containing entries such as
+
+    default port sudo login root password xxxxxxxx
+    
+or
+
+    machine xxxxx port xxx login xxx password xxxxxxx
+
+for more specific hosts (smtp, mails etc...)
+
+See [auth-sources manual](https://www.gnu.org/software/emacs/manual/html_mono/auth.html) for more infos.
+
+NOTE: For all your async implementations in emacs-26+ versions that
+handle remote files (tramp), you will have to let-bind
+`async-quiet-switch` to `-q` to workaround a tramp bug that prevent `emacs -Q` to use [auth-sources](https://www.gnu.org/software/emacs/manual/html_mono/auth.html) mechanism.
+
 ## Enable asynchronous compilation of your (M)elpa packages
 
 By default emacs package.el compile packages in its running emacs session.

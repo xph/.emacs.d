@@ -1,10 +1,5 @@
-((ag status "installed" recipe
-     (:name ag :description "A simple ag frontend, loosely based on ack-and-half.el." :type github :pkgname "Wilfred/ag.el" :depends
-            (dash s)))
- (cl-lib status "installed" recipe
+((cl-lib status "installed" recipe
          (:name cl-lib :builtin "24.3" :type elpa :description "Properly prefixed CL functions and macros" :website "http://elpa.gnu.org/packages/cl-lib.html"))
- (column-marker status "installed" recipe
-                (:name column-marker :description "Highlight certain character columns" :type emacswiki :features column-marker))
  (dash status "installed" recipe
        (:name dash :description "A modern list api for Emacs. No 'cl required." :type github :pkgname "magnars/dash.el"))
  (el-get status "installed" recipe
@@ -33,12 +28,6 @@
               (:name emacs-async :description "Simple library for asynchronous processing in Emacs" :type github :pkgname "jwiegley/emacs-async"))
  (epl status "installed" recipe
       (:name epl :description "EPL provides a convenient high-level API for various package.el versions, and aims to overcome its most striking idiocies." :type github :pkgname "cask/epl"))
- (f status "installed" recipe
-    (:name f :website "https://github.com/rejeep/f.el" :description "Modern API for working with files and directories in Emacs" :depends
-           (s dash)
-           :type github :pkgname "rejeep/f.el"))
- (flx status "installed" recipe
-      (:name flx :description "Fuzzy matching with good sorting in ido" :type github :pkgname "lewang/flx"))
  (flycheck status "installed" recipe
            (:name flycheck :type github :pkgname "flycheck/flycheck" :minimum-emacs-version "24.3" :description "On-the-fly syntax checking extension" :depends
                   (dash pkg-info let-alist seq)))
@@ -58,91 +47,41 @@
                     (expand-file-name "helm-autoloads.el"))
                    \
                    (backup-inhibited t))
-              (update-directory-autoloads default-directory)
-              nil)
-       :build/berkeley-unix
-       `(("gmake" ,(concat "ASYNC_ELPA_DIR="
-                           (el-get-package-directory 'emacs-async))))
-       :features "helm-config" :post-init
-       (helm-mode)))
-(helm-ag status "installed" recipe
-(:name helm-ag :description "The silver search with helm interface." :type github :pkgname "syohex/emacs-helm-ag" :depends
-(helm)))
-(helm-projectile status "installed" recipe
-(:name helm-projectile :description "Helm integration for Projectile." :type github :pkgname "bbatsov/helm-projectile" :depends
-(projectile helm cl-lib)))
-(inf-ruby status "installed" recipe
-(:name inf-ruby :description "Inferior Ruby Mode - ruby process in a buffer." :type github :pkgname "nonsequitur/inf-ruby"))
-(js2-mode status "installed" recipe
-(:name js2-mode :website "https://github.com/mooz/js2-mode#readme" :description "An improved JavaScript editing mode" :type github :pkgname "mooz/js2-mode" :prepare
-(autoload 'js2-mode "js2-mode" nil t)))
-(let-alist status "installed" recipe
-(:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :website "https://elpa.gnu.org/packages/let-alist.html"))
-(package status "installed" recipe
-(:name package :description "ELPA implementation (\"package.el\") from Emacs 24" :builtin "24" :type http :url "https://repo.or.cz/w/emacs.git/blob_plain/ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09:/lisp/emacs-lisp/package.el" :features package :post-init
-(progn
-(let
-((old-package-user-dir
-(expand-file-name
-(convert-standard-filename
-(concat
-(file-name-as-directory default-directory)
-"elpa")))))
-(when
-(file-directory-p old-package-user-dir)
-(add-to-list 'package-directory-list old-package-user-dir)))
-(setq package-archives
-(bound-and-true-p package-archives))
-(let
-((protocol
-(if
-(and
-(fboundp 'gnutls-available-p)
-(gnutls-available-p))
-"https://"
-(lwarn
-'(el-get tls)
-:warning "Your Emacs doesn't support HTTPS (TLS)%s"
-(if
-(eq system-type 'windows-nt)
-",\n  see https://github.com/dimitri/el-get/wiki/Installation-on-Windows." "."))
-"http://"))
-(archives
-'(("melpa" . "melpa.org/packages/")
-("gnu" . "elpa.gnu.org/packages/")
-("marmalade" . "marmalade-repo.org/packages/"))))
-(dolist
-(archive archives)
-(add-to-list 'package-archives
-(cons
-(car archive)
-(concat protocol
-(cdr archive)))))))))
-(pkg-info status "installed" recipe
-(:name pkg-info :description "Provide information about Emacs packages." :type github :pkgname "lunaryorn/pkg-info.el" :depends
-(dash epl)))
-(projectile status "installed" recipe
-(:name projectile :description "Project navigation and management library for Emacs." :type github :pkgname "bbatsov/projectile" :depends pkg-info))
-(ruby-mode status "installed" recipe
-(:name ruby-mode :builtin "24" :type http :description "Major mode for editing Ruby files." :url "http://bugs.ruby-lang.org/projects/ruby-trunk/repository/raw/misc/ruby-mode.el"))
-(rvm status "installed" recipe
-(:name rvm :description "Emacs integration for rvm" :type github :features rvm :pkgname "senny/rvm.el" :compile "rvm.el" :post-init
-(rvm-use-default)))
-(s status "installed" recipe
-(:name s :description "The long lost Emacs string manipulation library." :type github :pkgname "magnars/s.el"))
-(seq status "installed" recipe
-(:name seq :description "Sequence manipulation library for Emacs" :builtin "25" :type github :pkgname "NicolasPetton/seq.el"))
-(slim-mode status "installed" recipe
-(:name slim-mode :description "Syntax highlighting for Slim" :type github :pkgname "slim-template/emacs-slim" :features slim-mode))
-(solidity-mode status "installed" recipe
-(:name solidity-mode :description "Language mode for Ethereum's Solidity Language" :type github :website "https://github.com/ethereum/emacs-solidity" :pkgname "ethereum/emacs-solidity"))
-(tern status "installed" recipe
-(:name tern :description "A JavaScript code analyzer for deep, cross-editor language support." :type github :pkgname "marijnh/tern" :build
-'(("npm" "--production" "install"))
-:prepare
-(add-to-list 'auto-mode-alist
-'("\\.tern-\\(project\\|\\config\\)\\'" . json-mode))
-:load-path
-("emacs")))
-(web-mode status "installed" recipe
-(:name web-mode :description "emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)" :type github :pkgname "fxbois/web-mode")))
+                (update-directory-autoloads default-directory)
+                nil)
+              :build/berkeley-unix
+              `(("gmake" ,(concat "ASYNC_ELPA_DIR="
+                                  (el-get-package-directory 'emacs-async))))
+              :features "helm-config" :post-init
+              (helm-mode)))
+ (helm-ag status "installed" recipe
+          (:name helm-ag :description "The silver search with helm interface." :type github :pkgname "syohex/emacs-helm-ag" :depends
+                 (helm)))
+ (helm-projectile status "installed" recipe
+                  (:name helm-projectile :description "Helm integration for Projectile." :type github :pkgname "bbatsov/helm-projectile" :depends
+                         (projectile helm cl-lib)))
+ (let-alist status "installed" recipe
+            (:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :website "https://elpa.gnu.org/packages/let-alist.html"))
+ (pkg-info status "installed" recipe
+           (:name pkg-info :description "Provide information about Emacs packages." :type github :pkgname "lunaryorn/pkg-info.el" :depends
+                  (dash epl)))
+ (projectile status "installed" recipe
+             (:name projectile :description "Project navigation and management library for Emacs." :type github :pkgname "bbatsov/projectile" :depends pkg-info))
+ (ruby-mode status "installed" recipe
+            (:name ruby-mode :builtin "24" :type http :description "Major mode for editing Ruby files." :url "http://bugs.ruby-lang.org/projects/ruby-trunk/repository/raw/misc/ruby-mode.el"))
+ (seq status "installed" recipe
+      (:name seq :description "Sequence manipulation functions" :builtin "25" :type elpa :website "https://elpa.gnu.org/packages/seq.html"))
+ (slim-mode status "installed" recipe
+            (:name slim-mode :description "Syntax highlighting for Slim" :type github :pkgname "slim-template/emacs-slim" :features slim-mode))
+ (solidity-mode status "installed" recipe
+                (:name solidity-mode :description "Language mode for Ethereum's Solidity Language" :type github :website "https://github.com/ethereum/emacs-solidity" :pkgname "ethereum/emacs-solidity"))
+ (tern status "installed" recipe
+       (:name tern :description "A JavaScript code analyzer for deep, cross-editor language support." :type github :pkgname "marijnh/tern" :build
+              '(("npm" "--production" "install"))
+              :prepare
+              (add-to-list 'auto-mode-alist
+                           '("\\.tern-\\(project\\|\\config\\)\\'" . json-mode))
+              :load-path
+              ("emacs")))
+ (web-mode status "installed" recipe
+           (:name web-mode :description "emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)" :type github :pkgname "fxbois/web-mode")))

@@ -1,3 +1,69 @@
+var s = "xs";
+React.createClass({
+  render() {
+    return (
+      <ul class="cscdd" data-toto={ return 1 + "cdxs" }> cqsd
+        {
+          if (true) {
+            <BreadcrumbItem href="#/messages/{ this.props.scope.get('scopes') || this.props.scope.get('parent') }">
+              hello
+            </BreadcrumbItem>
+          }
+        }
+      </ul>
+    );
+  }
+});
+
+function hello() {
+
+  return (
+    <div>
+      {active ? (
+        <div></div>
+      ) : (
+        <span></span>
+      )}
+    </div>
+  )
+
+}
+
+function hello() {
+
+  return (
+    <input
+      type="file"
+      ref={component => {
+        this.inputFile = component;
+      }}
+    />
+  );
+}
+
+export default function Example() {
+  return (
+    <Menu>
+      <Menu.Item>
+        ← cursor here
+      </Menu.Item>
+    </Menu>
+  );
+}
+
+
+render() {
+  return (
+    <>
+      Some text.
+      <h2>A heading</h2>
+      More text.
+      <h2>Another heading</h2>
+      Even more text.
+    </>
+  );
+}
+
 return (
   <ModalTrigger modal={<InviteForm auth={this.props.auth} />} />
 );
@@ -197,10 +263,10 @@ class Confirm extends Component {
       <form onSubmit="">
         <fieldset>
           {project.foo && (
-             <div>Foo</div>
+            <div>Foo</div>
           )}
           {project.bar && (
-             <p>Bar</p>
+            <p>Bar</p>
           )}
         </fieldset>
       </form>
@@ -364,3 +430,59 @@ function hello() {
   );
 
 }
+
+React.createClass({
+  render() {
+    return (
+      <ul class="cscdd" data-toto={ return 1 + "cdxs" }> cqsd
+        { (this.props.scope.get('type') !== "home") ?
+          <BreadcrumbItem href="#/messages/{this.props.scope.get('scope') || this.props.scope.get('parent')}">
+            {this.props.scope.get('scope') || this.props.scope.get('parent')}
+          </BreadcrumbItem> : null}
+      </ul>
+    );
+  }
+});
+
+
+React.createClass({
+  render() {
+    return (
+      <ul class="cscdd" data-toto={ return 1 + "cdxs" }> cqsd
+        { this.props.list.map(function(element) {
+            var x = 1;
+            return <li class="dxs" x="xs">{ "aa" + this.getModel().get('bb') }</li>
+        }) } cqsdc { return "cd"; }
+      </ul>
+    )
+  }
+});
+
+return (
+  <li>
+    <ModalTrigger test="xs" test="dccd" modal={ <InviteForm> }>
+      <a href="#">Invite Representative</a>
+    </ModalTrigger>
+  </li>
+);
+
+
+return (
+  <li>
+    <ModalTrigger modal={ <InviteForm auth={this.props.auth} /> }>
+      <a href="#">Invite Representative</a>
+    </ModalTrigger>
+  </li>
+);
+
+var MyClass = react.createClass({
+  render: function() {
+    return
+    <div>
+      <OtherComponent/>
+      <OtherComponent class="toto"
+                      {...props}
+                      id="fr" />
+    </div>;
+  }
+});

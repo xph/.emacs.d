@@ -7,7 +7,7 @@
 
 <div id=top>
   <div id=head>
-    <a href="http://ternjs.net" class=title>Tern: <span class=subtitle>Intelligent JavaScript tooling</span>
+    <a href="https://ternjs.net" class=title>Tern: <span class=subtitle>Intelligent JavaScript tooling</span>
     </a><a href="doc/demo/index.html">Demo
     </a><a href="doc/manual.html">Docs
     </a><a href="https://github.com/ternjs/tern">Code</a>
@@ -29,12 +29,8 @@ JavaScript editing. Features provided are:</p>
 
 <p>Tern is open-source (<a href="LICENSE">MIT license</a>), written in
 JavaScript, and capable of running both
-on <a href="http://nodejs.org">node.js</a> and in
+on <a href="https://nodejs.org">node.js</a> and in
 the <a href="doc/demo/index.html">browser</a>.</p>
-
-<p><strong>NOTE</strong>: This project is looking for a new
-maintainer, since the original author no longer has time to work on
-it.</p>
 
 <h2><a id="plugins"></a>Editor plugins</h2>
 
@@ -69,27 +65,65 @@ issue tracker</a>.</p>
 through <a href="https://github.com/ternjs/tern/pulls">pull
 requests</a>.</p>
 
-<p>If you are getting value out of Tern, especially if you are using
-it in a for-profit way, consider funding further development by
-setting up a
-monthly <a href="https://marijnhaverbeke.nl/fund">contribution</a>.
-The maintainer (<a href="mailto:marijnh@gmail.com">Marijn
-Haverbeke</a>) is available for Tern-related consulting work.</p>
-
-<p>Current funding status:&nbsp; <img src="//marijnhaverbeke.nl/fund/status_s.png" title="Current maintainer happiness" style="vertical-align: middle; height: 16px; width: 16px"></p>
-
 <h2><a id="docs"></a>Documentation</h2>
 
 <p>The <a href="doc/manual.html">reference manual</a> should be your
 first stop for figuring out how to use Tern.</p>
 
 <p>If you are interested in the way the system works internally, take
-a look at this <a href="http://marijnhaverbeke.nl/blog/tern.html">blog
+a look at this <a href="https://marijnhaverbeke.nl/blog/tern.html">blog
 post</a> or the video
 of <a href="https://www.youtube.com/watch?v=wW5VbogkDQ4">the talk</a>
 I gave about it at the Curry On conference.</p>
 
 <h2><a id="releases"></a>Release history</h2>
+
+<p class="release">27-12-2019: <a href="https://github.com/ternjs/tern/tree/0.24.3">Version 0.24.3</a></p>
+
+<p class="release-note">Small update release that fixes crashes when spread operator in object literal</p>
+
+<p class="release">13-10-2019: <a href="https://github.com/ternjs/tern/tree/0.24.2">Version 0.24.2</a></p>
+
+<p class="release-note">Small update release that fixes crashes when writing catch clause</p>
+
+<p class="release">10-07-2019: <a href="https://github.com/ternjs/tern/tree/0.24.1">Version 0.24.1</a></p>
+
+<p class="release-note">Small update release that fixes crashes when using doc_comment plugin</p>
+
+<p class="release">30-05-2019: <a href="https://github.com/ternjs/tern/tree/0.24.0">Version 0.24</a></p>
+
+<ul class="release-note">
+  <li>Make bootstrapping of a Tern server easiert .</li>
+  <li>Support complete string property name in object notation.</li>
+  <li>Update def files for Date, DOM Node ...</li>
+  <li>More robust JSDoc handler</li>
+  <li>Fix bug where condense codes with spread operator.</li>
+  <li>Fix bug where rename cause object property also affected.</li>
+</ul>
+
+<p class="release">10-11-2018: <a href="https://github.com/ternjs/tern/tree/0.23.0">Version 0.23</a></p>
+
+<ul class="release-note">
+  <li>Upgrade Acorn to version 6.</li>
+  <li>Fix some crash issues caused by ECMAScript 6 syntax.</li>
+  <li>Update React definition.</li>
+  <li>Add Clipboard API to browser definition.</li>
+</ul>
+
+<p class="release">27-09-2018: <a href="https://github.com/ternjs/tern/tree/0.22.3">Version 0.22.3</a></p>
+
+<p class="release-note">Small update release that fixes crashes
+affecting spread operator in object notation, rest operator in object pattern and export default anonymous class or function.</p>
+
+<p class="release">28-08-2018: <a href="https://github.com/ternjs/tern/tree/0.22.0">Version 0.22</a></p>
+
+<ul class="release-note">
+  <li>Support async functions and async iteration.</li>
+  <li>Make the base type definitions match the current standards.</li>
+  <li>Make sure dynamic properties don't show up when completing object literal property names.</li>
+  <li>Pre-emptively start analyzing on startup.</li>
+  <li>Fix bug where renaming a variable might rename properties in the code.</li>
+</ul>
 
 <p class="release">18-02-2017: <a href="https://github.com/ternjs/tern/tree/0.21.0">Version 0.21</a></p>
 
@@ -264,7 +298,7 @@ I gave about it at the Curry On conference.</p>
 
 <ul class="release-note">
   <li>Further refinements of the RequireJS plugin's path resolution</li>
-  <li>Add <code>isKeyword</code> and <code>isProperty</code> fields to completion query JSON repsonses</li>
+  <li>Add <code>isKeyword</code> and <code>isProperty</code> fields to completion query JSON responses</li>
   <li>Various small bugfixes (<a href="https://github.com/ternjs/tern/compare/0.6.2...0.7.0">full list of patches</a>)</li>
 </ul>
 
@@ -328,4 +362,4 @@ affecting asynchronous loading of files.</p>
 <p class="release">03-05-2013: <a href="https://github.com/ternjs/tern/tree/0.1.0">Version 0.1</a></p>
 
 <p class="release-note">First numbered release. Should be considered
-beta status, but useable enough to test.</p>
+beta status, but usable enough to test.</p>

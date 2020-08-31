@@ -1,1 +1,1 @@
-("~/coin/schrodingersdog/" "~/.emacs.d/" "~/upstart/upstart_web/" "~/.emacs.d/el-get/flycheck/" "~/.emacs.d/el-get/pkg-info/" "~/.emacs.d/el-get/web-mode/" "~/upstart/john_dee/" "~/ms_bkmlt/" "~/" "~/.rvm/gems/ruby-2.3.3/gems/factory_girl-4.5.0/" "~/interview/loan_app/" "~/interview/loan/" "~/.emacs.d/el-get/ag/" "~/.emacs.d/el-get/projectile/")
+("~/upstart_web/" "~/.emacs.d/" "~/.emacs.d/el-get/pkg-info/" "~/" "~/.emacs.d/el-get/projectile/")

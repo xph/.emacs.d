@@ -1,28 +1,29 @@
-;;; async.el --- Asynchronous processing  -*- lexical-binding: t -*-
+;;; async.el --- Asynchronous processing in Emacs -*- lexical-binding: t -*-
 
-;; Copyright (C) 2012-2016 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
 
 ;; Author: John Wiegley <jwiegley@gmail.com>
+;; Maintainer: Thierry Volpiatto <thievol@posteo.net>
+
 ;; Created: 18 Jun 2012
-;; Version: 1.9.4
-;; Package-Requires: ((emacs "24.3"))
-;; Keywords: convenience async
-;; URL: https://github.com/jwiegley/emacs-async
+;; Version: 1.9.7
+;; Package-Requires: ((emacs "24.4"))
 
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or (at
-;; your option) any later version.
+;; Keywords: async
+;; X-URL: https://github.com/jwiegley/emacs-async
 
-;; This program is distributed in the hope that it will be useful, but
-;; WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -35,11 +36,10 @@
 
 (defgroup async nil
   "Simple asynchronous processing in Emacs"
-  :group 'emacs)
+  :group 'lisp)
 
 (defcustom async-variables-noprops-function #'async--purecopy
   "Default function to remove text properties in variables."
-  :group 'async
   :type 'function)
 
 (defvar async-debug nil)
@@ -51,6 +51,16 @@
 (defvar async-callback-value-set nil)
 (defvar async-current-process nil)
 (defvar async--procvar nil)
+(defvar async-child-init nil
+  "Initialisation file for async child Emacs.
+
+If defined this allows for an init file to setup the child Emacs. It
+should not be your normal init.el as that would likely load more
+things that you require. It should limit itself to ensuring paths have
+been setup so any async code can load libraries you expect.")
+
+;; For emacs<29 (only exists in emacs-29+).
+(defvar print-symbols-bare)
 
 (defun async--purecopy (object)
   "Remove text properties in OBJECT.
@@ -100,14 +110,14 @@ variable's value with `async-variables-noprops-function'.
 It is intended to be used as follows:
 
     (async-start
-       `(lambda ()
-          (require 'smtpmail)
+       \\=`(lambda ()
+          (require \\='smtpmail)
           (with-temp-buffer
             (insert ,(buffer-substring-no-properties (point-min) (point-max)))
             ;; Pass in the variable environment for smtpmail
-            ,(async-inject-variables \"\\`\\(smtpmail\\|\\(user-\\)?mail\\)-\")
+            ,(async-inject-variables \"\\\\=`\\(smtpmail\\|\\(user-\\)?mail\\)-\")
             (smtpmail-send-it)))
-       'ignore)"
+       \\='ignore)"
   `(setq
     ,@(let (bindings)
         (mapatoms
@@ -164,6 +174,19 @@ It is intended to be used as follows:
                         (kill-buffer (current-buffer))))
                   (set (make-local-variable 'async-callback-value) proc)
                   (set (make-local-variable 'async-callback-value-set) t))
+              ;; Maybe strip out unreadable "#"; They are replaced by
+              ;; empty string unless they are prefixing a special
+              ;; object like a marker. See issue #145.
+              (goto-char (point-min))
+              (save-excursion
+                ;; Transform markers in list like
+                ;; (marker (moves after insertion) at 2338 in
+                ;; test\.org) so that remap text properties function
+                ;; can parse it to restitute marker.
+                (while (re-search-forward "#<\\([^>]*\\)>" nil t)
+                  (replace-match (concat "(" (match-string 1) ")") t t)))
+              (while (re-search-forward "#(" nil t)
+                (replace-match "(" t t))
               (goto-char (point-max))
               (backward-sexp)
               (async-handle-result async-callback (read (current-buffer))
@@ -175,25 +198,33 @@ It is intended to be used as follows:
           (set (make-local-variable 'async-callback-value-set) t))))))
 
 (defun async--receive-sexp (&optional stream)
-  (let ((sexp (decode-coding-string (base64-decode-string
-                                     (read stream)) 'utf-8-auto))
+  ;; FIXME: Why use `utf-8-auto' instead of `utf-8-unix'?  This is
+  ;; a communication channel over which we have complete control,
+  ;; so we get to choose exactly which encoding and EOL we use, isn't
+  ;; it?
+  ;; UPDATE: We use now `utf-8-emacs-unix' instead of `utf-8-auto' as
+  ;; recommended in bug#165.
+  (let ((sexp (decode-coding-string (base64-decode-string (read stream))
+                                    'utf-8-emacs-unix))
         ;; Parent expects UTF-8 encoded text.
-        (coding-system-for-write 'utf-8-auto))
+        (coding-system-for-write 'utf-8-emacs-unix))
     (if async-debug
         (message "Received sexp {{{%s}}}" (pp-to-string sexp)))
     (setq sexp (read sexp))
     (if async-debug
         (message "Read sexp {{{%s}}}" (pp-to-string sexp)))
-    (eval sexp)))
+    (eval sexp t)))
 
 (defun async--insert-sexp (sexp)
   (let (print-level
         print-length
         (print-escape-nonascii t)
-        (print-circle t))
+        (print-circle t)
+        ;; Fix bug#153 in emacs-29 with symbol's positions.
+        (print-symbols-bare t))
     (prin1 sexp (current-buffer))
     ;; Just in case the string we're sending might contain EOF
-    (encode-coding-region (point-min) (point-max) 'utf-8-auto)
+    (encode-coding-region (point-min) (point-max) 'utf-8-emacs-unix)
     (base64-encode-region (point-min) (point-max) t)
     (goto-char (point-min)) (insert ?\")
     (goto-char (point-max)) (insert ?\" ?\n)))
@@ -209,25 +240,22 @@ It is intended to be used as follows:
   "Called from the child Emacs process' command line."
   ;; Make sure 'message' and 'prin1' encode stuff in UTF-8, as parent
   ;; process expects.
-  (let ((coding-system-for-write 'utf-8-auto))
+  (let ((coding-system-for-write 'utf-8-emacs-unix)
+        (args-left command-line-args-left))
     (setq async-in-child-emacs t
-          debug-on-error async-debug)
-    (if debug-on-error
+          debug-on-error async-debug
+          command-line-args-left nil)
+    (condition-case-unless-debug err
         (prin1 (funcall
                 (async--receive-sexp (unless async-send-over-pipe
-                                       command-line-args-left))))
-      (condition-case err
-          (prin1 (funcall
-                  (async--receive-sexp (unless async-send-over-pipe
-                                         command-line-args-left))))
-        (error
-         (prin1 (list 'async-signal err)))))))
+                                       args-left))))
+      (error
+       (prin1 (list 'async-signal err))))))
 
 (defun async-ready (future)
   "Query a FUTURE to see if it is ready.
 
-I.e., if no blocking
-would result from a call to `async-get' on that FUTURE."
+I.e., if no blocking would result from a call to `async-get' on that FUTURE."
   (and (memq (process-status future) '(exit signal))
        (let ((buf (process-buffer future)))
          (if (buffer-live-p buf)
@@ -257,7 +285,7 @@ its FINISH-FUNC is nil."
        (plist-get value :async-message)))
 
 (defun async-send (&rest args)
-  "Send the given messages to the asychronous Emacs PROCESS."
+  "Send the given messages to the asynchronous Emacs PROCESS."
   (let ((args (append args '(:async-message t))))
     (if async-in-child-emacs
         (if async-callback
@@ -265,7 +293,7 @@ its FINISH-FUNC is nil."
       (async--transmit-sexp (car args) (list 'quote (cdr args))))))
 
 (defun async-receive ()
-  "Send the given messages to the asychronous Emacs PROCESS."
+  "Send the given messages to the asynchronous Emacs PROCESS."
   (async--receive-sexp))
 
 ;;;###autoload
@@ -291,6 +319,20 @@ working directory."
 Can be one of \"-Q\" or \"-q\".
 Default is \"-Q\" but it is sometimes useful to use \"-q\" to have a
 enhanced config or some more variables loaded.")
+
+(defun async--emacs-program-args (&optional sexp)
+  "Return a list of arguments for invoking the child Emacs."
+  ;; Using `locate-library' ensure we use the right file
+  ;; when the .elc have been deleted.
+  (let ((args (list async-quiet-switch "-l" (locate-library "async"))))
+    (when async-child-init
+      (setq args (append args (list "-l" async-child-init))))
+    (append args (list "-batch" "-f" "async-batch-invoke"
+                       (if sexp
+                           (with-temp-buffer
+                             (async--insert-sexp (list 'quote sexp))
+                             (buffer-string))
+                           "<none>")))))
 
 ;;;###autoload
 (defun async-start (start-func &optional finish-func)
@@ -333,7 +375,18 @@ will leave *emacs* process buffers hanging around):
     (async-start
      (lambda ()
        (delete-file \"a remote file on a slow link\" nil))
-     'ignore)
+     \\='ignore)
+
+Special case:
+If the output of START-FUNC is a string with properties
+e.g. (buffer-string) RESULT will be transformed in a list where the
+car is the string itself (without props) and the cdr the rest of
+properties, this allows using in FINISH-FUNC the string without
+properties and then apply the properties in cdr to this string (if
+needed).
+Properties handling special objects like markers are returned as
+list to allow restoring them later.
+See <https://github.com/jwiegley/emacs-async/issues/145> for more infos.
 
 Note: Even when FINISH-FUNC is present, a future is still
 returned except that it yields no value (since the value is
@@ -342,23 +395,15 @@ returns nil.  It can still be useful, however, as an argument to
 `async-ready' or `async-wait'."
   (let ((sexp start-func)
         ;; Subordinate Emacs will send text encoded in UTF-8.
-        (coding-system-for-read 'utf-8-auto))
+        (coding-system-for-read 'utf-8-emacs-unix))
     (setq async--procvar
-          (async-start-process
-           "emacs" (file-truename
-                    (expand-file-name invocation-name
-                                      invocation-directory))
-           finish-func
-           async-quiet-switch "-l"
-           ;; Using `locate-library' ensure we use the right file
-           ;; when the .elc have been deleted.
-           (locate-library "async")
-           "-batch" "-f" "async-batch-invoke"
-           (if async-send-over-pipe
-               "<none>"
-             (with-temp-buffer
-               (async--insert-sexp (list 'quote sexp))
-               (buffer-string)))))
+          (apply 'async-start-process
+                 "emacs" (file-truename
+                          (expand-file-name invocation-name
+                                            invocation-directory))
+                 finish-func
+                 (async--emacs-program-args (if (not async-send-over-pipe) sexp))))
+
     (if async-send-over-pipe
         (async--transmit-sexp async--procvar (list 'quote sexp)))
     async--procvar))

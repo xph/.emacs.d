@@ -6,15 +6,55 @@
 ;;;### (autoloads nil "dash/dash" "dash/dash.el" (0 0 0 0))
 ;;; Generated autoloads from dash/dash.el
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dash/dash" '("!cdr" "!cons" "--" "->" "-a" "-butlast" "-c" "-d" "-e" "-f" "-gr" "-i" "-keep" "-l" "-m" "-non" "-only-some" "-p" "-r" "-s" "-t" "-u" "-value-to-list" "-when-let" "-zip" "dash-")))
+(autoload 'dash-fontify-mode "dash/dash" "\
+Toggle fontification of Dash special variables.
 
-;;;***
-
-;;;### (autoloads nil "dash/dash-functional" "dash/dash-functional.el"
-;;;;;;  (0 0 0 0))
-;;; Generated autoloads from dash/dash-functional.el
+If called interactively, enable Dash-Fontify mode if ARG is positive,
+and disable it if ARG is zero or negative.  If called from Lisp, also
+enable the mode if ARG is omitted or nil, and toggle it if ARG is
+`toggle'; disable the mode otherwise.
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dash/dash-functional" '("-a" "-c" "-f" "-iteratefn" "-juxt" "-not" "-o" "-prodfn" "-rpartial")))
+Dash-Fontify mode is a buffer-local minor mode intended for Emacs
+Lisp buffers.  Enabling it causes the special variables bound in
+anaphoric Dash macros to be fontified.  These anaphoras include
+`it', `it-index', `acc', and `other'.  In older Emacs versions
+which do not dynamically detect macros, Dash-Fontify mode
+additionally fontifies Dash macro calls.
+
+See also `dash-fontify-mode-lighter' and
+`global-dash-fontify-mode'.
+
+\(fn &optional ARG)" t nil)
+
+(put 'global-dash-fontify-mode 'globalized-minor-mode t)
+
+(defvar global-dash-fontify-mode nil "\
+Non-nil if Global Dash-Fontify mode is enabled.
+See the `global-dash-fontify-mode' command
+for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `global-dash-fontify-mode'.")
+
+(custom-autoload 'global-dash-fontify-mode "dash/dash" nil)
+
+(autoload 'global-dash-fontify-mode "dash/dash" "\
+Toggle Dash-Fontify mode in all buffers.
+With prefix ARG, enable Global Dash-Fontify mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
+
+Dash-Fontify mode is enabled in all buffers where
+`dash--turn-on-fontify-mode' would do it.
+See `dash-fontify-mode' for more information on Dash-Fontify mode.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'dash-register-info-lookup "dash/dash" "\
+Register the Dash Info manual with `info-lookup-symbol'.
+This allows Dash symbols to be looked up with \\[info-lookup-symbol]." t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dash/dash" '("!cdr" "!cons" "--" "->" "-a" "-butlast" "-c" "-d" "-e" "-f" "-gr" "-i" "-juxt" "-keep" "-l" "-m" "-no" "-o" "-p" "-r" "-s" "-t" "-u" "-value-to-list" "-when-let" "-zip" "dash-")))
 
 ;;;***
 
@@ -235,7 +275,7 @@ object or a file path.
 ;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from el-get/el-get-dependencies.el
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-dependencies" '("el-get-" "topological-sort")))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "el-get/el-get-dependencies" '("el-get-")))
 
 ;;;***
 
@@ -336,7 +376,18 @@ will leave *emacs* process buffers hanging around):
     (async-start
      (lambda ()
        (delete-file \"a remote file on a slow link\" nil))
-     'ignore)
+     \\='ignore)
+
+Special case:
+If the output of START-FUNC is a string with properties
+e.g. (buffer-string) RESULT will be transformed in a list where the
+car is the string itself (without props) and the cdr the rest of
+properties, this allows using in FINISH-FUNC the string without
+properties and then apply the properties in cdr to this string (if
+needed).
+Properties handling special objects like markers are returned as
+list to allow restoring them later.
+See <https://github.com/jwiegley/emacs-async/issues/145> for more infos.
 
 Note: Even when FINISH-FUNC is present, a future is still
 returned except that it yields no value (since the value is
@@ -389,7 +440,7 @@ Same as `byte-compile-file' but asynchronous.
 
 \(fn FILE)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-async/async-bytecomp" '("async-byte")))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-async/async-bytecomp" '("async-")))
 
 ;;;***
 
@@ -822,8 +873,9 @@ Find file at point based on context." t nil)
 
 (autoload 'helm-projectile-find-other-file "helm-projectile/helm-projectile" "\
 Switch between files with the same name but different extensions using Helm.
-With FLEX-MATCHING, match any file that contains the base name of current file.
-Other file extensions can be customized with the variable `projectile-other-file-alist'.
+With FLEX-MATCHING, match any file that contains the base name of
+current file.  Other file extensions can be customized with the
+variable `projectile-other-file-alist'.
 
 \(fn &optional FLEX-MATCHING)" t nil)
 
@@ -867,7 +919,7 @@ If invoked outside of a project, displays a list of known projects to jump.
 
 (eval-after-load 'projectile '(progn (define-key projectile-command-map (kbd "h") #'helm-projectile)))
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "helm-projectile/helm-projectile" '("helm-")))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "helm-projectile/helm-projectile" '("glob-quote" "helm-")))
 
 ;;;***
 
@@ -1026,10 +1078,11 @@ Add the currently visited file to the cache." t nil)
 
 (autoload 'projectile-discover-projects-in-directory "projectile/projectile" "\
 Discover any projects in DIRECTORY and add them to the projectile cache.
-This function is not recursive and only adds projects with roots
-at the top level of DIRECTORY.
 
-\(fn DIRECTORY)" t nil)
+If DEPTH is non-nil recursively descend exactly DEPTH levels below DIRECTORY and
+discover projects there.
+
+\(fn DIRECTORY &optional DEPTH)" t nil)
 
 (autoload 'projectile-discover-projects-in-search-path "projectile/projectile" "\
 Discover projects in `projectile-project-search-path'.
@@ -1060,21 +1113,26 @@ With a prefix argument, show NLINES of context.
 (autoload 'projectile-find-other-file "projectile/projectile" "\
 Switch between files with the same name but different extensions.
 With FLEX-MATCHING, match any file that contains the base name of current file.
-Other file extensions can be customized with the variable `projectile-other-file-alist'.
+Other file extensions can be customized with the variable
+`projectile-other-file-alist'.
 
 \(fn &optional FLEX-MATCHING)" t nil)
 
 (autoload 'projectile-find-other-file-other-window "projectile/projectile" "\
-Switch between files with the same name but different extensions in other window.
-With FLEX-MATCHING, match any file that contains the base name of current file.
-Other file extensions can be customized with the variable `projectile-other-file-alist'.
+Switch between files with different extensions in other window.
+Switch between files with the same name but different extensions in other
+window.  With FLEX-MATCHING, match any file that contains the base name of
+current file.  Other file extensions can be customized with the variable
+`projectile-other-file-alist'.
 
 \(fn &optional FLEX-MATCHING)" t nil)
 
 (autoload 'projectile-find-other-file-other-frame "projectile/projectile" "\
+Switch between files with different extensions in other frame.
 Switch between files with the same name but different extensions in other frame.
-With FLEX-MATCHING, match any file that contains the base name of current file.
-Other file extensions can be customized with the variable `projectile-other-file-alist'.
+With FLEX-MATCHING, match any file that contains the base name of current
+file.  Other file extensions can be customized with the variable
+`projectile-other-file-alist'.
 
 \(fn &optional FLEX-MATCHING)" t nil)
 
@@ -1086,19 +1144,21 @@ With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 If point is on a filename, Projectile first tries to search for that
 file in project:
 
-- If it finds just a file, it switches to that file instantly.  This works even
-if the filename is incomplete, but there's only a single file in the current project
-that matches the filename at point.  For example, if there's only a single file named
-\"projectile/projectile.el\" but the current filename is \"projectile/proj\" (incomplete),
-`projectile-find-file-dwim' still switches to \"projectile/projectile.el\" immediately
- because this is the only filename that matches.
+- If it finds just a file, it switches to that file instantly.  This works
+even if the filename is incomplete, but there's only a single file in the
+current project that matches the filename at point.  For example, if
+there's only a single file named \"projectile/projectile.el\" but the
+current filename is \"projectile/proj\" (incomplete),
+`projectile-find-file-dwim' still switches to \"projectile/projectile.el\"
+immediately because this is the only filename that matches.
 
-- If it finds a list of files, the list is displayed for selecting.  A list of
-files is displayed when a filename appears more than one in the project or the
-filename at point is a prefix of more than two files in a project.  For example,
-if `projectile-find-file-dwim' is executed on a filepath like \"projectile/\", it lists
-the content of that directory.  If it is executed on a partial filename like
- \"projectile/a\", a list of files with character 'a' in that directory is presented.
+- If it finds a list of files, the list is displayed for selecting.  A list
+of files is displayed when a filename appears more than one in the project
+or the filename at point is a prefix of more than two files in a project.
+For example, if `projectile-find-file-dwim' is executed on a filepath like
+\"projectile/\", it lists the content of that directory.  If it is executed
+on a partial filename like \"projectile/a\", a list of files with character
+\"a\" in that directory is presented.
 
 - If it finds nothing, display a list of all files in project for selecting.
 
@@ -1112,20 +1172,22 @@ With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 If point is on a filename, Projectile first tries to search for that
 file in project:
 
-- If it finds just a file, it switches to that file instantly.  This works even
-if the filename is incomplete, but there's only a single file in the current project
-that matches the filename at point.  For example, if there's only a single file named
-\"projectile/projectile.el\" but the current filename is \"projectile/proj\" (incomplete),
-`projectile-find-file-dwim-other-window' still switches to \"projectile/projectile.el\"
-immediately because this is the only filename that matches.
+- If it finds just a file, it switches to that file instantly.  This works
+even if the filename is incomplete, but there's only a single file in the
+current project that matches the filename at point.  For example, if
+there's only a single file named \"projectile/projectile.el\" but the
+current filename is \"projectile/proj\" (incomplete),
+`projectile-find-file-dwim-other-window' still switches to
+\"projectile/projectile.el\" immediately because this is the only filename
+that matches.
 
-- If it finds a list of files, the list is displayed for selecting.  A list of
-files is displayed when a filename appears more than one in the project or the
-filename at point is a prefix of more than two files in a project.  For example,
-if `projectile-find-file-dwim-other-window' is executed on a filepath like \"projectile/\", it lists
-the content of that directory.  If it is executed on a partial filename
-like \"projectile/a\", a list of files with character 'a' in that directory
-is presented.
+- If it finds a list of files, the list is displayed for selecting.  A list
+of files is displayed when a filename appears more than one in the project
+or the filename at point is a prefix of more than two files in a project.
+For example, if `projectile-find-file-dwim-other-window' is executed on a
+filepath like \"projectile/\", it lists the content of that directory.  If
+it is executed on a partial filename like \"projectile/a\", a list of files
+with character \"a\" in that directory is presented.
 
 - If it finds nothing, display a list of all files in project for selecting.
 
@@ -1139,20 +1201,22 @@ With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 If point is on a filename, Projectile first tries to search for that
 file in project:
 
-- If it finds just a file, it switches to that file instantly.  This works even
-if the filename is incomplete, but there's only a single file in the current project
-that matches the filename at point.  For example, if there's only a single file named
-\"projectile/projectile.el\" but the current filename is \"projectile/proj\" (incomplete),
-`projectile-find-file-dwim-other-frame' still switches to \"projectile/projectile.el\"
-immediately because this is the only filename that matches.
+- If it finds just a file, it switches to that file instantly.  This works
+even if the filename is incomplete, but there's only a single file in the
+current project that matches the filename at point.  For example, if
+there's only a single file named \"projectile/projectile.el\" but the
+current filename is \"projectile/proj\" (incomplete),
+`projectile-find-file-dwim-other-frame' still switches to
+\"projectile/projectile.el\" immediately because this is the only filename
+that matches.
 
-- If it finds a list of files, the list is displayed for selecting.  A list of
-files is displayed when a filename appears more than one in the project or the
-filename at point is a prefix of more than two files in a project.  For example,
-if `projectile-find-file-dwim-other-frame' is executed on a filepath like \"projectile/\", it lists
-the content of that directory.  If it is executed on a partial filename
-like \"projectile/a\", a list of files with character 'a' in that directory
-is presented.
+- If it finds a list of files, the list is displayed for selecting.  A list
+of files is displayed when a filename appears more than one in the project
+or the filename at point is a prefix of more than two files in a project.
+For example, if `projectile-find-file-dwim-other-frame' is executed on a
+filepath like \"projectile/\", it lists the content of that directory.  If
+it is executed on a partial filename like \"projectile/a\", a list of files
+with character \"a\" in that directory is presented.
 
 - If it finds nothing, display a list of all files in project for selecting.
 
@@ -1180,6 +1244,21 @@ With a prefix arg INVALIDATE-CACHE invalidates the cache first.
 
 (autoload 'projectile-toggle-project-read-only "projectile/projectile" "\
 Toggle project read only." t nil)
+
+(autoload 'projectile-add-dir-local-variable "projectile/projectile" "\
+Run `add-dir-local-variable' with .dir-locals.el in root of project.
+
+Parameters MODE VARIABLE VALUE are passed directly to `add-dir-local-variable'.
+
+\(fn MODE VARIABLE VALUE)" nil nil)
+
+(autoload 'projectile-delete-dir-local-variable "projectile/projectile" "\
+Run `delete-dir-local-variable' with .dir-locals.el in root of project.
+
+Parameters MODE VARIABLE VALUE are passed directly to
+`delete-dir-local-variable'.
+
+\(fn MODE VARIABLE)" nil nil)
 
 (autoload 'projectile-find-dir "projectile/projectile" "\
 Jump to a project's directory using completion.
@@ -1229,12 +1308,14 @@ Generate a related-files-fn which relates as KIND for files having EXTENSIONS.
 \(fn KIND EXTENSIONS)" nil nil)
 
 (autoload 'projectile-related-files-fn-test-with-prefix "projectile/projectile" "\
-Generate a related-files-fn which relates tests and impl for files with EXTENSION based on TEST-PREFIX.
+Generate a related-files-fn which relates tests and impl.
+Use files with EXTENSION based on TEST-PREFIX.
 
 \(fn EXTENSION TEST-PREFIX)" nil nil)
 
 (autoload 'projectile-related-files-fn-test-with-suffix "projectile/projectile" "\
-Generate a related-files-fn which relates tests and impl for files with EXTENSION based on TEST-SUFFIX.
+Generate a related-files-fn which relates tests and impl.
+Use files with EXTENSION based on TEST-SUFFIX.
 
 \(fn EXTENSION TEST-SUFFIX)" nil nil)
 
@@ -1242,13 +1323,26 @@ Generate a related-files-fn which relates tests and impl for files with EXTENSIO
 Display info for current project." t nil)
 
 (autoload 'projectile-find-implementation-or-test-other-window "projectile/projectile" "\
-Open matching implementation or test file in other window." t nil)
+Open matching implementation or test file in other window.
+
+See the documentation of `projectile--find-matching-file' and
+`projectile--find-matching-test' for how implementation and test files
+are determined." t nil)
 
 (autoload 'projectile-find-implementation-or-test-other-frame "projectile/projectile" "\
-Open matching implementation or test file in other frame." t nil)
+Open matching implementation or test file in other frame.
+
+See the documentation of `projectile--find-matching-file' and
+`projectile--find-matching-test' for how implementation and test files
+are determined." t nil)
 
 (autoload 'projectile-toggle-between-implementation-and-test "projectile/projectile" "\
-Toggle between an implementation file and its test file." t nil)
+Toggle between an implementation file and its test file.
+
+
+See the documentation of `projectile--find-matching-file' and
+`projectile--find-matching-test' for how implementation and test files
+are determined." t nil)
 
 (autoload 'projectile-grep "projectile/projectile" "\
 Perform rgrep in the project.
@@ -1270,10 +1364,13 @@ regular expression.
 \(fn SEARCH-TERM &optional ARG)" t nil)
 
 (autoload 'projectile-ripgrep "projectile/projectile" "\
-Run a Ripgrep search with `SEARCH-TERM' at current project root.
+Run a ripgrep (rg) search with `SEARCH-TERM' at current project root.
 
 With an optional prefix argument ARG SEARCH-TERM is interpreted as a
 regular expression.
+
+This command depends on of the Emacs packages ripgrep or rg being
+installed to work.
 
 \(fn SEARCH-TERM &optional ARG)" t nil)
 
@@ -1287,10 +1384,14 @@ Find tag in project." t nil)
 Invoke `execute-extended-command' in the project's root." t nil)
 
 (autoload 'projectile-run-shell-command-in-root "projectile/projectile" "\
-Invoke `shell-command' in the project's root." t nil)
+Invoke `shell-command' in the project's root.
+
+\(fn COMMAND &optional OUTPUT-BUFFER ERROR-BUFFER)" t nil)
 
 (autoload 'projectile-run-async-shell-command-in-root "projectile/projectile" "\
-Invoke `async-shell-command' in the project's root." t nil)
+Invoke `async-shell-command' in the project's root.
+
+\(fn COMMAND &optional OUTPUT-BUFFER ERROR-BUFFER)" t nil)
 
 (autoload 'projectile-run-gdb "projectile/projectile" "\
 Invoke `gdb' in the project's root." t nil)
@@ -1302,7 +1403,7 @@ Switch to the project specific shell buffer if it already exists.
 
 Use a prefix argument ARG to indicate creation of a new process instead.
 
-\(fn ARG)" t nil)
+\(fn &optional ARG)" t nil)
 
 (autoload 'projectile-run-eshell "projectile/projectile" "\
 Invoke `eshell' in the project's root.
@@ -1311,7 +1412,7 @@ Switch to the project specific eshell buffer if it already exists.
 
 Use a prefix argument ARG to indicate creation of a new process instead.
 
-\(fn ARG)" t nil)
+\(fn &optional ARG)" t nil)
 
 (autoload 'projectile-run-ielm "projectile/projectile" "\
 Invoke `ielm' in the project's root.
@@ -1320,7 +1421,7 @@ Switch to the project specific ielm buffer if it already exists.
 
 Use a prefix argument ARG to indicate creation of a new process instead.
 
-\(fn ARG)" t nil)
+\(fn &optional ARG)" t nil)
 
 (autoload 'projectile-run-term "projectile/projectile" "\
 Invoke `term' in the project's root.
@@ -1329,7 +1430,7 @@ Switch to the project specific term buffer if it already exists.
 
 Use a prefix argument ARG to indicate creation of a new process instead.
 
-\(fn ARG)" t nil)
+\(fn &optional ARG)" t nil)
 
 (autoload 'projectile-run-vterm "projectile/projectile" "\
 Invoke `vterm' in the project's root.
@@ -1343,8 +1444,8 @@ Use a prefix argument ARG to indicate creation of a new process instead.
 (autoload 'projectile-replace "projectile/projectile" "\
 Replace literal string in project using non-regexp `tags-query-replace'.
 
-With a prefix argument ARG prompts you for a directory on which
-to run the replacement.
+With a prefix argument ARG prompts you for a directory and file name patterns
+on which to run the replacement.
 
 \(fn &optional ARG)" t nil)
 
@@ -1488,6 +1589,9 @@ Remove known projects that don't exist anymore." t nil)
 (autoload 'projectile-clear-known-projects "projectile/projectile" "\
 Clear both `projectile-known-projects' and `projectile-known-projects-file'." t nil)
 
+(autoload 'projectile-reset-known-projects "projectile/projectile" "\
+Clear known projects and rediscover." t nil)
+
 (autoload 'projectile-remove-known-project "projectile/projectile" "\
 Remove PROJECT from the list of known projects.
 
@@ -1554,24 +1658,7 @@ Otherwise behave as if called interactively.
 
 (define-obsolete-function-alias 'projectile-global-mode 'projectile-mode "1.0")
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "projectile/projectile" '("??" "compilation-find-file-projectile-find-compilation-buffer" "def-projectile-commander-method" "delete-file-projectile-remove-from-cache" "projectile-")))
-
-;;;***
-
-;;;### (autoloads nil "slim-mode/slim-mode" "slim-mode/slim-mode.el"
-;;;;;;  (0 0 0 0))
-;;; Generated autoloads from slim-mode/slim-mode.el
-
-(autoload 'slim-mode "slim-mode/slim-mode" "\
-Major mode for editing Slim files.
-
-\\{slim-mode-map}
-
-\(fn)" t nil)
-
-(add-to-list 'auto-mode-alist '("\\.slim\\'" . slim-mode))
-
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "slim-mode/slim-mode" '("html-tags" "slim-")))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "projectile/projectile" '("??" "compilation-find-file-projectile-find-compilation-buffer" "def-projectile-commander-method" "delete-file-projectile-remove-from-cache" "project")))
 
 ;;;***
 
@@ -1670,7 +1757,7 @@ Major mode for editing web templates.
 
 ;;;***
 
-;;;### (autoloads nil nil ("el-get/el-get-install.el" "emacs-async/async-pkg.el")
+;;;### (autoloads nil nil ("dash/dash-functional.el" "el-get/el-get-install.el")
 ;;;;;;  (0 0 0 0))
 
 ;;;***

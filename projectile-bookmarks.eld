@@ -1,1 +1,1 @@
-("~/upstart_web/" "~/.emacs.d/" "~/.emacs.d/el-get/pkg-info/" "~/" "~/.emacs.d/el-get/projectile/")
+("~/.emacs.d/" "~/.emacs.d/el-get/pkg-info/" "~/" "~/.emacs.d/el-get/projectile/")

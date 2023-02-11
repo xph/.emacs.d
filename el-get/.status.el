@@ -52,10 +52,10 @@
               :build/berkeley-unix
               `(("gmake" ,(concat "ASYNC_ELPA_DIR="
                                   (el-get-package-directory 'emacs-async))))
-              :features "helm-config" :post-init
+              :features "helm-autoloads" :post-init
               (helm-mode)))
  (helm-ag status "installed" recipe
-          (:name helm-ag :description "The silver search with helm interface." :type github :pkgname "syohex/emacs-helm-ag" :depends
+          (:name helm-ag :description "The silver search with helm interface." :type github :pkgname "emacsorphanage/helm-ag" :depends
                  (helm)))
  (helm-projectile status "installed" recipe
                   (:name helm-projectile :description "Helm integration for Projectile." :type github :pkgname "bbatsov/helm-projectile" :depends
@@ -63,7 +63,7 @@
  (let-alist status "installed" recipe
             (:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :website "https://elpa.gnu.org/packages/let-alist.html"))
  (pkg-info status "installed" recipe
-           (:name pkg-info :description "Provide information about Emacs packages." :type github :pkgname "lunaryorn/pkg-info.el" :depends
+           (:name pkg-info :description "Provide information about Emacs packages." :type github :pkgname "emacsorphanage/pkg-info" :depends
                   (dash epl)))
  (projectile status "installed" recipe
              (:name projectile :description "Project navigation and management library for Emacs." :type github :pkgname "bbatsov/projectile" :depends pkg-info))
@@ -71,8 +71,6 @@
             (:name ruby-mode :builtin "24" :type http :description "Major mode for editing Ruby files." :url "http://bugs.ruby-lang.org/projects/ruby-trunk/repository/raw/misc/ruby-mode.el"))
  (seq status "installed" recipe
       (:name seq :description "Sequence manipulation functions" :builtin "25" :type elpa :website "https://elpa.gnu.org/packages/seq.html"))
- (slim-mode status "installed" recipe
-            (:name slim-mode :description "Syntax highlighting for Slim" :type github :pkgname "slim-template/emacs-slim" :features slim-mode))
  (solidity-mode status "installed" recipe
                 (:name solidity-mode :description "Language mode for Ethereum's Solidity Language" :type github :website "https://github.com/ethereum/emacs-solidity" :pkgname "ethereum/emacs-solidity"))
  (tern status "installed" recipe

@@ -1,1 +1,1 @@
-("~/.emacs.d/" "~/.emacs.d/el-get/pkg-info/" "~/" "~/.emacs.d/el-get/projectile/")
+("~/.emacs.d/" "~/cred0/" "~/.emacs.d/el-get/pkg-info/" "~/" "~/.emacs.d/el-get/projectile/")

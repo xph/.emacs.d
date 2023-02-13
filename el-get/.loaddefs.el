@@ -3,6 +3,278 @@
 ;;; Code:
 
 
+;;;### (autoloads nil "anaphora/anaphora" "anaphora/anaphora.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from anaphora/anaphora.el
+
+(let ((loads (get 'anaphora 'custom-loads))) (if (member '"anaphora/anaphora" loads) nil (put 'anaphora 'custom-loads (cons '"anaphora/anaphora" loads))))
+
+(defvar anaphora-use-long-names-only nil "\
+Use only long names such as `anaphoric-if' instead of traditional `aif'.")
+
+(custom-autoload 'anaphora-use-long-names-only "anaphora/anaphora" t)
+
+(defun anaphora--install-traditional-aliases (&optional arg) "\
+Install traditional short aliases for anaphoric macros.
+
+With negative numeric ARG, remove traditional aliases." (let ((syms '((if . t) (prog1 . t) (prog2 . t) (when . when) (while . t) (and . t) (cond . cond) (lambda . lambda) (block . block) (case . case) (ecase . ecase) (typecase . typecase) (etypecase . etypecase) (let . let) (+ . t) (- . t) (* . t) (/ . t)))) (cond ((and (numberp arg) (< arg 0)) (dolist (cell syms) (when (ignore-errors (eq (symbol-function (intern-soft (format "a%s" (car cell)))) (intern-soft (format "anaphoric-%s" (car cell))))) (fmakunbound (intern (format "a%s" (car cell))))))) (t (dolist (cell syms) (let* ((builtin (car cell)) (traditional (intern (format "a%s" builtin))) (long (intern (format "anaphoric-%s" builtin)))) (defalias traditional long) (put traditional 'lisp-indent-function (get builtin 'lisp-indent-function)) (put traditional 'edebug-form-spec (cdr cell))))))))
+
+(unless anaphora-use-long-names-only (anaphora--install-traditional-aliases))
+
+(autoload 'anaphoric-if "anaphora/anaphora" "\
+Like `if', but the result of evaluating COND is bound to `it'.
+
+The variable `it' is available within THEN and ELSE.
+
+COND, THEN, and ELSE are otherwise as documented for `if'.
+
+\(fn COND THEN &rest ELSE)" nil t)
+
+(function-put 'anaphoric-if 'lisp-indent-function '2)
+
+(autoload 'anaphoric-prog1 "anaphora/anaphora" "\
+Like `prog1', but the result of evaluating FIRST is bound to `it'.
+
+The variable `it' is available within BODY.
+
+FIRST and BODY are otherwise as documented for `prog1'.
+
+\(fn FIRST &rest BODY)" nil t)
+
+(function-put 'anaphoric-prog1 'lisp-indent-function '1)
+
+(autoload 'anaphoric-prog2 "anaphora/anaphora" "\
+Like `prog2', but the result of evaluating FORM2 is bound to `it'.
+
+The variable `it' is available within BODY.
+
+FORM1, FORM2, and BODY are otherwise as documented for `prog2'.
+
+\(fn FORM1 FORM2 &rest BODY)" nil t)
+
+(function-put 'anaphoric-prog2 'lisp-indent-function '2)
+
+(autoload 'anaphoric-when "anaphora/anaphora" "\
+Like `when', but the result of evaluating COND is bound to `it'.
+
+The variable `it' is available within BODY.
+
+COND and BODY are otherwise as documented for `when'.
+
+\(fn COND &rest BODY)" nil t)
+
+(function-put 'anaphoric-when 'lisp-indent-function '1)
+
+(autoload 'anaphoric-while "anaphora/anaphora" "\
+Like `while', but the result of evaluating TEST is bound to `it'.
+
+The variable `it' is available within BODY.
+
+TEST and BODY are otherwise as documented for `while'.
+
+\(fn TEST &rest BODY)" nil t)
+
+(function-put 'anaphoric-while 'lisp-indent-function '1)
+
+(autoload 'anaphoric-and "anaphora/anaphora" "\
+Like `and', but the result of the previous condition is bound to `it'.
+
+The variable `it' is available within all CONDITIONS after the
+initial one.
+
+CONDITIONS are otherwise as documented for `and'.
+
+Note that some implementations of this macro bind only the first
+condition to `it', rather than each successive condition.
+
+\(fn &rest CONDITIONS)" nil t)
+
+(autoload 'anaphoric-cond "anaphora/anaphora" "\
+Like `cond', but the result of each condition is bound to `it'.
+
+The variable `it' is available within the remainder of each of CLAUSES.
+
+CLAUSES are otherwise as documented for `cond'.
+
+\(fn &rest CLAUSES)" nil t)
+
+(autoload 'anaphoric-lambda "anaphora/anaphora" "\
+Like `lambda', but the function may refer to itself as `self'.
+
+ARGS and BODY are otherwise as documented for `lambda'.
+
+\(fn ARGS &rest BODY)" nil t)
+
+(function-put 'anaphoric-lambda 'lisp-indent-function 'defun)
+
+(autoload 'anaphoric-block "anaphora/anaphora" "\
+Like `block', but the result of the previous expression is bound to `it'.
+
+The variable `it' is available within all expressions of BODY
+except the initial one.
+
+NAME and BODY are otherwise as documented for `block'.
+
+\(fn NAME &rest BODY)" nil t)
+
+(function-put 'anaphoric-block 'lisp-indent-function '1)
+
+(autoload 'anaphoric-case "anaphora/anaphora" "\
+Like `case', but the result of evaluating EXPR is bound to `it'.
+
+The variable `it' is available within CLAUSES.
+
+EXPR and CLAUSES are otherwise as documented for `case'.
+
+\(fn EXPR &rest CLAUSES)" nil t)
+
+(function-put 'anaphoric-case 'lisp-indent-function '1)
+
+(autoload 'anaphoric-ecase "anaphora/anaphora" "\
+Like `ecase', but the result of evaluating EXPR is bound to `it'.
+
+The variable `it' is available within CLAUSES.
+
+EXPR and CLAUSES are otherwise as documented for `ecase'.
+
+\(fn EXPR &rest CLAUSES)" nil t)
+
+(function-put 'anaphoric-ecase 'lisp-indent-function '1)
+
+(autoload 'anaphoric-typecase "anaphora/anaphora" "\
+Like `typecase', but the result of evaluating EXPR is bound to `it'.
+
+The variable `it' is available within CLAUSES.
+
+EXPR and CLAUSES are otherwise as documented for `typecase'.
+
+\(fn EXPR &rest CLAUSES)" nil t)
+
+(function-put 'anaphoric-typecase 'lisp-indent-function '1)
+
+(autoload 'anaphoric-etypecase "anaphora/anaphora" "\
+Like `etypecase', but result of evaluating EXPR is bound to `it'.
+
+The variable `it' is available within CLAUSES.
+
+EXPR and CLAUSES are otherwise as documented for `etypecase'.
+
+\(fn EXPR &rest CLAUSES)" nil t)
+
+(function-put 'anaphoric-etypecase 'lisp-indent-function '1)
+
+(autoload 'anaphoric-let "anaphora/anaphora" "\
+Like `let', but the result of evaluating FORM is bound to `it'.
+
+FORM and BODY are otherwise as documented for `let'.
+
+\(fn FORM &rest BODY)" nil t)
+
+(function-put 'anaphoric-let 'lisp-indent-function '1)
+
+(autoload 'anaphoric-+ "anaphora/anaphora" "\
+Like `+', but the result of evaluating the previous expression is bound to `it'.
+
+The variable `it' is available within all expressions after the
+initial one.
+
+NUMBERS-OR-MARKERS are otherwise as documented for `+'.
+
+\(fn &rest NUMBERS-OR-MARKERS)" nil t)
+
+(autoload 'anaphoric-- "anaphora/anaphora" "\
+Like `-', but the result of evaluating the previous expression is bound to `it'.
+
+The variable `it' is available within all expressions after the
+initial one.
+
+NUMBER-OR-MARKER and NUMBERS-OR-MARKERS are otherwise as
+documented for `-'.
+
+\(fn &optional NUMBER-OR-MARKER &rest NUMBERS-OR-MARKERS)" nil t)
+
+(autoload 'anaphoric-* "anaphora/anaphora" "\
+Like `*', but the result of evaluating the previous expression is bound to `it'.
+
+The variable `it' is available within all expressions after the
+initial one.
+
+NUMBERS-OR-MARKERS are otherwise as documented for `*'.
+
+\(fn &rest NUMBERS-OR-MARKERS)" nil t)
+
+(autoload 'anaphoric-/ "anaphora/anaphora" "\
+Like `/', but the result of evaluating the previous divisor is bound to `it'.
+
+The variable `it' is available within all expressions after the
+first divisor.
+
+DIVIDEND, DIVISOR, and DIVISORS are otherwise as documented for `/'.
+
+\(fn DIVIDEND DIVISOR &rest DIVISORS)" nil t)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "anaphora/anaphora" '("anaphora-install-font-lock-keywords")))
+
+;;;***
+
+;;;### (autoloads nil "auto-complete/auto-complete" "auto-complete/auto-complete.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from auto-complete/auto-complete.el
+
+(autoload 'auto-complete "auto-complete/auto-complete" "\
+Start auto-completion at current point.
+
+\(fn &optional SOURCES)" t nil)
+
+(autoload 'auto-complete-mode "auto-complete/auto-complete" "\
+AutoComplete mode
+
+If called interactively, enable Auto-Complete mode if ARG is
+positive, and disable it if ARG is zero or negative.  If called
+from Lisp, also enable the mode if ARG is omitted or nil, and
+toggle it if ARG is `toggle'; disable the mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+(put 'global-auto-complete-mode 'globalized-minor-mode t)
+
+(defvar global-auto-complete-mode nil "\
+Non-nil if Global Auto-Complete mode is enabled.
+See the `global-auto-complete-mode' command
+for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `global-auto-complete-mode'.")
+
+(custom-autoload 'global-auto-complete-mode "auto-complete/auto-complete" nil)
+
+(autoload 'global-auto-complete-mode "auto-complete/auto-complete" "\
+Toggle Auto-Complete mode in all buffers.
+With prefix ARG, enable Global Auto-Complete mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
+
+Auto-Complete mode is enabled in all buffers where
+`auto-complete-mode-maybe' would do it.
+See `auto-complete-mode' for more information on Auto-Complete mode.
+
+\(fn &optional ARG)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "auto-complete/auto-complete" '("ac-" "auto-complete-mode")))
+
+;;;***
+
+;;;### (autoloads nil "auto-complete/auto-complete-config" "auto-complete/auto-complete-config.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from auto-complete/auto-complete-config.el
+
+(autoload 'ac-config-default "auto-complete/auto-complete-config" "\
+No documentation." nil nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "auto-complete/auto-complete-config" '("ac-")))
+
+;;;***
+
 ;;;### (autoloads nil "dash/dash" "dash/dash.el" (0 0 0 0))
 ;;; Generated autoloads from dash/dash.el
 
@@ -55,6 +327,465 @@ Register the Dash Info manual with `info-lookup-symbol'.
 This allows Dash symbols to be looked up with \\[info-lookup-symbol]." t nil)
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dash/dash" '("!cdr" "!cons" "--" "->" "-a" "-butlast" "-c" "-d" "-e" "-f" "-gr" "-i" "-juxt" "-keep" "-l" "-m" "-no" "-o" "-p" "-r" "-s" "-t" "-u" "-value-to-list" "-when-let" "-zip" "dash-")))
+
+;;;***
+
+;;;### (autoloads nil "deferred/concurrent" "deferred/concurrent.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from deferred/concurrent.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "deferred/concurrent" '("cc:")))
+
+;;;***
+
+;;;### (autoloads nil "deferred/deferred" "deferred/deferred.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from deferred/deferred.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "deferred/deferred" '("deferred:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-cell" "ein/lisp/ein-cell.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-cell.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-cell" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-classes" "ein/lisp/ein-classes.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-classes.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-classes" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-contents-api" "ein/lisp/ein-contents-api.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-contents-api.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-contents-api" '("*ein:content-hierarchy*" "ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-core" "ein/lisp/ein-core.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-core.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-core" '("*ein:" "ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-dev" "ein/lisp/ein-dev.el" (0
+;;;;;;  0 0 0))
+;;; Generated autoloads from ein/lisp/ein-dev.el
+
+(autoload 'ein:dev-start-debug "ein/lisp/ein-dev" "\
+Start logging a bunch of stuff." t nil)
+
+(autoload 'ein:dev-stop-debug "ein/lisp/ein-dev" "\
+Inverse of `ein:dev-start-debug'.
+Impossible to maintain because it needs to match start." t nil)
+
+(autoload 'ein:dev-bug-report-template "ein/lisp/ein-dev" "\
+Open a buffer with bug report template." t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-dev" '("ein:dev-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-events" "ein/lisp/ein-events.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-events.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-events" '("ein:events-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-file" "ein/lisp/ein-file.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-file.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-file" '("*ein:file-buffername-template*" "ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-gat" "ein/lisp/ein-gat.el" (0
+;;;;;;  0 0 0))
+;;; Generated autoloads from ein/lisp/ein-gat.el
+
+(autoload 'ein:gat-create "ein/lisp/ein-gat" "\
+
+
+\(fn &optional REFRESH)" t nil)
+
+(autoload 'ein:gat-run-local-batch "ein/lisp/ein-gat" "\
+
+
+\(fn &optional REFRESH)" t nil)
+
+(autoload 'ein:gat-run-local "ein/lisp/ein-gat" "\
+
+
+\(fn &optional REFRESH)" t nil)
+
+(autoload 'ein:gat-run-remote-batch "ein/lisp/ein-gat" "\
+
+
+\(fn &optional REFRESH)" t nil)
+
+(autoload 'ein:gat-run-remote "ein/lisp/ein-gat" "\
+
+
+\(fn &optional REFRESH)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-gat" '("ein:gat-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-ipdb" "ein/lisp/ein-ipdb.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-ipdb.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-ipdb" '("*ein:ipdb-sessions*" "ein:ipdb-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-ipynb-mode" "ein/lisp/ein-ipynb-mode.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-ipynb-mode.el
+
+(autoload 'ein:ipynb-mode "ein/lisp/ein-ipynb-mode" "\
+A simple mode for ipynb file.
+
+\\{ein:ipynb-mode-map}
+
+\(fn)" t nil)
+
+(add-to-list 'auto-mode-alist '("\\.ipynb\\'" . ein:ipynb-mode))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-jupyter" "ein/lisp/ein-jupyter.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-jupyter.el
+
+(autoload 'ein:jupyter-crib-token "ein/lisp/ein-jupyter" "\
+Shell out to jupyter for its credentials knowledge.  Return list
+of (PASSWORD TOKEN).
+
+\(fn URL-OR-PORT)" nil nil)
+
+(autoload 'ein:jupyter-crib-running-servers "ein/lisp/ein-jupyter" "\
+Shell out to jupyter for running servers." nil nil)
+
+(autoload 'ein:jupyter-server-start "ein/lisp/ein-jupyter" "\
+Start SERVER-COMMAND with `--notebook-dir' NOTEBOOK-DIRECTORY.
+
+Login after connection established unless NO-LOGIN-P is set.
+LOGIN-CALLBACK takes two arguments, the buffer created by
+`ein:notebooklist-open--finish', and the url-or-port argument
+of `ein:notebooklist-open*'.
+
+With \\[universal-argument] prefix arg, prompt the user for the
+server command.
+
+\(fn SERVER-COMMAND NOTEBOOK-DIRECTORY &optional NO-LOGIN-P LOGIN-CALLBACK PORT)" t nil)
+
+(defalias 'ein:run 'ein:jupyter-server-start)
+
+(defalias 'ein:stop 'ein:jupyter-server-stop)
+
+(autoload 'ein:jupyter-server-stop "ein/lisp/ein-jupyter" "\
+
+
+\(fn &optional ASK-P URL-OR-PORT)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-jupyter" '("*ein:jupyter-server-" "ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-kernel" "ein/lisp/ein-kernel.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-kernel.el
+
+(defalias 'ein:kernel-url-or-port 'ein:$kernel-url-or-port)
+
+(defalias 'ein:kernel-id 'ein:$kernel-kernel-id)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-kernel" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-kernelinfo" "ein/lisp/ein-kernelinfo.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-kernelinfo.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-kernelinfo" '("ein:kernelinfo")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-kill-ring" "ein/lisp/ein-kill-ring.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-kill-ring.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-kill-ring" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-log" "ein/lisp/ein-log.el" (0
+;;;;;;  0 0 0))
+;;; Generated autoloads from ein/lisp/ein-log.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-log" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-markdown-mode" "ein/lisp/ein-markdown-mode.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-markdown-mode.el
+
+(autoload 'ein:markdown-mode "ein/lisp/ein-markdown-mode" "\
+Major mode for editing ein:markdown files.
+
+\(fn)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-markdown-mode" '("defun-markdown-" "ein:markdown")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-node" "ein/lisp/ein-node.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-node.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-node" '("ein:node-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-notebook" "ein/lisp/ein-notebook.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-notebook.el
+
+(defalias 'ein:notebook-name 'ein:$notebook-notebook-name)
+
+(autoload 'ein:notebook-jump-to-opened-notebook "ein/lisp/ein-notebook" "\
+List all opened notebook buffers and switch to one that the user selects.
+
+\(fn NOTEBOOK)" t nil)
+
+(autoload 'ein:notebook-open "ein/lisp/ein-notebook" "\
+Returns notebook at URL-OR-PORT/PATH.
+
+Note that notebook sends for its contents and won't have them right away.
+
+After the notebook is opened, CALLBACK is called as::
+
+  (funcall CALLBACK notebook created)
+
+where `created' indicates a new notebook or an existing one.
+
+\(fn URL-OR-PORT PATH &optional KERNELSPEC CALLBACK ERRBACK NO-POP)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-notebook" '("*ein:notebook--pending-query*" "ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-notebooklist" "ein/lisp/ein-notebooklist.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-notebooklist.el
+
+(autoload 'ein:notebooklist-reload "ein/lisp/ein-notebooklist" "\
+Reload current Notebook list.
+
+\(fn &optional NBLIST RESYNC CALLBACK)" t nil)
+
+(autoload 'ein:notebooklist-new-notebook "ein/lisp/ein-notebooklist" "\
+
+
+\(fn URL-OR-PORT KERNELSPEC &optional CALLBACK NO-POP RETRY EXPLICIT-PATH)" t nil)
+
+(autoload 'ein:notebooklist-new-notebook-with-name "ein/lisp/ein-notebooklist" "\
+Upon notebook-open, rename the notebook, then funcall CALLBACK.
+
+\(fn URL-OR-PORT KERNELSPEC NAME &optional CALLBACK NO-POP)" t nil)
+
+(autoload 'ein:notebooklist-list-paths "ein/lisp/ein-notebooklist" "\
+Return all files of CONTENT-TYPE for all sessions
+
+\(fn &optional CONTENT-TYPE)" nil nil)
+
+(autoload 'ein:notebooklist-load "ein/lisp/ein-notebooklist" "\
+Load notebook list but do not pop-up the notebook list buffer.
+
+For example, if you want to load notebook list when Emacs starts,
+add this in the Emacs initialization file::
+
+  (add-to-hook 'after-init-hook 'ein:notebooklist-load)
+
+or even this (if you want fast Emacs start-up)::
+
+  ;; load notebook list if Emacs is idle for 3 sec after start-up
+  (run-with-idle-timer 3 nil #'ein:notebooklist-load)
+
+\(fn &optional URL-OR-PORT)" nil nil)
+
+(autoload 'ein:notebooklist-open "ein/lisp/ein-notebooklist" "\
+This is now an alias for `ein:notebooklist-login'.
+
+\(fn URL-OR-PORT CALLBACK)" t nil)
+
+(defalias 'ein:login 'ein:notebooklist-login)
+
+(autoload 'ein:notebooklist-login "ein/lisp/ein-notebooklist" "\
+Deal with security before main entry of ein:notebooklist-open*.
+CALLBACK takes two arguments, the buffer created by
+ein:notebooklist-open--success and the url-or-port argument of
+ein:notebooklist-open*.
+
+\(fn URL-OR-PORT CALLBACK &optional COOKIE-NAME COOKIE-CONTENT TOKEN)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-notebooklist" '("ein:" "generate-breadcrumbs" "render-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-notification" "ein/lisp/ein-notification.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-notification.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-notification" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-output-area" "ein/lisp/ein-output-area.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-output-area.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-output-area" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-pager" "ein/lisp/ein-pager.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-pager.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-pager" '("ein:pager-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-process" "ein/lisp/ein-process.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-process.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-process" '("ein:process-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-python-send" "ein/lisp/ein-python-send.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-python-send.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-python-send" '("ein:python-send-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-pytools" "ein/lisp/ein-pytools.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-pytools.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-pytools" '("ein:pytools-jump-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-query" "ein/lisp/ein-query.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-query.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-query" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-scratchsheet" "ein/lisp/ein-scratchsheet.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-scratchsheet.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-scratchsheet" '("ein:scratchsheet")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-shared-output" "ein/lisp/ein-shared-output.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-shared-output.el
+
+(autoload 'ein:shared-output-pop-to-buffer "ein/lisp/ein-shared-output" "\
+Open shared output buffer." t nil)
+
+(autoload 'ein:shared-output-show-code-cell-at-point "ein/lisp/ein-shared-output" "\
+Show code cell at point in shared-output buffer.
+It is useful when the output of the cell at point is truncated.
+See also `ein:cell-max-num-outputs'." t nil)
+
+(autoload 'ein:shared-output-eval-string "ein/lisp/ein-shared-output" "\
+Entry to `ein:cell-execute-internal' from the shared output cell.
+
+\(fn KERNEL CODE &rest ARGS)" nil nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-shared-output" '("*ein:shared-output*" "ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-traceback" "ein/lisp/ein-traceback.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-traceback.el
+
+(autoload 'ein:tb-show "ein/lisp/ein-traceback" "\
+Show full traceback in traceback viewer." t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-traceback" '("ein:t")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-utils" "ein/lisp/ein-utils.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-utils.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-utils" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-websocket" "ein/lisp/ein-websocket.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-websocket.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-websocket" '("ein:")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ein-worksheet" "ein/lisp/ein-worksheet.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/ein-worksheet.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ein-worksheet" '("ein:" "hof-add")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/ob-ein" "ein/lisp/ob-ein.el" (0 0
+;;;;;;  0 0))
+;;; Generated autoloads from ein/lisp/ob-ein.el
+
+(when (featurep 'org) (let* ((orig (get 'org-babel-load-languages 'custom-type)) (orig-cdr (cdr orig)) (choices (plist-get orig-cdr :key-type))) (push '(const :tag "Ein" ein) (nthcdr 1 choices)) (put 'org-babel-load-languages 'custom-type (cons (car orig) (plist-put orig-cdr :key-type choices)))))
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/ob-ein" '("*ob-ein-sentinel*" "ob-ein-")))
+
+;;;***
+
+;;;### (autoloads nil "ein/lisp/poly-ein" "ein/lisp/poly-ein.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ein/lisp/poly-ein.el
+ (autoload 'poly-ein-mode "poly-ein")
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ein/lisp/poly-ein" '("pm-" "poly-ein-")))
 
 ;;;***
 
@@ -804,6 +1535,13 @@ SYMBOL with `flycheck-def-executable-var'.
 
 ;;;***
 
+;;;### (autoloads nil "fuzzy/fuzzy" "fuzzy/fuzzy.el" (0 0 0 0))
+;;; Generated autoloads from fuzzy/fuzzy.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "fuzzy/fuzzy" '("fuzzy-" "turn-o")))
+
+;;;***
+
 ;;;### (autoloads nil "helm-ag/helm-ag" "helm-ag/helm-ag.el" (0 0
 ;;;;;;  0 0))
 ;;; Generated autoloads from helm-ag/helm-ag.el
@@ -923,6 +1661,126 @@ If invoked outside of a project, displays a list of known projects to jump.
 
 ;;;***
 
+;;;### (autoloads nil "js2-mode/js2-imenu-extras" "js2-mode/js2-imenu-extras.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from js2-mode/js2-imenu-extras.el
+
+(autoload 'js2-imenu-extras-setup "js2-mode/js2-imenu-extras" nil nil nil)
+
+(autoload 'js2-imenu-extras-mode "js2-mode/js2-imenu-extras" "\
+Toggle Imenu support for frameworks and structural patterns.
+
+If called interactively, enable Js2-Imenu-Extras mode if ARG is
+positive, and disable it if ARG is zero or negative.  If called
+from Lisp, also enable the mode if ARG is omitted or nil, and
+toggle it if ARG is `toggle'; disable the mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "js2-mode/js2-imenu-extras" '("js2-imenu-")))
+
+;;;***
+
+;;;### (autoloads nil "js2-mode/js2-mode" "js2-mode/js2-mode.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from js2-mode/js2-mode.el
+
+(autoload 'js2-highlight-unused-variables-mode "js2-mode/js2-mode" "\
+Toggle highlight of unused variables.
+
+If called interactively, enable Js2-Highlight-Unused-Variables
+mode if ARG is positive, and disable it if ARG is zero or
+negative.  If called from Lisp, also enable the mode if ARG is
+omitted or nil, and toggle it if ARG is `toggle'; disable the
+mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'js2-minor-mode "js2-mode/js2-mode" "\
+Minor mode for running js2 as a background linter.
+This allows you to use a different major mode for JavaScript editing,
+such as `js-mode', while retaining the asynchronous error/warning
+highlighting features of `js2-mode'.
+
+If called interactively, enable Js2 minor mode if ARG is
+positive, and disable it if ARG is zero or negative.  If called
+from Lisp, also enable the mode if ARG is omitted or nil, and
+toggle it if ARG is `toggle'; disable the mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'js2-mode "js2-mode/js2-mode" "\
+Major mode for editing JavaScript code.
+
+\(fn)" t nil)
+
+(autoload 'js2-jsx-mode "js2-mode/js2-mode" "\
+Major mode for editing JSX code in Emacs 26 and earlier.
+
+To edit JSX code in Emacs 27, use `js-mode' as your major mode
+with `js2-minor-mode' enabled.
+
+To customize the indentation for this mode, set the SGML offset
+variables (`sgml-basic-offset' et al) locally, like so:
+
+  (defun set-jsx-indentation ()
+    (setq-local sgml-basic-offset js2-basic-offset))
+  (add-hook \\='js2-jsx-mode-hook #\\='set-jsx-indentation)
+
+\(fn)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "js2-mode/js2-mode" '("js2-")))
+
+;;;***
+
+;;;### (autoloads nil "js2-mode/js2-old-indent" "js2-mode/js2-old-indent.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from js2-mode/js2-old-indent.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "js2-mode/js2-old-indent" '("js2-")))
+
+;;;***
+
+;;;### (autoloads nil "markdown-mode/markdown-mode" "markdown-mode/markdown-mode.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from markdown-mode/markdown-mode.el
+
+(autoload 'markdown-mode "markdown-mode/markdown-mode" "\
+Major mode for editing Markdown files.
+
+\(fn)" t nil)
+
+(add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
+
+(autoload 'gfm-mode "markdown-mode/markdown-mode" "\
+Major mode for editing GitHub Flavored Markdown files.
+
+\(fn)" t nil)
+
+(autoload 'markdown-view-mode "markdown-mode/markdown-mode" "\
+Major mode for viewing Markdown content.
+
+\(fn)" t nil)
+
+(autoload 'gfm-view-mode "markdown-mode/markdown-mode" "\
+Major mode for viewing GitHub Flavored Markdown content.
+
+\(fn)" t nil)
+
+(autoload 'markdown-live-preview-mode "markdown-mode/markdown-mode" "\
+Toggle native previewing on save for a specific markdown file.
+
+If called interactively, enable Markdown-Live-Preview mode if ARG
+is positive, and disable it if ARG is zero or negative.  If
+called from Lisp, also enable the mode if ARG is omitted or nil,
+and toggle it if ARG is `toggle'; disable the mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "markdown-mode/markdown-mode" '("defun-markdown-" "gfm-" "markdown")))
+
+;;;***
+
 ;;;### (autoloads nil "pkg-info/pkg-info" "pkg-info/pkg-info.el"
 ;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from pkg-info/pkg-info.el
@@ -1033,6 +1891,283 @@ version.
 \(fn LIBRARY &optional PACKAGE SHOW)" t nil)
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pkg-info/pkg-info" '("pkg-info-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/poly-lock" "polymode/poly-lock.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/poly-lock.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/poly-lock" '("poly-lock-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode" "polymode/polymode.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode.el
+
+(autoload 'define-polymode "polymode/polymode" "\
+Define a new polymode MODE.
+This macro defines command MODE and an indicator variable MODE
+which becomes t when MODE is active and nil otherwise.
+
+MODE command can be used as both major and minor mode. Using
+polymodes as minor modes makes sense when :hostmode (see below)
+is not specified, in which case polymode installs only inner
+modes and doesn't touch current major mode.
+
+Standard hook MODE-hook is run at the end of the initialization
+of each polymode buffer (both indirect and base buffers).
+
+This macro also defines the MODE-map keymap from the :keymap
+argument and PARENT-map (see below) and poly-[MODE-NAME]-polymode
+variable which holds an object of class `pm-polymode' which holds
+the entire configuration for this polymode.
+
+PARENT is either the polymode configuration object or a polymode
+mode (there is 1-to-1 correspondence between config
+objects (`pm-polymode') and mode functions). The new polymode
+MODE inherits alll the behavior from PARENT except for the
+overwrites specified by the keywords (see below). The new MODE
+runs all the hooks from the PARENT-mode and inherits its MODE-map
+from PARENT-map.
+
+DOC is an optional documentation string. If present PARENT must
+be provided, but can be nil.
+
+BODY is executed after the complete initialization of the
+polymode but before MODE-hook. It is executed once for each
+polymode buffer - host buffer on initialization and every inner
+buffer subsequently created.
+
+Before the BODY code keyword arguments (i.e. alternating keywords
+and values) are allowed. The following special keywords
+controlling the behavior of the new MODE are supported:
+
+:lighter Optional LIGHTER is displayed in the mode line when the
+   mode is on. If omitted, it defaults to the :lighter slot of
+   CONFIG object.
+
+:keymap If nil, a new MODE-map keymap is created what directly
+  inherits from the PARENT's keymap. The last keymap in the
+  inheritance chain is always `polymode-minor-mode-map'. If a
+  keymap it is used directly as it is. If a list of binding of
+  the form (KEY . BINDING) it is merged the bindings are added to
+  the newly create keymap.
+
+:after-hook A single form which is evaluated after the mode hooks
+  have been run. It should not be quoted.
+
+Other keywords are added to the `pm-polymode' configuration
+object and should be valid slots in PARENT config object or the
+root config `pm-polymode' object if PARENT is nil. By far the
+most frequently used slots are:
+
+:hostmode Symbol pointing to a `pm-host-chunkmode' object
+  specifying the behavior of the hostmode. If missing or nil,
+  MODE will behave as a minor-mode in the sense that it will
+  reuse the currently installed major mode and will install only
+  the inner modes.
+
+:innermodes List of symbols pointing to `pm-inner-chunkmode'
+  objects which specify the behavior of inner modes (or submodes).
+
+\(fn MODE &optional PARENT DOC &rest BODY)" nil t)
+
+(function-put 'define-polymode 'lisp-indent-function 'defun)
+
+(function-put 'define-polymode 'doc-string-elt '3)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode" '("pm-" "poly")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-base" "polymode/polymode-base.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-base.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-base" '("poly-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-classes" "polymode/polymode-classes.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-classes.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-classes" '("pm-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-compat" "polymode/polymode-compat.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-compat.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-compat" '("*span*" "pm-" "polymode-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-core" "polymode/polymode-core.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-core.el
+
+(defvar-local polymode-default-inner-mode nil "\
+Inner mode for chunks with unspecified modes.
+Intended to be used as local variable in polymode buffers. A
+special value `host' means use the host mode.")
+
+(put 'polymode-default-inner-mode 'safe-local-variable #'symbolp)
+
+(autoload 'define-hostmode "polymode/polymode-core" "\
+Define a hostmode with name NAME.
+Optional PARENT is a name of a hostmode to be derived (cloned)
+from. If missing, the optional documentation string DOC is
+generated automatically. KEY-ARGS is a list of key-value pairs.
+See the documentation of the class `pm-host-chunkmode' for
+possible values.
+
+\(fn NAME &optional PARENT DOC &rest KEY-ARGS)" nil t)
+
+(function-put 'define-hostmode 'doc-string-elt '3)
+
+(function-put 'define-hostmode 'lisp-indent-function 'defun)
+
+(autoload 'define-innermode "polymode/polymode-core" "\
+Ddefine an innermode with name NAME.
+Optional PARENT is a name of a innermode to be derived (cloned)
+from. If missing the optional documentation string DOC is
+generated automatically. KEY-ARGS is a list of key-value pairs.
+See the documentation of the class `pm-inner-chunkmode' for
+possible values.
+
+\(fn NAME &optional PARENT DOC &rest KEY-ARGS)" nil t)
+
+(function-put 'define-innermode 'doc-string-elt '3)
+
+(function-put 'define-innermode 'lisp-indent-function 'defun)
+
+(autoload 'define-auto-innermode "polymode/polymode-core" "\
+Ddefine an auto innermode with name NAME.
+Optional PARENT is a name of an auto innermode to be
+derived (cloned) from. If missing the optional documentation
+string DOC is generated automatically. KEY-ARGS is a list of
+key-value pairs. See the documentation of the class
+`pm-inner-auto-chunkmode' for possible values.
+
+\(fn NAME &optional PARENT DOC &rest KEY-ARGS)" nil t)
+
+(function-put 'define-auto-innermode 'doc-string-elt '3)
+
+(function-put 'define-auto-innermode 'lisp-indent-function 'defun)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-core" '("*span*" "polymode-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-debug" "polymode/polymode-debug.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-debug.el
+
+(autoload 'pm-debug-minor-mode "polymode/polymode-debug" "\
+Turns on/off useful facilities for debugging polymode.
+
+If called interactively, enable Pm-Debug minor mode if ARG is
+positive, and disable it if ARG is zero or negative.  If called
+from Lisp, also enable the mode if ARG is omitted or nil, and
+toggle it if ARG is `toggle'; disable the mode otherwise.
+
+Key bindings:
+\\{pm-debug-minor-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'pm-debug-minor-mode-on "polymode/polymode-debug" nil nil nil)
+
+(put 'pm-debug-mode 'globalized-minor-mode t)
+
+(defvar pm-debug-mode nil "\
+Non-nil if Pm-Debug mode is enabled.
+See the `pm-debug-mode' command
+for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `pm-debug-mode'.")
+
+(custom-autoload 'pm-debug-mode "polymode/polymode-debug" nil)
+
+(autoload 'pm-debug-mode "polymode/polymode-debug" "\
+Toggle Pm-Debug minor mode in all buffers.
+With prefix ARG, enable Pm-Debug mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
+
+Pm-Debug minor mode is enabled in all buffers where
+`pm-debug-minor-mode-on' would do it.
+See `pm-debug-minor-mode' for more information on Pm-Debug minor mode.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'pm-toggle-tracing "polymode/polymode-debug" "\
+Toggle polymode tracing.
+With numeric prefix toggle tracing for that LEVEL. Currently
+universal argument toggles maximum level of tracing (15). See
+`pm-traced-functions'. Default level is 4.
+
+\(fn LEVEL)" t nil)
+
+(autoload 'pm-trace "polymode/polymode-debug" "\
+Trace function FN.
+Use `untrace-function' to untrace or `untrace-all' to untrace all
+currently traced functions.
+
+\(fn FN)" t nil)
+
+(autoload 'pm-debug-relevant-variables "polymode/polymode-debug" "\
+Get the relevant polymode variables.
+If OUT-TYPE is `buffer', print the variables in the dedicated buffer,
+if `message' issue a message, if nil just return a list of values.
+
+\(fn &optional OUT-TYPE)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-debug" '("pm-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-export" "polymode/polymode-export.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-export.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-export" '("pm-" "poly")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-methods" "polymode/polymode-methods.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-methods.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-methods" '("pm-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-test-utils" "polymode/polymode-test-utils.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-test-utils.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-test-utils" '("pm-")))
+
+;;;***
+
+;;;### (autoloads nil "polymode/polymode-weave" "polymode/polymode-weave.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from polymode/polymode-weave.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "polymode/polymode-weave" '("pm-" "polymode-")))
+
+;;;***
+
+;;;### (autoloads nil "popup/popup" "popup/popup.el" (0 0 0 0))
+;;; Generated autoloads from popup/popup.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "popup/popup" '("popup-")))
 
 ;;;***
 
@@ -1662,6 +2797,373 @@ Otherwise behave as if called interactively.
 
 ;;;***
 
+;;;### (autoloads nil "request/request" "request/request.el" (0 0
+;;;;;;  0 0))
+;;; Generated autoloads from request/request.el
+
+(autoload 'request-response-header "request/request" "\
+Fetch the values of RESPONSE header field named FIELD-NAME.
+
+It returns comma separated values when the header has multiple
+field with the same name, as :RFC:`2616` specifies.
+
+Examples::
+
+  (request-response-header response
+                           \"content-type\") ; => \"text/html; charset=utf-8\"
+  (request-response-header response
+                           \"unknown-field\") ; => nil
+
+\(fn RESPONSE FIELD-NAME)" nil nil)
+
+(autoload 'request-response-headers "request/request" "\
+Return RESPONSE headers as an alist.
+I would have chosen a function name that wasn't so suggestive that
+`headers` is a member of the `request-response` struct, but
+as there's already precedent with `request-response-header', I
+hew to consistency.
+
+\(fn RESPONSE)" nil nil)
+
+(autoload 'request "request/request" "\
+Main entry requesting URL with property list SETTINGS as follow.
+
+==================== ========================================================
+Keyword argument      Explanation
+==================== ========================================================
+TYPE          (string)   type of request to make: POST/GET/PUT/DELETE
+PARAMS         (alist)   set \"?key=val\" part in URL
+DATA    (string/alist)   data to be sent to the server
+FILES          (alist)   files to be sent to the server (see below)
+PARSER        (symbol)   a function that reads current buffer and return data
+HEADERS        (alist)   additional headers to send with the request
+ENCODING      (symbol)   encoding for request body (utf-8 by default)
+SUCCESS     (function)   called on success
+ERROR       (function)   called on error
+COMPLETE    (function)   called on both success and error
+TIMEOUT       (number)   timeout in second
+STATUS-CODE    (alist)   map status code (int) to callback
+SYNC            (bool)   If non-nil, wait until request is done. Default is nil.
+==================== ========================================================
+
+
+* Callback functions
+
+Callback functions STATUS, ERROR, COMPLETE and `cdr\\='s in element of
+the alist STATUS-CODE take same keyword arguments listed below.  For
+forward compatibility, these functions must ignore unused keyword
+arguments (i.e., it\\='s better to use `&allow-other-keys\\=' [#]_).::
+
+    (CALLBACK                      ; SUCCESS/ERROR/COMPLETE/STATUS-CODE
+     :data          data           ; whatever PARSER function returns, or nil
+     :error-thrown  error-thrown   ; (ERROR-SYMBOL . DATA), or nil
+     :symbol-status symbol-status  ; success/error/timeout/abort/parse-error
+     :response      response       ; request-response object
+     ...)
+
+.. [#] `&allow-other-keys\\=' is a special \"markers\" available in macros
+   in the CL library for function definition such as `cl-defun\\=' and
+   `cl-function\\='.  Without this marker, you need to specify all arguments
+   to be passed.  This becomes problem when request.el adds new arguments
+   when calling callback functions.  If you use `&allow-other-keys\\='
+   (or manually ignore other arguments), your code is free from this
+   problem.  See info node `(cl) Argument Lists\\=' for more information.
+
+Arguments data, error-thrown, symbol-status can be accessed by
+`request-response-data\\=', `request-response-error-thrown\\=',
+`request-response-symbol-status\\=' accessors, i.e.::
+
+    (request-response-data RESPONSE)  ; same as data
+
+Response object holds other information which can be accessed by
+the following accessors:
+`request-response-status-code\\=',
+`request-response-url\\=' and
+`request-response-settings\\='
+
+* STATUS-CODE callback
+
+STATUS-CODE is an alist of the following format::
+
+    ((N-1 . CALLBACK-1)
+     (N-2 . CALLBACK-2)
+     ...)
+
+Here, N-1, N-2,... are integer status codes such as 200.
+
+
+* FILES
+
+FILES is an alist of the following format::
+
+    ((NAME-1 . FILE-1)
+     (NAME-2 . FILE-2)
+     ...)
+
+where FILE-N is a list of the form::
+
+    (FILENAME &key PATH BUFFER STRING MIME-TYPE)
+
+FILE-N can also be a string (path to the file) or a buffer object.
+In that case, FILENAME is set to the file name or buffer name.
+
+Example FILES argument::
+
+    `((\"passwd\"   . \"/etc/passwd\")                ; filename = passwd
+      (\"scratch\"  . ,(get-buffer \"*scratch*\"))    ; filename = *scratch*
+      (\"passwd2\"  . (\"password.txt\" :file \"/etc/passwd\"))
+      (\"scratch2\" . (\"scratch.txt\"  :buffer ,(get-buffer \"*scratch*\")))
+      (\"data\"     . (\"data.csv\"     :data \"1,2,3\\n4,5,6\\n\")))
+
+.. note:: FILES is implemented only for curl backend for now.
+   As furl.el_ supports multipart POST, it should be possible to
+   support FILES in pure elisp by making furl.el_ another backend.
+   Contributions are welcome.
+
+   .. _furl.el: https://code.google.com/p/furl-el/
+
+
+* PARSER function
+
+PARSER function takes no argument and it is executed in the
+buffer with HTTP response body.  The current position in the HTTP
+response buffer is at the beginning of the buffer.  As the HTTP
+header is stripped off, the cursor is actually at the beginning
+of the response body.  So, for example, you can pass `json-read\\='
+to parse JSON object in the buffer.  To fetch whole response as a
+string, pass `buffer-string\\='.
+
+When using `json-read\\=', it is useful to know that the returned
+type can be modified by `json-object-type\\=', `json-array-type\\=',
+`json-key-type\\=', `json-false\\=' and `json-null\\='.  See docstring of
+each function for what it does.  For example, to convert JSON
+objects to plist instead of alist, wrap `json-read\\=' by `lambda\\='
+like this.::
+
+    (request
+     \"https://...\"
+     :parser (lambda ()
+               (let ((json-object-type \\='plist))
+                 (json-read)))
+     ...)
+
+This is analogous to the `dataType\\=' argument of jQuery.ajax_.
+Only this function can access to the process buffer, which
+is killed immediately after the execution of this function.
+
+* SYNC
+
+Synchronous request is functional, but *please* don\\='t use it
+other than testing or debugging.  Emacs users have better things
+to do rather than waiting for HTTP request.  If you want a better
+way to write callback chains, use `request-deferred\\='.
+
+If you can\\='t avoid using it (e.g., you are inside of some hook
+which must return some value), make sure to set TIMEOUT to
+relatively small value.
+
+Due to limitation of `url-retrieve-synchronously\\=', response slots
+`request-response-error-thrown\\=', `request-response-history\\=' and
+`request-response-url\\=' are unknown (always nil) when using
+synchronous request with `url-retrieve\\=' backend.
+
+* Note
+
+API of `request\\=' is somewhat mixture of jQuery.ajax_ (Javascript)
+and requests.request_ (Python).
+
+.. _jQuery.ajax: https://api.jquery.com/jQuery.ajax/
+.. _requests.request: https://docs.python-requests.org
+
+\(fn URL &rest SETTINGS &key (PARAMS nil) (DATA nil) (HEADERS nil) (ENCODING \\='utf-8) (ERROR nil) (SYNC nil) (RESPONSE (make-request-response)) &allow-other-keys)" nil nil)
+
+(function-put 'request 'lisp-indent-function 'defun)
+
+(autoload 'request-untrampify-filename "request/request" "\
+Return FILE as the local file name.
+
+\(fn FILE)" nil nil)
+
+(autoload 'request-abort "request/request" "\
+Abort request for RESPONSE (the object returned by `request').
+Note that this function invoke ERROR and COMPLETE callbacks.
+Callbacks may not be called immediately but called later when
+associated process is exited.
+
+\(fn RESPONSE)" nil nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "request/request" '("request-")))
+
+;;;***
+
+;;;### (autoloads nil "request/request-deferred" "request/request-deferred.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from request/request-deferred.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "request/request-deferred" '("request-deferred")))
+
+;;;***
+
+;;;### (autoloads nil "s/s" "s/s.el" (0 0 0 0))
+;;; Generated autoloads from s/s.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "s/s" '("s-")))
+
+;;;***
+
+;;;### (autoloads nil "simple-httpd/simple-httpd" "simple-httpd/simple-httpd.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from simple-httpd/simple-httpd.el
+
+(autoload 'httpd-start "simple-httpd/simple-httpd" "\
+Start the web server process. If the server is already
+running, this will restart the server. There is only one server
+instance per Emacs instance." t nil)
+
+(autoload 'httpd-stop "simple-httpd/simple-httpd" "\
+Stop the web server if it is currently running, otherwise do nothing." t nil)
+
+(autoload 'httpd-running-p "simple-httpd/simple-httpd" "\
+Return non-nil if the simple-httpd server is running." nil nil)
+
+(autoload 'httpd-serve-directory "simple-httpd/simple-httpd" "\
+Start the web server with given `directory' as `httpd-root'.
+
+\(fn DIRECTORY)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "simple-httpd/simple-httpd" '("defservlet" "httpd" "with-httpd-buffer")))
+
+;;;***
+
+;;;### (autoloads nil "simple-httpd/simple-httpd-test" "simple-httpd/simple-httpd-test.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from simple-httpd/simple-httpd-test.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "simple-httpd/simple-httpd-test" '("httpd--flet")))
+
+;;;***
+
+;;;### (autoloads nil "skewer-mode/cache-table" "skewer-mode/cache-table.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from skewer-mode/cache-table.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "skewer-mode/cache-table" '("cache-table-")))
+
+;;;***
+
+;;;### (autoloads nil "skewer-mode/skewer-bower" "skewer-mode/skewer-bower.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from skewer-mode/skewer-bower.el
+
+(autoload 'skewer-bower-refresh "skewer-mode/skewer-bower" "\
+Update the package listing and packages synchronously." t nil)
+
+(autoload 'skewer-bower-load "skewer-mode/skewer-bower" "\
+Dynamically load a library from bower into the current page.
+
+\(fn PACKAGE &optional VERSION)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "skewer-mode/skewer-bower" '("skewer")))
+
+;;;***
+
+;;;### (autoloads nil "skewer-mode/skewer-css" "skewer-mode/skewer-css.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from skewer-mode/skewer-css.el
+
+(autoload 'skewer-css-mode "skewer-mode/skewer-css" "\
+Minor mode for interactively loading new CSS rules.
+
+If called interactively, enable Skewer-Css mode if ARG is
+positive, and disable it if ARG is zero or negative.  If called
+from Lisp, also enable the mode if ARG is omitted or nil, and
+toggle it if ARG is `toggle'; disable the mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "skewer-mode/skewer-css" '("skewer-css")))
+
+;;;***
+
+;;;### (autoloads nil "skewer-mode/skewer-html" "skewer-mode/skewer-html.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from skewer-mode/skewer-html.el
+
+(autoload 'skewer-html-mode "skewer-mode/skewer-html" "\
+Minor mode for interactively loading new HTML.
+
+If called interactively, enable Skewer-Html mode if ARG is
+positive, and disable it if ARG is zero or negative.  If called
+from Lisp, also enable the mode if ARG is omitted or nil, and
+toggle it if ARG is `toggle'; disable the mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "skewer-mode/skewer-html" '("skewer-html-")))
+
+;;;***
+
+;;;### (autoloads nil "skewer-mode/skewer-mode" "skewer-mode/skewer-mode.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from skewer-mode/skewer-mode.el
+
+(autoload 'list-skewer-clients "skewer-mode/skewer-mode" "\
+List the attached browsers in a buffer." t nil)
+
+(autoload 'skewer-mode "skewer-mode/skewer-mode" "\
+Minor mode for interacting with a browser.
+
+If called interactively, enable Skewer mode if ARG is positive,
+and disable it if ARG is zero or negative.  If called from Lisp,
+also enable the mode if ARG is omitted or nil, and toggle it if
+ARG is `toggle'; disable the mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'run-skewer "skewer-mode/skewer-mode" "\
+Attach a browser to Emacs for a skewer JavaScript REPL. Uses
+`browse-url' to launch a browser.
+
+With a prefix arugment (C-u), it will ask the filename of the
+root document.  With two prefix arguments (C-u C-u), it will use
+the contents of the current buffer as the root document.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'skewer-run-phantomjs "skewer-mode/skewer-mode" "\
+Connect an inferior PhantomJS process to Skewer, returning the process." t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "skewer-mode/skewer-mode" '("httpd/skewer/" "phantomjs-program-name" "skewer")))
+
+;;;***
+
+;;;### (autoloads nil "skewer-mode/skewer-repl" "skewer-mode/skewer-repl.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from skewer-mode/skewer-repl.el
+
+(autoload 'skewer-repl--response-hook "skewer-mode/skewer-repl" "\
+Catches all browser messages logging some to the REPL.
+
+\(fn RESPONSE)" nil nil)
+
+(autoload 'skewer-repl "skewer-mode/skewer-repl" "\
+Start a JavaScript REPL to be evaluated in the visiting browser." t nil)
+
+(eval-after-load 'skewer-mode '(progn (add-hook 'skewer-response-hook #'skewer-repl--response-hook) (add-hook 'skewer-repl-mode-hook #'skewer-repl-mode-compilation-shell-hook) (define-key skewer-mode-map (kbd "C-c C-z") #'skewer-repl)))
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "skewer-mode/skewer-repl" '("company-skewer-repl" "skewer-")))
+
+;;;***
+
+;;;### (autoloads nil "skewer-mode/skewer-setup" "skewer-mode/skewer-setup.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from skewer-mode/skewer-setup.el
+
+(autoload 'skewer-setup "skewer-mode/skewer-setup" "\
+Fully integrate Skewer into js2-mode, css-mode, and html-mode buffers." nil nil)
+
+;;;***
+
 ;;;### (autoloads nil "solidity-mode/company-solidity" "solidity-mode/company-solidity.el"
 ;;;;;;  (0 0 0 0))
 ;;; Generated autoloads from solidity-mode/company-solidity.el
@@ -1757,8 +3259,35 @@ Major mode for editing web templates.
 
 ;;;***
 
-;;;### (autoloads nil nil ("dash/dash-functional.el" "el-get/el-get-install.el")
+;;;### (autoloads nil "websocket/websocket" "websocket/websocket.el"
 ;;;;;;  (0 0 0 0))
+;;; Generated autoloads from websocket/websocket.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "websocket/websocket" '("websocket-")))
+
+;;;***
+
+;;;### (autoloads nil "websocket/websocket-functional-test" "websocket/websocket-functional-test.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from websocket/websocket-functional-test.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "websocket/websocket-functional-test" '("websocket-")))
+
+;;;***
+
+;;;### (autoloads nil "websocket/websocket-test" "websocket/websocket-test.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from websocket/websocket-test.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "websocket/websocket-test" '("websocket-test-")))
+
+;;;***
+
+;;;### (autoloads nil nil ("auto-complete/auto-complete-pkg.el" "code-cells/code-cells-autoloads.el"
+;;;;;;  "code-cells/code-cells-pkg.el" "dash/dash-functional.el"
+;;;;;;  "ein/lisp/ein-completer.el" "ein/lisp/ein-pkg.el" "ein/lisp/ein.el"
+;;;;;;  "el-get/el-get-install.el" "polymode/polymode-tangle.el"
+;;;;;;  "skewer-mode/skewer-mode-pkg.el") (0 0 0 0))
 
 ;;;***
 

@@ -84,16 +84,6 @@
 (require 'helm-projectile)
 (helm-projectile-on)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
- '(helm-ag-command-option "--all-text")
- '(helm-ag-insert-at-point (quote symbol))
- '(package-selected-packages (quote (let-alist))))
-
 (global-set-key (kbd "C-c p x x") 'helm-do-ag)
 
 ;;----------------------------------------------------------------------------
@@ -249,6 +239,21 @@
 
 ;; JS file associations
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+
+;;----------------------------------------------------------------------------
+;; Custom
+;;----------------------------------------------------------------------------
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
+ '(helm-ag-command-option "--all-text")
+ '(helm-ag-insert-at-point 'symbol)
+ '(package-selected-packages '(let-alist)))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

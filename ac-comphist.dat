@@ -1,6 +1,62 @@
-((("code-cells" .
-   [1 0 0 0 0 0 0 0 0 0])
+((("test_default_probability_and_interest_rates_correlated" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("interest" .
+   [1 0 0 0 0 0 0 0])
+  ("test_default_probability_interest_rates_correlated" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("_estimate_future_selling_price" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0])
+  ("AttributeError" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 0])
+  ("_init_loan_calculator" .
+   [2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("apr" .
+   [3 0 0])
+  ("interest_rate" .
+   [7 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("total_debt" .
+   [3 0 0 0 0 0 0 0 0 0])
+  ("isclose" .
+   [4 0 0 0 0 0 0])
+  ("irr" .
+   [6 0 0])
+  ("pytest" .
+   [3 0 0 0 0 0])
+  ("ein:$notebook-notebook-name" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("expand-file-name" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("debug-on-entry" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("sync-jupytext" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("after-save-hook" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("add-hook" .
+   [1 0 0 0 0 0 0 0])
+  ("buffer-file-name" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("format" .
+   [1 0 0 0 0 0])
+  ("shell-command-to-string" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("defun" .
+   [1 0 0 0 0])
+  ("code-cells-convert-ipynb" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0])
   ("matplotlib" .
    [0 0 0 0 0 0 1 1 0 0])
-  ("code-cells-convert-ipynb" .
-   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0])))
+  ("code-cells" .
+   [1 0 0 0 0 0 0 0 0 0])
+  ("my@sync-jupytext-ein" .
+   [1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("VENV_DIR" .
+   [1 0 0 0 0 0 0 0])
+  ("feature_types" .
+   [0 0 0 0 0 1 0 0 0 0 0 0 0])
+  ("feature_engineering" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("read_data" .
+   [1 0 0 0 0 0 0 0 0])
+  ("cred0" .
+   [8 0 0 0 0])))

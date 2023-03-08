@@ -227,6 +227,27 @@
 (setq solidity-flycheck-solium-checker-active t)
 
 ;;----------------------------------------------------------------------------
+;; Notebooks
+;;----------------------------------------------------------------------------
+
+;; Auto sync linked files via jupytext on save
+(defun my@sync-jupytext ()
+  "Sync linked files via jupytext."
+  (shell-command-to-string (format "jupytext --sync %s" buffer-file-name)))
+
+(add-hook 'after-save-hook #'my@sync-jupytext)
+
+(defun my@sync-jupytext-ein (orig-fn notebook &rest args)
+  "Sync linked files via jupytext when in ein mode."
+  (apply orig-fn notebook args)
+  (message "[jupytext] %s"
+           (shell-command-to-string
+            (format "jupytext --sync %s"
+                    (expand-file-name (ein:$notebook-notebook-name notebook))))))
+
+(advice-add 'ein:notebook-save-notebook-success :around #'my@sync-jupytext-ein)
+
+;;----------------------------------------------------------------------------
 ;; File associations
 ;;----------------------------------------------------------------------------
 
